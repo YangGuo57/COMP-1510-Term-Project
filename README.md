@@ -7,15 +7,18 @@ This is written in markdown. Read about markdown here: [markdowncheatsheet](http
 
 ## Your name:
 
-Alice Huang
+Alice Huang  
+Yang Guo
 
 ## Your student number:
 
-A01372753
+A01372753  
+A00968177
 
 ## Your GitHub username:
 
-orangeepop
+orangeepop  
+YangGuo57 
 
 ## Any important comments you'd like to make about your work:
 
