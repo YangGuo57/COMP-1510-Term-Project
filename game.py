@@ -2,11 +2,11 @@ def greeting():
     print('Welcome to Survive CST. Please take a moment to answer the following questionnaire. There is no right '
           'or wrong answer.')
 
-    new_character = {'IQ': 0, 'EQ': 0, 'Stress': 0, 'Wealth': 0, 'X': 0, 'Y': 0, 'project': 0,
+    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 0, 'Y': 0, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
-    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'Wealth': 40}, {'Wealth': 20, 'EQ': 0.5}),
-                           ({'EQ': 0.5}, {'Wealth': 20}), ({'IQ': 0.5}, {'Wealth': 20}))
+    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 0.5}),
+                           ({'EQ': 0.5}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
 
     answers = ask_questionnaire()
 
