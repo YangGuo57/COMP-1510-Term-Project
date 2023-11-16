@@ -1,7 +1,7 @@
-def greeting():
-    print('Welcome to Survive CST. Please take a moment to answer the following questionnaire. There is no right '
-          'or wrong answer.')
+import time
 
+
+def create_character():
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
@@ -17,13 +17,26 @@ def greeting():
             new_character[stat] += stats[stat]
         questionnaire_index += 1
 
-    print('It is the first week of September, your first time in the City of Vancouver, and your first day studying\n'
-          'Computer Systems Technology (CST) at BCIT. You enter the school elevator with mixed feelings; after all,\n'
-          'you came to this foreign city in hopes that computer science is the right career for you. As you step out \n'
-          'of the elevator, you tell yourself: "Don\'t stress, learn lots, make friends, get co-op, and most \n'
-          'importantly, have fun!"')
-
     return new_character
+
+
+def print_message(message):
+    print(message)
+
+
+def greeting():
+    greeting_dict = {
+        1: "Welcome to Survive CST. Please take a moment to answer the following questionnaire. There is no right"
+           " or wrong answer.",
+        2: "It is the first week of September, your first time in the City of Vancouver, and your first day studying. "
+           "Computer Systems Technology (CST) at BCIT. You enter the school elevator with mixed feelings; after all, "
+           "you came to this foreign city in hopes that computer science is the right career for you. As you step out "
+           "of the elevator, you tell yourself: Don't stress, learn lots, make friends, get co-op, and most "
+           "importantly, have fun!",
+        3: "",
+    }
+
+    return greeting_dict
 
 
 def ask_questionnaire():
@@ -369,7 +382,11 @@ def run_weekend():
 
 
 def game():
-    player = greeting()
+    greeting_msg = greeting()
+    print_message(greeting_msg[1])
+    player = create_character()
+    print_message(greeting_msg[2])
+
     rows = 10
     columns = 18
     board = make_board(rows, columns)
