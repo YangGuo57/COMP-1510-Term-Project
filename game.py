@@ -58,6 +58,24 @@ def print_stats():
     prints character stats to screen
     """
 
+def make_board(row, column):
+    game_board = {}
+    locations = {
+        (3, 4): "school",
+        (5, 8): "hospital",
+        (9, 8): "park",
+        (7, 3): "work",
+    }
+    for x in range(row):
+        for y in range(column):
+            if (x, y) in locations:
+                game_board[(x, y)] = locations[(x, y)]
+            else:
+                game_board[(x, y)] = " "
+
+    return game_board
+
+
 def generate_map(location):
     # location = city, park, school
     pass
