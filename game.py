@@ -2,7 +2,7 @@ def greeting():
     print('Welcome to Survive CST. Please take a moment to answer the following questionnaire. There is no right '
           'or wrong answer.')
 
-    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 0, 'Y': 0, 'project': 0,
+    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 0.5}),
@@ -108,19 +108,73 @@ def update_surroundings(game_board, x, y, horizontal_symbol, vertical_symbol, lo
                 game_board[(i, j)] = vertical_symbol
 
 
-def print_map(game_board, row, column):
+def print_map(game_board, row, column, character):
+    player_position = (character['X'], character['Y'])
     for i in range(row):
         for j in range(column):
-            if i == 0 or i == row - 1:
-                if j == 0 or j == column - 1:
-                    print('+', end=' ')
-                else:
-                    print('-', end=' ')
+            if (i, j) == player_position:
+                print('*', end=' ')
+            elif i == 0 or i == row - 1:
+                print('-', end=' ')
             elif j == 0 or j == column - 1:
                 print('|', end=' ')
             else:
                 print(game_board[(i, j)], end=' ')
         print()
+
+
+def get_user_choice():
+    directions = ["North", "East", "South", "West"]
+    while True:
+        for i in range(len(directions)):
+            print(f"{i + 1}. {directions[i]}", end=' ')
+
+        choice = input("\nPlease choose a direction number: ")
+        if choice.isdigit():
+            choice = int(choice)
+            if 0 < choice <= len(directions):
+                select_direction = directions[choice - 1]
+                return select_direction
+            else:
+                print("Please choose a valid direction number!")
+        else:
+            print("Please choose a valid direction number!")
+
+
+def validate_move(board, character, direction):
+    x_coordinate = character["X"]
+    y_coordinate = character["Y"]
+
+    if direction == "North":
+        coordinate = (x_coordinate - 1, y_coordinate)
+    elif direction == "East":
+        coordinate = (x_coordinate, y_coordinate + 1)
+    elif direction == "South":
+        coordinate = (x_coordinate + 1, y_coordinate)
+    else:
+        coordinate = (x_coordinate, y_coordinate - 1)
+
+    if coordinate in board:
+        return True
+
+    return False
+
+
+def move_character(character, direction, row, column):
+    x_coordinate = character["X"]
+    y_coordinate = character["Y"]
+
+    if direction == "North" and x_coordinate > 1:
+        x_coordinate -= 1
+    elif direction == "East" and y_coordinate < column - 2:
+        y_coordinate += 1
+    elif direction == "South" and x_coordinate < row - 2:
+        x_coordinate += 1
+    elif direction == "West" and y_coordinate > 1:
+        y_coordinate -= 1
+
+    character["X"] = x_coordinate
+    character["Y"] = y_coordinate
 
 
 def check_fast_travel(location):
@@ -131,16 +185,6 @@ def check_fast_travel(location):
 
 def fast_travel(character, location):
     # sets player coordinates to coordinates of location
-    pass
-
-
-def validate_move(direction):
-    # checks whether player can move in desired direction
-    pass
-
-
-def move_character(character):
-    # moves character in desired direction
     pass
 
 
@@ -306,7 +350,18 @@ def game():
     columns = 18
     board = make_board(rows, columns)
     game_map = generate_game_map(board)
-    print_map(game_map, rows, columns)
+    while True:
+        print_map(game_map, rows, columns, player)
+        direction = get_user_choice()
+        valid_move = validate_move(board, player, direction)
+
+        if valid_move:
+            move_character(player, direction, rows, columns)
+        else:
+            print("Invalid move! Please choose another direction.")
+            continue
+        game_map = generate_game_map(board)
+
 
 if __name__ == '__main__':
     game()
