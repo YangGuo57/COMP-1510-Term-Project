@@ -88,7 +88,7 @@ def make_board(row, column):
     locations = {
         (3, 4): "school",
         (5, 8): "hospital",
-        (2, 12): "park",
+        (2, 13): "park",
         (7, 3): "work",
     }
     for x in range(row):
@@ -111,7 +111,7 @@ def generate_game_map(game_board):
             update_surroundings(game_board, x, y, '|', '-', 'S')
         elif location == "park":
             game_board[(x, y)] = 'P'
-            update_surroundings(game_board, x, y, '=', '=', 'P')
+            update_surroundings(game_board, x, y, '|', '=', 'P')
         elif location == "work":
             game_board[(x, y)] = 'W'
             update_surroundings(game_board, x, y, '|', '~', 'W')
@@ -119,16 +119,16 @@ def generate_game_map(game_board):
     return game_board
 
 
-def update_surroundings(game_board, x, y, horizontal_symbol, vertical_symbol, location_symbol):
+def update_surroundings(game_board, x, y, door, wall, location_symbol):
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
             if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = horizontal_symbol
+                game_board[(i, j)] = door
 
     for j in range(y - 1, y + 2):
         for i in [x - 1, x + 1]:
             if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = vertical_symbol
+                game_board[(i, j)] = wall
 
 
 def print_map(game_board, row, column, character):
@@ -183,7 +183,7 @@ def validate_move(board, character, direction):
     return False
 
 
-def move_character(character, direction, row, column):
+def move_character(character, direction, row, column, game_board):
     x_coordinate = character["X"]
     y_coordinate = character["Y"]
 
@@ -199,8 +199,14 @@ def move_character(character, direction, row, column):
         print("You hit a wall!")
         return
 
-    character["X"] = x_coordinate
-    character["Y"] = y_coordinate
+    new_position = (x_coordinate, y_coordinate)
+    location = game_board[new_position]
+
+    if location in [' ', '|']:
+        character["X"] = x_coordinate
+        character["Y"] = y_coordinate
+    else:
+        print("You hit a wall!")
 
 
 def check_fast_travel(location):
@@ -410,7 +416,7 @@ def game():
         direction = get_user_choice()
         valid_move = validate_move(board, player, direction)
         if valid_move:
-            move_character(player, direction, rows, columns)
+            move_character(player, direction, rows, columns, game_map)
         else:
             print("Invalid move! Please choose another direction.")
             continue
