@@ -195,6 +195,9 @@ def move_character(character, direction, row, column):
         x_coordinate += 1
     elif direction == "West" and y_coordinate > 1:
         y_coordinate -= 1
+    else:
+        print("You hit a wall!")
+        return
 
     character["X"] = x_coordinate
     character["Y"] = y_coordinate
