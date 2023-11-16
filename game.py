@@ -1,14 +1,12 @@
 import time
 
 
-def create_character():
+def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 0.5}),
                            ({'EQ': 0.5}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
-
-    answers = ask_questionnaire()
 
     questionnaire_index = 0
     for answer in answers:
@@ -18,6 +16,24 @@ def create_character():
         questionnaire_index += 1
 
     return new_character
+
+
+def print_stats(new_character):
+    character = new_character
+    while True:
+        input_status = input("Please type 'status' to see your current stats:")
+        if input_status.lower() == 'status':
+            print("Your current attributes: ")
+            print("IQ:", character['IQ'])
+            print("EQ:", character['EQ'])
+            print("stress:", character['stress'])
+            print("wealth:", character['wealth'])
+            print("exp:", character['exp'])
+            print("lvl:", character['lvl'])
+            break
+        else:
+            print("Invalid input. Please type 'status' to see your current attributes.")
+            continue
 
 
 def print_message(message):
@@ -65,12 +81,6 @@ def ask_questionnaire():
         answers.append(int(answer) - 1)
 
     return answers
-
-
-def print_stats():
-    """
-    prints character stats to screen
-    """
 
 
 def make_board(row, column):
@@ -384,9 +394,10 @@ def run_weekend():
 def game():
     greeting_msg = greeting()
     print_message(greeting_msg[1])
-    player = create_character()
+    answer = ask_questionnaire()
+    player = create_character(answer)
     print_message(greeting_msg[2])
-
+    print_stats(player)
     rows = 10
     columns = 18
     board = make_board(rows, columns)
