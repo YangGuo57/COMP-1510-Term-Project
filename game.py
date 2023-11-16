@@ -194,7 +194,21 @@ def evaluate_exp(character, subject):
     if subject == all, loop through all subjects
     else, only evaluate that one subject passed in
     """
-    pass
+    threshold = 100
+
+    if subject == 'all':
+        subject = ('1510', '1537', '1113', '1712')
+    else:
+        subject = subject,
+        subject = tuple(subject)
+
+    for each_subject in subject:
+        level_threshold = (character['lvl'][each_subject] + 1) * threshold
+        print(each_subject, character['exp'][each_subject])
+        if character['exp'][each_subject] > level_threshold:
+            character['lvl'][each_subject] += 1
+            print(f'Through relentlessly studying for COMP{each_subject}, an epiphany strikes you and suddenly'
+                  f'everything that was once perplexing becomes clear and understandable...')
 
 
 def evaluate_stress(character):
@@ -345,7 +359,6 @@ def run_weekend():
 
 def game():
     player = greeting()
-    print(player)
     rows = 10
     columns = 18
     board = make_board(rows, columns)
