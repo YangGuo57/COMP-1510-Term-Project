@@ -354,7 +354,6 @@ def game():
         print_map(game_map, rows, columns, player)
         direction = get_user_choice()
         valid_move = validate_move(board, player, direction)
-
         if valid_move:
             move_character(player, direction, rows, columns)
         else:
