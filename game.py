@@ -215,7 +215,18 @@ def evaluate_stress(character):
     """
     evaluates whether character need to go to ER
     """
-    pass
+    pass_out = False
+    if character['stress'] > 100:
+        print('Suddenly the world is spinning and darkness befalls over your eyes... You succumbed to the pressure'
+              'of life and you lay on the ground, unconscious. Thankfully, a passerby sees your motionless body and'
+              'dials 911 for assistance.')
+        pass_out = True
+    elif character['stress'] > 90:
+        print('You feel your heart palpitating and you can\'t breathe... Maybe you should get some rest?')
+    elif character['stress'] > 80:
+        print('You feel a sudden light-headedness... Maybe you should take it easy?')
+
+    return pass_out
 
 
 def run_weekday(character):
