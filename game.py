@@ -10,12 +10,22 @@ def greeting():
     return character_choices[1]
 
 
-def make_board(rows, columns):
-    board = {}
-    for x in range(rows):
-        for y in range(columns):
-            board[(x, y)] = " "
-    return board
+def make_board(row, column):
+    game_board = {}
+    locations = {
+        (3, 4): "school",
+        (5, 8): "hospital",
+        (9, 8): "park",
+        (7, 3): "work",
+    }
+    for x in range(row):
+        for y in range(column):
+            if (x, y) in locations:
+                game_board[(x, y)] = locations[(x, y)]
+            else:
+                game_board[(x, y)] = " "
+
+    return game_board
 
 
 def generate_map(location):
