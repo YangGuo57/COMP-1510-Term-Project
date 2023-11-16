@@ -10,6 +10,14 @@ def greeting():
     return character_choices[1]
 
 
+def make_board(rows, columns):
+    board = {}
+    for x in range(rows):
+        for y in range(columns):
+            board[(x, y)] = " "
+    return board
+
+
 def generate_map(location):
     # location = city, park, school
     pass
@@ -197,9 +205,11 @@ def run_weekend():
 
 
 def game():
-    # player = greeting()
-    # board = generate_map(5, 5)
-    # print(board)
+
+
+# player = greeting()
+# board = generate_map(5, 5)
+# print(board)
 
 
 if __name__ == '__main__':
