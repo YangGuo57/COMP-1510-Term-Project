@@ -524,7 +524,6 @@ def game():
     answer = ask_questionnaire()
     player = create_character(answer)
     print_message(greeting_msg[2])
-
     while True:
         action = main_menu(player)
         if action == 'move':
