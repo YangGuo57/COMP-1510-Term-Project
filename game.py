@@ -236,7 +236,7 @@ def fast_travel(character):
         "school": [(3, 3), (3, 5)],
         "hospital": [(5, 7), (5, 9)],
         "park": [(2, 12), (2, 14)],
-        "work": [(7, 2), (7, 5)]
+        "work": [(7, 2), (7, 4)]
     }
 
     destination = input("Please input fast travel destination: school, hospital, park, work:")
