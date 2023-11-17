@@ -24,7 +24,7 @@ def create_character(answers):
 def print_stats(new_character):
     character = new_character
     while True:
-        input_status = input("Please type 'status' to see your current stats:")
+        input_status = input("Please type 'status' to see your current stats (type 'menu' back to main):")
         if input_status.lower() == 'status':
             print("Your current attributes: ")
             print("IQ:", character['IQ'])
