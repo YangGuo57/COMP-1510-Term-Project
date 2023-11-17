@@ -5,7 +5,9 @@ from random import randint
 def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
-                     'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
+                     'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
+                     'visited_locations': {'school': 0, 'hospital': 0, 'park': 0, 'work': 0, }}
+
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 0.5}),
                            ({'EQ': 0.5}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
 
@@ -324,7 +326,7 @@ def weekday_schoolwork(character):
         experience_gained = character['IQ'] * randint(8, 12)
         character['exp'][subject] += experience_gained
         describe_exp_gain(character, subject, experience_gained)
-    stress_gained = randint(8,12)
+    stress_gained = randint(8, 12)
     character['stress'] += stress_gained
     describe_stress_change(character, stress_gained)
 
