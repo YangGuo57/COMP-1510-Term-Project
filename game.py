@@ -1,4 +1,5 @@
 import time
+from random import randint
 
 
 def create_character(answers):
@@ -247,21 +248,20 @@ def evaluate_stress(character):
     """
     evaluates whether character need to go to ER
     """
-    pass_out = False
     if character['stress'] > 100:
         print('Suddenly the world is spinning and darkness befalls over your eyes... You succumbed to the pressure'
               'of life and you lay on the ground, unconscious. Thankfully, a passerby sees your motionless body and'
               'dials 911 for assistance.')
-        pass_out = True
+        return True
     elif character['stress'] > 90:
         print('You feel your heart palpitating and you can\'t breathe... Maybe you should get some rest?')
     elif character['stress'] > 80:
         print('You feel a sudden light-headedness... Maybe you should take it easy?')
 
-    return pass_out
+    return False
 
 
-def run_weekday(character):
+def run_weekday(character, week):
     """
     print weekday prompt to screen (eg. It is now week 5, only 2 more weeks until midterms...)
     increase exp in all subjects
@@ -270,7 +270,53 @@ def run_weekday(character):
     evaluate_stress()
     generate random event
     """
-    pass
+    exam = 'midterms' if week < 7 else 'finals'
+    print(f'It is now week {week} of the term. The looming presence of the {exam} reminds you that in {7 - week} weeks '
+          f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
+          f'the challenges that lie ahead.')
+    weekday_schoolwork(character)
+    evaluate_exp(character, 'all')
+    if evaluate_stress(character):
+        # call ER function
+        pass
+    random_weekday_event()
+
+
+def weekday_schoolwork(character):
+    """
+    adds exp to all subjects
+    adds stress
+    calls other functions to print stat changes
+    """
+    subjects = ('1510', '1537', '1113', '1712')
+    for subject in subjects:
+        experience_gained = character['IQ'] * randint(8, 12)
+        character['exp'][subject] += experience_gained
+        describe_exp_gain(character, subject, experience_gained)
+    stress_gained = randint(8,12)
+    character['stress'] += stress_gained
+    describe_stress_change(character, stress_gained)
+
+
+def describe_exp_gain(character, attribute, amount):
+    """
+    describes how much exp is gained in an attribute
+    """
+    print(f'Through hardwork and perseverance, you became more knowledgeable about {attribute}. Your experience in '
+          f'{attribute} increased by {amount}.')
+    print(f'Your experience in {attribute} is now {character["exp"][attribute]}.')
+
+
+def describe_stress_change(character, amount):
+    """
+    describes how much stress is gained/lost
+    """
+    if amount > 0:
+        print(f'You start to feel a bit more tired, but that\'s natural given how the human body works. Remember to '
+              f'get some rest regularly so you don\'t burn out!')
+    else:
+        print(f'You feel rejuvenated as if a great load has been taken off your shoulders.')
+    print(f'Your stress level is now {character["stress"]}.')
 
 
 def random_weekday_event():
@@ -407,6 +453,9 @@ def game():
     player = create_character(answer)
     print_message(greeting_msg[2])
     print_stats(player)
+
+    # weekday_schoolwork(player)
+
     rows = 10
     columns = 18
     board = make_board(rows, columns)
