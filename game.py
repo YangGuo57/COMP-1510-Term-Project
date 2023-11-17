@@ -31,7 +31,8 @@ def print_stats(new_character):
             print("wealth:", character['wealth'])
             print("exp:", character['exp'])
             print("lvl:", character['lvl'])
-            break
+        elif input_status.lower() == 'menu':
+            main_menu(character)
         else:
             print("Invalid input. Please type 'status' to see your current attributes.")
             continue
@@ -148,15 +149,18 @@ def print_map(game_board, row, column, character):
 
 
 def get_user_choice():
-    directions = ["North", "East", "South", "West"]
+    directions = ["North", "East", "South", "West", "Back to Menu"]
+
     while True:
         for i in range(len(directions)):
             print(f"{i + 1}. {directions[i]}", end=' ')
 
-        choice = input("\nPlease choose a direction number: ")
+        choice = input("\nPlease input a number\n")
         if choice.isdigit():
             choice = int(choice)
             if 0 < choice <= len(directions):
+                if choice == 5:
+                    pass
                 select_direction = directions[choice - 1]
                 return select_direction
             else:
@@ -210,15 +214,42 @@ def move_character(character, direction, row, column, game_board):
         print("You hit a wall!")
 
 
-def check_fast_travel(location):
-    # checks whether player has been to this place before
-    # if so, prints out fast travel command to desired location to screen for player to type
-    pass
+def update_visited_location(character):
+    player_position = (character['X'], character['Y'])
+    location_door = {
+        "school": [(3, 3), (3, 5)],
+        "hospital": [(5, 7), (5, 9)],
+        "park": [(2, 12), (2, 14)],
+        "work": [(7, 2), (7, 5)]
+    }
+
+    for location, door_positions in location_door.items():
+        if player_position in door_positions:
+            character['visited_locations'][location] += 1
+            break
 
 
-def fast_travel(character, location):
-    # sets player coordinates to coordinates of location
-    pass
+def fast_travel(character):
+    location_door = {
+        "school": [(3, 3), (3, 5)],
+        "hospital": [(5, 7), (5, 9)],
+        "park": [(2, 12), (2, 14)],
+        "work": [(7, 2), (7, 5)]
+    }
+
+    destination = input("Please input fast travel destination: school, hospital, park, work:")
+    if destination.lower() in location_door:
+        visited = character['visited_locations'][destination]
+        if visited:
+            character['X'], character['Y'] = location_door[destination][1]
+            print(f"You've fast traveled to {destination}!")
+            map_action(character)
+        else:
+            print(f"You need to visit {destination} at least once before fast traveling there.")
+            main_menu(character)
+    else:
+        print("Invalid destination.")
+        main_menu(character)
 
 
 def evaluate_exp(character, subject):
@@ -446,30 +477,64 @@ def run_weekend():
     pass
 
 
+def map_action(character):
+    rows = 10
+    columns = 18
+    board = make_board(rows, columns)
+    game_map = generate_game_map(board)
+
+    while True:
+        print_map(game_map, rows, columns, character)
+        direction = get_user_choice()
+        if direction == "Back to Menu":
+            main_menu(character)
+        valid_move = validate_move(board, character, direction)
+        if valid_move:
+            move_character(character, direction, rows, columns, game_map)
+            update_visited_location(character)
+        else:
+            print("Invalid move! Please choose another direction.")
+
+
+def main_menu(character):
+    while True:
+        print("1. Move")
+        print("2. Check Status")
+        print("3. Fast Travel")
+        print("4. Exit")
+
+        choice = input("Please choose an option: ")
+        if choice == '1':
+            map_action(character)
+        elif choice == '2':
+            print_stats(character)
+        elif choice == '3':
+            fast_travel(character)
+        elif choice == '4':
+            print("Exiting the game...")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+        return choice
+
+
 def game():
     greeting_msg = greeting()
     print_message(greeting_msg[1])
     answer = ask_questionnaire()
     player = create_character(answer)
     print_message(greeting_msg[2])
-    print_stats(player)
 
-    # weekday_schoolwork(player)
-
-    rows = 10
-    columns = 18
-    board = make_board(rows, columns)
-    game_map = generate_game_map(board)
     while True:
-        print_map(game_map, rows, columns, player)
-        direction = get_user_choice()
-        valid_move = validate_move(board, player, direction)
-        if valid_move:
-            move_character(player, direction, rows, columns, game_map)
+        action = main_menu(player)
+        if action == 'move':
+            map_action(player)
+        elif action == 'Check Status':
+            print_stats(player)
+        elif action == 'Fast Travel':
+            fast_travel(player)
         else:
-            print("Invalid move! Please choose another direction.")
-            continue
-        game_map = generate_game_map(board)
+            break
 
 
 if __name__ == '__main__':
