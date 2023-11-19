@@ -8,8 +8,8 @@ def create_character(answers):
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'visited_locations': {'school': 0, 'hospital': 0, 'park': 0, 'work': 0, }}
 
-    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 0.5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 0.5}),
-                           ({'EQ': 0.5}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
+    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
+                           ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
 
     questionnaire_index = 0
     for answer in answers:
@@ -270,7 +270,6 @@ def evaluate_exp(character, subject):
 
     for each_subject in subject:
         level_threshold = (character['lvl'][each_subject] + 1) * threshold
-        print(each_subject, character['exp'][each_subject])
         if character['exp'][each_subject] > level_threshold:
             character['lvl'][each_subject] += 1
             print(f'Through relentlessly studying for COMP{each_subject}, an epiphany strikes you and suddenly'
@@ -312,7 +311,7 @@ def run_weekday(character, week):
     if evaluate_stress(character):
         # call ER function
         pass
-    random_weekday_event()
+    random_weekday_event(character)
 
 
 def weekday_schoolwork(character):
@@ -340,25 +339,139 @@ def describe_exp_gain(character, attribute, amount):
     print(f'Your experience in {attribute} is now {character["exp"][attribute]}.')
 
 
+def describe_flat_stat_gain(character, attribute, amount):
+    """
+    describes how an attribute that is not exp related has changed (ie. EQ, IQ, project)
+    """
+    if attribute == 'EQ':
+        print(f'Through meaningful human interactions, you unlock the power to navigate relationships with empathy '
+              f'and resilience. You feel more confident talking to humans now.')
+    elif attribute == 'IQ':
+        pass
+    elif attribute == 'project':
+        pass
+
+    print(f'Your {attribute} increased by {amount}. It is now {character[attribute]}')
+
+
 def describe_stress_change(character, amount):
     """
     describes how much stress is gained/lost
     """
     if amount > 0:
-        print(f'You start to feel a bit more tired, but that\'s natural given how the human body works. Remember to '
+        print(f'The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to '
               f'get some rest regularly so you don\'t burn out!')
+        print(f'Your stress increased by {amount}')
     else:
         print(f'You feel rejuvenated as if a great load has been taken off your shoulders.')
+        print(f'Your stress decreased by {amount * -1}')
     print(f'Your stress level is now {character["stress"]}.')
 
 
-def random_weekday_event():
+def random_weekday_event(character):
     """
     hackathon (most rare), quiz, club event, assignment, trauma bond
     evaluate_exp()
     evaluate_stress()
     """
-    pass
+    roll = randint(1, 4)
+    subject = roll_subject()
+    fail = fail_assessment()
+
+    if roll == 1:
+        club_event(character)
+    elif roll == 2:
+        trauma_bond(character)
+    elif roll == 3:
+        print_assessment_results(fail, subject, 'quiz')
+        assessment_stat_change(character, fail, subject, 'quiz')
+    else:
+        print_assessment_results(fail, subject, 'assignment')
+        assessment_stat_change(character, fail, subject, 'assignment')
+
+
+def assessment_stat_change(character, fail, subject, assessment):
+    """
+    changes character's stats based on whether character passed or failed the assessment
+    """
+    if fail:
+        stress_gain = randint(10, 15)
+        character['stress'] += stress_gain
+        describe_stress_change(character, stress_gain)
+    else:
+        stat_gain = 0
+        stress_gain = randint(4, 7)
+
+        if assessment == 'quiz':
+            stat_gain = randint(6, 10)
+        elif assessment == 'assignment':
+            stat_gain = randint(10, 14)
+
+        character['exp'][subject] += stat_gain * character['IQ']
+        describe_exp_gain(character, subject, stat_gain)
+        evaluate_exp(character, subject)
+        character['stress'] += stress_gain
+        describe_stress_change(character, stress_gain)
+
+
+def fail_assessment():
+    """
+    decides whether character passes or fails the assessment randomly at 50% chance
+    """
+    roll = randint(0, 1)
+    if roll:
+        return True
+    else:
+        return False
+
+
+def print_assessment_results(fail, subject, assessment):
+    """
+    prints flavour text to screen, describing whether character has passed or failed the assessment
+    """
+    if not fail:
+        print(f'Hurrah! You aced the {subject} {assessment}. All those tearful all-nighters were not for naught!')
+    else:
+        print(f'You completely bombed the {subject} {assessment}. Perhaps you should study harder.')
+
+
+def roll_subject():
+    """
+    randomly rolls one subject out of four subjects at 25% chance
+    """
+    roll = randint(0, 3)
+    subjects = ('1510', '1537', '1113', '1712')
+    return subjects[roll]
+
+
+def trauma_bond(character):
+    """
+    carries out trauma bond with classmates
+    """
+    print('After a week of endless schoolwork, you and your classmates find yourselves rendered speechless by the '
+          'ordeal. Seeking comfort, you complain about the challenges of school life to each other. The venting '
+          'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
+          'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
+          'looms over you, and the night ends with tears as you drift off to sleep.')
+    stress_lost = randint(1, 5) * -1
+    describe_stress_change(character, stress_lost)
+    character['stress'] += stress_lost
+
+
+def club_event(character):
+    """
+    carries out club event
+    """
+    stress_lost = randint(5, 8) * -1
+    print('In the midst of overwhelming homework, the news of a socializing club event feels like a welcomed '
+          'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
+          'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
+          'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
+    character['stress'] += stress_lost
+    EQ_gained = randint(1, 3)
+    character['EQ'] += EQ_gained
+    describe_stress_change(character, stress_lost)
+    describe_flat_stat_gain(character, 'EQ', EQ_gained)
 
 
 def weekend_user_input():
@@ -536,7 +649,8 @@ def game():
             fast_travel(player)
         else:
             break
-
+    run_weekday(player, 1)
+    run_weekday(player, 2)
 
 if __name__ == '__main__':
     game()
