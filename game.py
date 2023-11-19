@@ -272,8 +272,8 @@ def evaluate_exp(character, subject):
         level_threshold = (character['lvl'][each_subject] + 1) * threshold
         if character['exp'][each_subject] > level_threshold:
             character['lvl'][each_subject] += 1
-            print(f'Through relentlessly studying for COMP{each_subject}, an epiphany strikes you and suddenly'
-                  f'everything that was once perplexing becomes clear and understandable...')
+            print(f'As you relentlessly study for COMP{each_subject}, an epiphany strikes you. Eureka! Everything '
+                  f'that was once confusing now makes perfect sense...')
 
 
 def evaluate_stress(character):
@@ -334,9 +334,9 @@ def describe_exp_gain(character, attribute, amount):
     """
     describes how much exp is gained in an attribute
     """
-    print(f'Through hardwork and perseverance, you became more knowledgeable about {attribute}. Your experience in '
-          f'{attribute} increased by {amount}.')
-    print(f'Your experience in {attribute} is now {character["exp"][attribute]}.')
+    print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
+          f'COMP{attribute} increased by {amount}.')
+    print(f'Your experience in COMP{attribute} is now {character["exp"][attribute]}.')
 
 
 def describe_flat_stat_gain(character, attribute, amount):
@@ -418,11 +418,7 @@ def fail_assessment():
     """
     decides whether character passes or fails the assessment randomly at 50% chance
     """
-    roll = randint(0, 1)
-    if roll:
-        return True
-    else:
-        return False
+    return True if randint(0, 1) else False
 
 
 def print_assessment_results(fail, subject, assessment):
@@ -430,9 +426,9 @@ def print_assessment_results(fail, subject, assessment):
     prints flavour text to screen, describing whether character has passed or failed the assessment
     """
     if not fail:
-        print(f'Hurrah! You aced the {subject} {assessment}. All those tearful all-nighters were not for naught!')
+        print(f'Hurrah! You aced the COMP{subject} {assessment}. All those tearful all-nighters were not for naught!')
     else:
-        print(f'You completely bombed the {subject} {assessment}. Perhaps you should study harder.')
+        print(f'You completely bombed the COMP{subject} {assessment}. Perhaps you should study harder.')
 
 
 def roll_subject():
