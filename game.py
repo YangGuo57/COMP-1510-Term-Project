@@ -270,10 +270,11 @@ def evaluate_exp(character, subject):
 
     for each_subject in subject:
         level_threshold = (character['lvl'][each_subject] + 1) * threshold
-        if character['exp'][each_subject] > level_threshold:
+        if character['exp'][each_subject] >= level_threshold:
             character['lvl'][each_subject] += 1
-            print(f'As you relentlessly study for COMP{each_subject}, an epiphany strikes you. Eureka! Everything '
-                  f'that was once confusing now makes perfect sense...')
+            print(f'Eureka, an epiphany strikes you! All the puzzle pieces fall into place and you\'ve deepened your '
+                  f'understanding of COMP{each_subject}.')
+            print(f'Your COMP{each_subject} level increased by 1. It is now level {character["lvl"][each_subject]}.')
 
 
 def evaluate_stress(character):
@@ -312,6 +313,71 @@ def run_weekday(character, week):
         # call ER function
         pass
     random_weekday_event(character)
+    end_of_week_action(character)
+
+
+def end_of_week_action(character):
+    print('At last, you made it through another week. It is Friday afternoon, and you find yourself at crossroads. '
+          'All your instructors are available for questions during their office hours. If you have any pressing '
+          'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
+          'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
+    choice = False
+    while not choice:
+        # ask player for directions
+        # validate direction
+        # move character
+        # check location to see if character has reached a classroom or is going home
+        # ask player to confirm action
+            # if player denies action, repeat while loop
+            # if player confirms action, carry out action depending on location of character
+                # office_hours(character, subject) if player goes to office hours
+                # home_rest(character) if player goes home
+        break
+    pass
+
+
+def home_rest(character):
+    """
+    Decreases character's stress by resting at home
+    """
+    print(f'It\'s been a long week. You decide to call it a day and head home to get some rest.')
+    change_stat(character, 'stress', randint(-20, -15))
+
+
+def office_hours(character, subject):
+    """
+    carries out office hours
+    """
+    epiphany = roll_epiphany()
+    exp_gain = 0
+    print_epiphany_office_hours(subject, epiphany)
+
+    if epiphany:
+        exp_gain += 100
+    else:
+        exp_gain += randint(10, 15) * character['IQ']
+
+    change_stat(character, subject, exp_gain)
+    change_stat(character, 'stress', randint(10, 15))
+
+
+def roll_epiphany():
+    """
+    rolls for an epiphany during office hours at 20% chance
+    """
+    return False if randint(0, 4) else True
+
+
+def print_epiphany_office_hours(subject, epiphany):
+    """
+    prints flavour text depending on whether player has an epiphany during office hours
+    """
+    if epiphany:
+        print(f'Your COMP{subject} instructor graciously imparts their wisdom on you. You absorb all this wisdom like '
+              f'a sponge.')
+    else:
+        print(f'Your COMP{subject} instructor graciously imparts their wisdom on you, but Alas, your brain struggles '
+              f'to absorb all this wisdom.')
 
 
 def weekday_schoolwork(character):
@@ -323,11 +389,23 @@ def weekday_schoolwork(character):
     subjects = ('1510', '1537', '1113', '1712')
     for subject in subjects:
         experience_gained = character['IQ'] * randint(8, 12)
-        character['exp'][subject] += experience_gained
-        describe_exp_gain(character, subject, experience_gained)
-    stress_gained = randint(8, 12)
-    character['stress'] += stress_gained
-    describe_stress_change(character, stress_gained)
+        change_stat(character, subject, experience_gained)
+    change_stat(character, 'stress', randint(8, 12))
+
+
+def change_stat(character, attribute, amount):
+    subjects = ('1510', '1537', '1712', '1113')
+    if attribute in subjects:
+        character['exp'][attribute] += amount
+        describe_exp_gain(character, attribute, amount)
+        evaluate_exp(character, attribute)
+    elif attribute == 'stress':
+        character[attribute] += amount
+        describe_stress_change(character, amount)
+        evaluate_stress(character)
+    else:
+        character[attribute] += amount
+        describe_flat_stat_gain(character, attribute, amount)
 
 
 def describe_exp_gain(character, attribute, amount):
@@ -395,23 +473,18 @@ def assessment_stat_change(character, fail, subject, assessment):
     changes character's stats based on whether character passed or failed the assessment
     """
     if fail:
-        stress_gain = randint(10, 15)
-        character['stress'] += stress_gain
-        describe_stress_change(character, stress_gain)
+        change_stat(character, 'stress', randint(10, 15))
     else:
         stat_gain = 0
         stress_gain = randint(4, 7)
 
         if assessment == 'quiz':
-            stat_gain = randint(6, 10)
+            stat_gain = randint(6, 10) * character['IQ']
         elif assessment == 'assignment':
-            stat_gain = randint(10, 14)
+            stat_gain = randint(10, 14) * character['IQ']
 
-        character['exp'][subject] += stat_gain * character['IQ']
-        describe_exp_gain(character, subject, stat_gain)
-        evaluate_exp(character, subject)
-        character['stress'] += stress_gain
-        describe_stress_change(character, stress_gain)
+        change_stat(character, subject, stat_gain)
+        change_stat(character, subject, stress_gain)
 
 
 def fail_assessment():
@@ -449,25 +522,21 @@ def trauma_bond(character):
           'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
           'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
           'looms over you, and the night ends with tears as you drift off to sleep.')
-    stress_lost = randint(1, 5) * -1
-    describe_stress_change(character, stress_lost)
-    character['stress'] += stress_lost
+    change_stat(character, 'stress', randint(-5, -1))
 
 
 def club_event(character):
     """
     carries out club event
     """
-    stress_lost = randint(5, 8) * -1
+    # stress_lost = randint(5, 8) * -1
     print('In the midst of overwhelming homework, the news of a socializing club event feels like a welcomed '
           'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
-    character['stress'] += stress_lost
-    EQ_gained = randint(1, 3)
-    character['EQ'] += EQ_gained
-    describe_stress_change(character, stress_lost)
-    describe_flat_stat_gain(character, 'EQ', EQ_gained)
+
+    change_stat(character, 'stress', randint(-8, -5))
+    change_stat(character, 'EQ', randint(1, 3))
 
 
 def weekend_user_input():
@@ -635,16 +704,16 @@ def game():
     answer = ask_questionnaire()
     player = create_character(answer)
     print_message(greeting_msg[2])
-    while True:
-        action = main_menu(player)
-        if action == 'move':
-            map_action(player)
-        elif action == 'Check Status':
-            print_stats(player)
-        elif action == 'Fast Travel':
-            fast_travel(player)
-        else:
-            break
+    # while True:
+    #     action = main_menu(player)
+    #     if action == 'move':
+    #         map_action(player)
+    #     elif action == 'Check Status':
+    #         print_stats(player)
+    #     elif action == 'Fast Travel':
+    #         fast_travel(player)
+    #     else:
+    #         break
     run_weekday(player, 1)
     run_weekday(player, 2)
 
