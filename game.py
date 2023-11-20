@@ -1,6 +1,9 @@
 import time
 from random import randint
 
+from map_functions import make_board, generate_game_map, print_map
+from character_functions import validate_move, get_user_choice, move_character, update_visited_location
+
 
 def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
@@ -87,148 +90,23 @@ def ask_questionnaire():
     return answers
 
 
-def make_board(row, column):
-    game_board = {}
-    locations = {
-        (3, 4): "school",
-        (5, 8): "hospital",
-        (2, 13): "park",
-        (7, 3): "work",
-    }
-    for x in range(row):
-        for y in range(column):
-            if (x, y) in locations:
-                game_board[(x, y)] = locations[(x, y)]
-            else:
-                game_board[(x, y)] = " "
-
-    return game_board
-
-
-def generate_game_map(game_board):
-    for (x, y), location in game_board.items():
-        if location == "hospital":
-            game_board[(x, y)] = 'H'
-            update_surroundings(game_board, x, y, '|', '+', 'H')
-        elif location == "school":
-            game_board[(x, y)] = 'S'
-            update_surroundings(game_board, x, y, '|', '-', 'S')
-        elif location == "park":
-            game_board[(x, y)] = 'P'
-            update_surroundings(game_board, x, y, '|', '=', 'P')
-        elif location == "work":
-            game_board[(x, y)] = 'W'
-            update_surroundings(game_board, x, y, '|', '~', 'W')
-
-    return game_board
-
-
-def update_surroundings(game_board, x, y, door, wall, location_symbol):
-    for i in range(x - 1, x + 2):
-        for j in range(y - 1, y + 2):
-            if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = door
-
-    for j in range(y - 1, y + 2):
-        for i in [x - 1, x + 1]:
-            if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = wall
-
-
-def print_map(game_board, row, column, character):
-    player_position = (character['X'], character['Y'])
-    for i in range(row):
-        for j in range(column):
-            if (i, j) == player_position:
-                print('*', end=' ')
-            elif i == 0 or i == row - 1:
-                print('-', end=' ')
-            elif j == 0 or j == column - 1:
-                print('|', end=' ')
-            else:
-                print(game_board[(i, j)], end=' ')
-        print()
-
-
-def get_user_choice():
-    directions = ["North", "East", "South", "West", "Back to Menu"]
+def map_action(character):
+    rows = 10
+    columns = 18
+    board = make_board(rows, columns)
+    game_map = generate_game_map(board)
 
     while True:
-        for i in range(len(directions)):
-            print(f"{i + 1}. {directions[i]}", end=' ')
-
-        choice = input("\nPlease input a number\n")
-        if choice.isdigit():
-            choice = int(choice)
-            if 0 < choice <= len(directions):
-                if choice == 5:
-                    pass
-                select_direction = directions[choice - 1]
-                return select_direction
-            else:
-                print("Please choose a valid direction number!")
+        print_map(game_map, rows, columns, character)
+        direction = get_user_choice()
+        if direction == "Back to Menu":
+            main_menu(character)
+        valid_move = validate_move(board, character, direction)
+        if valid_move:
+            move_character(character, direction, rows, columns, game_map)
+            update_visited_location(character)
         else:
-            print("Please choose a valid direction number!")
-
-
-def validate_move(board, character, direction):
-    x_coordinate = character["X"]
-    y_coordinate = character["Y"]
-
-    if direction == "North":
-        coordinate = (x_coordinate - 1, y_coordinate)
-    elif direction == "East":
-        coordinate = (x_coordinate, y_coordinate + 1)
-    elif direction == "South":
-        coordinate = (x_coordinate + 1, y_coordinate)
-    else:
-        coordinate = (x_coordinate, y_coordinate - 1)
-
-    if coordinate in board:
-        return True
-
-    return False
-
-
-def move_character(character, direction, row, column, game_board):
-    x_coordinate = character["X"]
-    y_coordinate = character["Y"]
-
-    if direction == "North" and x_coordinate > 1:
-        x_coordinate -= 1
-    elif direction == "East" and y_coordinate < column - 2:
-        y_coordinate += 1
-    elif direction == "South" and x_coordinate < row - 2:
-        x_coordinate += 1
-    elif direction == "West" and y_coordinate > 1:
-        y_coordinate -= 1
-    else:
-        print("You hit a wall!")
-        return
-
-    new_position = (x_coordinate, y_coordinate)
-    location = game_board[new_position]
-
-    if location in [' ', '|']:
-        character["X"] = x_coordinate
-        character["Y"] = y_coordinate
-    else:
-        print("You hit a wall!")
-
-
-def update_visited_location(character):
-    player_position = (character['X'], character['Y'])
-    location_door = {
-        "school": [(3, 3), (3, 5)],
-        "hospital": [(5, 7), (5, 9)],
-        "park": [(2, 12), (2, 14)],
-        "work": [(7, 2), (7, 5)]
-    }
-
-    for location, door_positions in location_door.items():
-        if player_position in door_positions:
-            character['visited_locations'][location] += 1
-            break
+            print("Invalid move! Please choose another direction.")
 
 
 def fast_travel(character):
@@ -328,10 +206,10 @@ def end_of_week_action(character):
         # move character
         # check location to see if character has reached a classroom or is going home
         # ask player to confirm action
-            # if player denies action, repeat while loop
-            # if player confirms action, carry out action depending on location of character
-                # office_hours(character, subject) if player goes to office hours
-                # home_rest(character) if player goes home
+        # if player denies action, repeat while loop
+        # if player confirms action, carry out action depending on location of character
+        # office_hours(character, subject) if player goes to office hours
+        # home_rest(character) if player goes home
         break
     pass
 
@@ -657,25 +535,6 @@ def run_weekend():
     pass
 
 
-def map_action(character):
-    rows = 10
-    columns = 18
-    board = make_board(rows, columns)
-    game_map = generate_game_map(board)
-
-    while True:
-        print_map(game_map, rows, columns, character)
-        direction = get_user_choice()
-        if direction == "Back to Menu":
-            main_menu(character)
-        valid_move = validate_move(board, character, direction)
-        if valid_move:
-            move_character(character, direction, rows, columns, game_map)
-            update_visited_location(character)
-        else:
-            print("Invalid move! Please choose another direction.")
-
-
 def main_menu(character):
     while True:
         print("1. Move")
@@ -704,18 +563,19 @@ def game():
     answer = ask_questionnaire()
     player = create_character(answer)
     print_message(greeting_msg[2])
-    # while True:
-    #     action = main_menu(player)
-    #     if action == 'move':
-    #         map_action(player)
-    #     elif action == 'Check Status':
-    #         print_stats(player)
-    #     elif action == 'Fast Travel':
-    #         fast_travel(player)
-    #     else:
-    #         break
+    while True:
+        action = main_menu(player)
+        if action == 'move':
+            map_action(player)
+        elif action == 'Check Status':
+            print_stats(player)
+        elif action == 'Fast Travel':
+            fast_travel(player)
+        else:
+            break
     run_weekday(player, 1)
     run_weekday(player, 2)
+
 
 if __name__ == '__main__':
     game()
