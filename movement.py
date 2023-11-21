@@ -1,3 +1,6 @@
+import menu as me
+
+
 def validate_move(board, character, direction):
     x_coordinate = character["X"]
     y_coordinate = character["Y"]
@@ -77,3 +80,25 @@ def update_visited_location(character):
         if player_position in door_positions:
             character['visited_locations'][location] += 1
             break
+
+
+def fast_travel(character):
+    location_door = {
+        "school": [(3, 3), (3, 5)],
+        "hospital": [(5, 7), (5, 9)],
+        "park": [(2, 12), (2, 14)],
+        "work": [(7, 2), (7, 4)]
+    }
+
+    destination = input("Please input fast travel destination: school, hospital, park, work:")
+    if destination.lower() in location_door:
+        visited = character['visited_locations'][destination]
+        if visited:
+            character['X'], character['Y'] = location_door[destination][1]
+            print(f"You've fast traveled to {destination}!")
+        else:
+            print(f"You need to visit {destination} at least once before fast traveling there.")
+            me.main_menu(character)
+    else:
+        print("Invalid destination.")
+        me.main_menu(character)

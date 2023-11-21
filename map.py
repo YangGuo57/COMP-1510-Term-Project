@@ -1,3 +1,7 @@
+import movement as mov
+import menu as me
+
+
 def make_board(row, column):
     game_board = {}
     locations = {
@@ -59,3 +63,22 @@ def print_map(game_board, row, column, character):
             else:
                 print(game_board[(i, j)], end=' ')
         print()
+
+
+def map_action(character):
+    rows = 10
+    columns = 18
+    board = make_board(rows, columns)
+    game_map = generate_game_map(board)
+
+    while True:
+        print_map(game_map, rows, columns, character)
+        direction = mov.get_user_choice()
+        if direction == "Back to Menu":
+            me.main_menu(character)
+        valid_move = mov.validate_move(board, character, direction)
+        if valid_move:
+            mov.move_character(character, direction, rows, columns, game_map)
+            mov.update_visited_location(character)
+        else:
+            print("Invalid move! Please choose another direction.")
