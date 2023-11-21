@@ -70,33 +70,21 @@ def move_character(character, direction, row, column, game_board):
 
 def update_visited_location(character):
     player_position = (character['X'], character['Y'])
-    location_door = {
-        "home": [(2, 3)],
-        "school": [(3, 7), (3, 9)],
-        "hospital": [(6, 12), (6, 14)],
-        "park": [(2, 15), (2, 17)],
-        "work": [(7, 4), (7, 6)]
-    }
+    locations = mp.coordinates()
 
-    for location, door_positions in location_door.items():
+    for location, door_positions in locations["door"].items():
         if player_position in door_positions:
             character['visited_locations'][location] += 1
             break
 
 
 def fast_travel(character):
-    location_door = {
-        "home": [(2, 3)],
-        "school": [(3, 9)],
-        "hospital": [(6, 14)],
-        "park": [(2, 17)],
-        "work": [(7, 6)]
-    }
+    locations = mp.coordinates()
     destination = input("Please input fast travel destination: home, school, hospital, park, work:")
-    if destination.lower() in location_door:
+    if destination.lower() in locations["door"]:
         visited = character['visited_locations'][destination]
         if visited:
-            character['X'], character['Y'] = location_door[destination][0]
+            character['X'], character['Y'] = locations["door"][destination][0]
             print(f"You've fast traveled to {destination}!")
         else:
             print(f"You need to visit {destination} at least once before fast traveling there.")

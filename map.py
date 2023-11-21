@@ -2,19 +2,33 @@ import movement as mov
 import menu as me
 
 
-def make_board(row, column):
-    game_board = {}
-    locations = {
-        (2, 2): "home",
-        (3, 8): "school",
-        (6, 13): "hospital",
-        (2, 16): "park",
-        (7, 5): "work",
+def coordinates():
+    location_coordinates = {
+        "coordinates": {
+            (2, 2): "home",
+            (3, 8): "school",
+            (6, 13): "hospital",
+            (2, 16): "park",
+            (7, 5): "work"
+        },
+        "door": {
+            "home": [(2, 3)],
+            "school": [(3, 7), (3, 9)],
+            "hospital": [(6, 12), (6, 14)],
+            "park": [(2, 15), (2, 17)],
+            "work": [(7, 4), (7, 6)]
+        }
     }
+
+    return location_coordinates
+
+
+def make_board(row, column, locations):
+    game_board = {}
     for x in range(row):
         for y in range(column):
-            if (x, y) in locations:
-                game_board[(x, y)] = locations[(x, y)]
+            if (x, y) in locations["coordinates"]:
+                game_board[(x, y)] = locations["coordinates"][(x, y)]
             else:
                 game_board[(x, y)] = " "
 
@@ -72,7 +86,8 @@ def print_map(game_board, row, column, character):
 def map_action(character):
     rows = 10
     columns = 20
-    board = make_board(rows, columns)
+    locations = coordinates()
+    board = make_board(rows, columns, locations)
     game_map = generate_game_map(board)
 
     while True:
