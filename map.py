@@ -43,29 +43,29 @@ def generate_game_map(game_board):
 
 
 def update_surroundings(game_board, x, y, door, wall, location_symbol):
-    for i in range(x - 1, x + 2):
-        for j in range(y - 1, y + 2):
-            if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = door
+    for row_offset in range(x - 1, x + 2):
+        for col_offset in range(y - 1, y + 2):
+            if (row_offset, col_offset) in game_board and game_board[(row_offset, col_offset)] != location_symbol:
+                game_board[(row_offset, col_offset)] = door
 
-    for j in range(y - 1, y + 2):
-        for i in [x - 1, x + 1]:
-            if (i, j) in game_board and game_board[(i, j)] != location_symbol:
-                game_board[(i, j)] = wall
+    for col_offset in range(y - 1, y + 2):
+        for row_offset in [x - 1, x + 1]:
+            if (row_offset, col_offset) in game_board and game_board[(row_offset, col_offset)] != location_symbol:
+                game_board[(row_offset, col_offset)] = wall
 
 
 def print_map(game_board, row, column, character):
     player_position = (character['X'], character['Y'])
-    for i in range(row):
-        for j in range(column):
-            if (i, j) == player_position:
+    for row_index in range(row):
+        for col_index in range(column):
+            if (row_index, col_index) == player_position:
                 print('*', end=' ')
-            elif i == 0 or i == row - 1:
+            elif row_index == 0 or row_index == row - 1:
                 print('-', end=' ')
-            elif j == 0 or j == column - 1:
+            elif col_index == 0 or col_index == column - 1:
                 print('|', end=' ')
             else:
-                print(game_board[(i, j)], end=' ')
+                print(game_board[(row_index, col_index)], end=' ')
         print()
 
 
