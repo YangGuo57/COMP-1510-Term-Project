@@ -1,50 +1,9 @@
 import time
 from random import randint
-
-from map_functions import make_board, generate_game_map, print_map
-from character_functions import validate_move, get_user_choice, move_character, update_visited_location
-
-
-def create_character(answers):
-    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
-                     'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
-                     'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
-                     'visited_locations': {'school': 0, 'hospital': 0, 'park': 0, 'work': 0, }}
-
-    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
-                           ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
-
-    questionnaire_index = 0
-    for answer in answers:
-        stats = questionnaire_stats[questionnaire_index][answer]
-        for stat in stats:
-            new_character[stat] += stats[stat]
-        questionnaire_index += 1
-
-    return new_character
-
-
-def print_stats(new_character):
-    character = new_character
-    while True:
-        input_status = input("Please type 'status' to see your current stats (type 'menu' back to main):")
-        if input_status.lower() == 'status':
-            print("Your current attributes: ")
-            print("IQ:", character['IQ'])
-            print("EQ:", character['EQ'])
-            print("stress:", character['stress'])
-            print("wealth:", character['wealth'])
-            print("exp:", character['exp'])
-            print("lvl:", character['lvl'])
-        elif input_status.lower() == 'menu':
-            main_menu(character)
-        else:
-            print("Invalid input. Please type 'status' to see your current attributes.")
-            continue
-
-
-def print_message(message):
-    print(message)
+import map as mp
+import menu as me
+import movement as mov
+import create_character as cha
 
 
 def greeting():
@@ -60,76 +19,6 @@ def greeting():
     }
 
     return greeting_dict
-
-
-def ask_questionnaire():
-    answers = []
-    questions = ('When new work is assigned to you, what do you do?\n'
-                 '1. Get started on it right away\n'
-                 '2. Leave it until the last minute\n',
-                 'How would you describe your lifestyle?\n'
-                 '1. You live in the moment\n'
-                 '2. You reflect on the past and you plan for your future\n',
-                 'Which of the following statements best describes you?\n'
-                 '1. You are a social butterfly\n'
-                 '2. You need time to recharge your social battery\n',
-                 'What do you do when there is learning material you don\'t understand?\n'
-                 '1. This seldom happens; you are able to solve all challenges thrown at you\n'
-                 '2. You seek help from online resources or from other people\n')
-
-    print('Please choose one of the two options that best describes you, and enter the NUMBER representing '
-          'that option.')
-
-    for question in questions:
-        answer = input(question)
-        while answer != '1' and answer != '2':
-            print('That is not a valid entry. Enter the NUMBER representing the option that best describes you.')
-            answer = input(question)
-        answers.append(int(answer) - 1)
-
-    return answers
-
-
-def map_action(character):
-    rows = 10
-    columns = 18
-    board = make_board(rows, columns)
-    game_map = generate_game_map(board)
-
-    while True:
-        print_map(game_map, rows, columns, character)
-        direction = get_user_choice()
-        if direction == "Back to Menu":
-            main_menu(character)
-        valid_move = validate_move(board, character, direction)
-        if valid_move:
-            move_character(character, direction, rows, columns, game_map)
-            update_visited_location(character)
-        else:
-            print("Invalid move! Please choose another direction.")
-
-
-def fast_travel(character):
-    location_door = {
-        "school": [(3, 3), (3, 5)],
-        "hospital": [(5, 7), (5, 9)],
-        "park": [(2, 12), (2, 14)],
-        "work": [(7, 2), (7, 4)]
-    }
-
-    destination = input("Please input fast travel destination: school, hospital, park, work:")
-    if destination.lower() in location_door:
-        visited = character['visited_locations'][destination]
-        if visited:
-            character['X'], character['Y'] = location_door[destination][1]
-            print(f"You've fast traveled to {destination}!")
-            map_action(character)
-        else:
-            print(f"You need to visit {destination} at least once before fast traveling there.")
-            main_menu(character)
-    else:
-        print("Invalid destination.")
-        main_menu(character)
 
 
 def evaluate_exp(character, subject):
@@ -535,42 +424,20 @@ def run_weekend():
     pass
 
 
-def main_menu(character):
-    while True:
-        print("1. Move")
-        print("2. Check Status")
-        print("3. Fast Travel")
-        print("4. Exit")
-
-        choice = input("Please choose an option: ")
-        if choice == '1':
-            map_action(character)
-        elif choice == '2':
-            print_stats(character)
-        elif choice == '3':
-            fast_travel(character)
-        elif choice == '4':
-            print("Exiting the game...")
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-        return choice
-
-
 def game():
     greeting_msg = greeting()
-    print_message(greeting_msg[1])
-    answer = ask_questionnaire()
-    player = create_character(answer)
-    print_message(greeting_msg[2])
+    print(greeting_msg[1])
+    answer = cha.ask_questionnaire()
+    player = cha.create_character(answer)
+    print(greeting_msg[2])
     while True:
-        action = main_menu(player)
+        action = me.main_menu(player)
         if action == 'move':
-            map_action(player)
+            mp.map_action(player)
         elif action == 'Check Status':
-            print_stats(player)
+            cha.print_stats(player)
         elif action == 'Fast Travel':
-            fast_travel(player)
+            mov.fast_travel(player)
         else:
             break
     run_weekday(player, 1)
