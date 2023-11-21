@@ -5,10 +5,11 @@ import menu as me
 def make_board(row, column):
     game_board = {}
     locations = {
-        (3, 4): "school",
-        (5, 8): "hospital",
-        (2, 13): "park",
-        (7, 3): "work",
+        (2, 2): "home",
+        (3, 8): "school",
+        (6, 13): "hospital",
+        (2, 16): "park",
+        (7, 5): "work",
     }
     for x in range(row):
         for y in range(column):
@@ -22,7 +23,10 @@ def make_board(row, column):
 
 def generate_game_map(game_board):
     for (x, y), location in game_board.items():
-        if location == "hospital":
+        if location == "home":
+            game_board[(x, y)] = '✦'
+            update_surroundings(game_board, x, y, '|', '-', '✦')
+        elif location == "hospital":
             game_board[(x, y)] = 'H'
             update_surroundings(game_board, x, y, '|', '+', 'H')
         elif location == "school":
@@ -67,7 +71,7 @@ def print_map(game_board, row, column, character):
 
 def map_action(character):
     rows = 10
-    columns = 18
+    columns = 20
     board = make_board(rows, columns)
     game_map = generate_game_map(board)
 
