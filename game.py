@@ -1,6 +1,6 @@
 from random import randint
 import menu as me
-import create_character as cha
+import character as cha
 
 
 def greeting():
@@ -18,46 +18,6 @@ def greeting():
     return greeting_dict
 
 
-def evaluate_exp(character, subject):
-    """
-    evaluates whether character has enough exp in a subject to level up
-    if subject == all, loop through all subjects
-    else, only evaluate that one subject passed in
-    """
-    threshold = 100
-
-    if subject == 'all':
-        subject = ('1510', '1537', '1113', '1712')
-    else:
-        subject = subject,
-        subject = tuple(subject)
-
-    for each_subject in subject:
-        level_threshold = (character['lvl'][each_subject] + 1) * threshold
-        if character['exp'][each_subject] >= level_threshold:
-            character['lvl'][each_subject] += 1
-            print(f'Eureka, an epiphany strikes you! All the puzzle pieces fall into place and you\'ve deepened your '
-                  f'understanding of COMP{each_subject}.')
-            print(f'Your COMP{each_subject} level increased by 1. It is now level {character["lvl"][each_subject]}.')
-
-
-def evaluate_stress(character):
-    """
-    evaluates whether character need to go to ER
-    """
-    if character['stress'] > 100:
-        print('Suddenly the world is spinning and darkness befalls over your eyes... You succumbed to the pressure'
-              'of life and you lay on the ground, unconscious. Thankfully, a passerby sees your motionless body and'
-              'dials 911 for assistance.')
-        return True
-    elif character['stress'] > 90:
-        print('You feel your heart palpitating and you can\'t breathe... Maybe you should get some rest?')
-    elif character['stress'] > 80:
-        print('You feel a sudden light-headedness... Maybe you should take it easy?')
-
-    return False
-
-
 def run_weekday(character, week):
     """
     print weekday prompt to screen (eg. It is now week 5, only 2 more weeks until midterms...)
@@ -72,8 +32,8 @@ def run_weekday(character, week):
           f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
           f'the challenges that lie ahead.')
     weekday_schoolwork(character)
-    evaluate_exp(character, 'all')
-    if evaluate_stress(character):
+    cha.evaluate_exp(character, 'all')
+    if cha.evaluate_stress(character):
         # call ER function
         pass
     random_weekday_event(character)
@@ -100,14 +60,6 @@ def end_of_week_action(character):
     pass
 
 
-def home_rest(character):
-    """
-    Decreases character's stress by resting at home
-    """
-    print(f'It\'s been a long week. You decide to call it a day and head home to get some rest.')
-    change_stat(character, 'stress', randint(-20, -15))
-
-
 def office_hours(character, subject):
     """
     carries out office hours
@@ -121,8 +73,8 @@ def office_hours(character, subject):
     else:
         exp_gain += randint(10, 15) * character['IQ']
 
-    change_stat(character, subject, exp_gain)
-    change_stat(character, 'stress', randint(10, 15))
+    cha.change_stat(character, subject, exp_gain)
+    cha.change_stat(character, 'stress', randint(10, 15))
 
 
 def roll_epiphany():
@@ -153,61 +105,8 @@ def weekday_schoolwork(character):
     subjects = ('1510', '1537', '1113', '1712')
     for subject in subjects:
         experience_gained = character['IQ'] * randint(8, 12)
-        change_stat(character, subject, experience_gained)
-    change_stat(character, 'stress', randint(8, 12))
-
-
-def change_stat(character, attribute, amount):
-    subjects = ('1510', '1537', '1712', '1113')
-    if attribute in subjects:
-        character['exp'][attribute] += amount
-        describe_exp_gain(character, attribute, amount)
-        evaluate_exp(character, attribute)
-    elif attribute == 'stress':
-        character[attribute] += amount
-        describe_stress_change(character, amount)
-        evaluate_stress(character)
-    else:
-        character[attribute] += amount
-        describe_flat_stat_gain(character, attribute, amount)
-
-
-def describe_exp_gain(character, attribute, amount):
-    """
-    describes how much exp is gained in an attribute
-    """
-    print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
-          f'COMP{attribute} increased by {amount}.')
-    print(f'Your experience in COMP{attribute} is now {character["exp"][attribute]}.')
-
-
-def describe_flat_stat_gain(character, attribute, amount):
-    """
-    describes how an attribute that is not exp related has changed (ie. EQ, IQ, project)
-    """
-    if attribute == 'EQ':
-        print(f'Through meaningful human interactions, you unlock the power to navigate relationships with empathy '
-              f'and resilience. You feel more confident talking to humans now.')
-    elif attribute == 'IQ':
-        pass
-    elif attribute == 'project':
-        pass
-
-    print(f'Your {attribute} increased by {amount}. It is now {character[attribute]}')
-
-
-def describe_stress_change(character, amount):
-    """
-    describes how much stress is gained/lost
-    """
-    if amount > 0:
-        print(f'The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to '
-              f'get some rest regularly so you don\'t burn out!')
-        print(f'Your stress increased by {amount}')
-    else:
-        print(f'You feel rejuvenated as if a great load has been taken off your shoulders.')
-        print(f'Your stress decreased by {amount * -1}')
-    print(f'Your stress level is now {character["stress"]}.')
+        cha.change_stat(character, subject, experience_gained)
+    cha.change_stat(character, 'stress', randint(8, 12))
 
 
 def random_weekday_event(character):
@@ -237,7 +136,7 @@ def assessment_stat_change(character, fail, subject, assessment):
     changes character's stats based on whether character passed or failed the assessment
     """
     if fail:
-        change_stat(character, 'stress', randint(10, 15))
+        cha.change_stat(character, 'stress', randint(10, 15))
     else:
         stat_gain = 0
         stress_gain = randint(4, 7)
@@ -247,8 +146,8 @@ def assessment_stat_change(character, fail, subject, assessment):
         elif assessment == 'assignment':
             stat_gain = randint(10, 14) * character['IQ']
 
-        change_stat(character, subject, stat_gain)
-        change_stat(character, subject, stress_gain)
+        cha.change_stat(character, subject, stat_gain)
+        cha.change_stat(character, subject, stress_gain)
 
 
 def fail_assessment():
@@ -286,7 +185,7 @@ def trauma_bond(character):
           'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
           'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
           'looms over you, and the night ends with tears as you drift off to sleep.')
-    change_stat(character, 'stress', randint(-5, -1))
+    cha.change_stat(character, 'stress', randint(-5, -1))
 
 
 def club_event(character):
@@ -299,8 +198,8 @@ def club_event(character):
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
 
-    change_stat(character, 'stress', randint(-8, -5))
-    change_stat(character, 'EQ', randint(1, 3))
+    cha.change_stat(character, 'stress', randint(-8, -5))
+    cha.change_stat(character, 'EQ', randint(1, 3))
 
 
 def weekend_user_input():
