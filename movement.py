@@ -28,16 +28,10 @@ def get_user_choice():
         for i in range(len(directions)):
             print(f"{i + 1}. {directions[i]}", end=' ')
 
-        choice = input("\nPlease input a number\n")
-        if choice.isdigit():
-            choice = int(choice)
-            if 0 < choice <= len(directions):
-                if choice == 5:
-                    pass
-                select_direction = directions[choice - 1]
-                return select_direction
-            else:
-                print("Please choose a valid direction number!")
+        choice = int(input("\nPlease input a number\n"))
+        if 0 < choice <= len(directions):
+            select_direction = directions[choice - 1]
+            return select_direction
         else:
             print("Please choose a valid direction number!")
 
