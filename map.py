@@ -26,7 +26,6 @@ def coordinates():
             (4, 4): "1113",
         }
     }
-
     return location_coordinates
 
 
