@@ -30,7 +30,7 @@ def ask_questionnaire():
 
 
 def create_character(answers):
-    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 2, 'Y': 3, 'project': 0,
+    new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'visited_locations': {'home': 0, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, }}

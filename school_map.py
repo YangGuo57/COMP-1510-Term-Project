@@ -32,6 +32,8 @@ def school_map_action(character):
     while True:
         mp.print_map(school_map, school_board_rows, school_board_columns, character)
         direction = mov.get_user_choice()
+        if direction == "Back to Menu":
+            mp.map_action(character)
         valid_move = mov.validate_move(school_board, character, direction)
         if valid_move:
             mov.move_character(character, direction, school_board_rows, school_board_columns, school_map)
