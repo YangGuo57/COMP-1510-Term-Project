@@ -105,8 +105,10 @@ def map_action(character):
         if valid_move:
             mov.move_character(character, direction, main_board_rows, main_board_columns, game_map)
             mov.update_visited_location(character)
-            e.trigger_school_event(character, locations, game_map, main_board_rows, main_board_columns)
-            e.trigger_home_event(character, locations, game_map, main_board_rows, main_board_columns)
-
+            message = e.trigger_description()
+            if e.is_at_location(character, locations["door"]["school"]):
+                e.trigger_event(main_board_rows, main_board_columns, game_map, character, "school", message)
+            if e.is_at_location(character, locations["door"]["home"]):
+                e.trigger_event(main_board_rows, main_board_columns, game_map, character, "home", message)
         else:
             print("Invalid move! Please choose another direction.")
