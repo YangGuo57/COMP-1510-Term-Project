@@ -1,7 +1,6 @@
 import map as mp
 import movement as mov
 import character as cha
-import school_map as smp
 import random
 
 
@@ -14,7 +13,7 @@ def main_menu(character):
 
         choice = input("Please choose an option: ")
         if choice == '1':
-            mp.map_action(character)
+            mp.map_action(character, 10, 20, 'coordinates')
         elif choice == '2':
             cha.print_stats(character)
         elif choice == '3':
@@ -33,9 +32,9 @@ def school_menu(character):
 
         choice = input("Please choose an option: ")
         if choice == '1':
-            smp.school_map_action(character)
+            mp.map_action(character, 13, 9, 'school')
         elif choice == '2':
-            mp.map_action(character)
+            mp.map_action(character, 10, 20, 'coordinates')
             break
         else:
             print("Invalid choice. Please enter a valid option.")
@@ -50,7 +49,7 @@ def home_menu(character):
         if choice == '1':
             cha.change_stat(character, 'stress', random.randint(-20, -15))
         elif choice == '2':
-            mp.map_action(character)
+            mp.map_action(character, 10, 20, 'coordinates')
             break
         else:
             print("Invalid choice. Please enter a valid option.")

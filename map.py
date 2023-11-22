@@ -4,7 +4,7 @@ import event_trigger as e
 
 
 def coordinates():
-    location_coordinates = {
+    locations = {
         "coordinates": {
             (2, 4): "home",
             (3, 10): "school",
@@ -26,7 +26,7 @@ def coordinates():
             (4, 4): "1113",
         }
     }
-    return location_coordinates
+    return locations
 
 
 def make_board(row, column, locations, keys):
@@ -41,7 +41,7 @@ def make_board(row, column, locations, keys):
     return game_board
 
 
-def generate_game_map(game_board):
+def add_element_main_map(game_board):
     for (x, y), location in game_board.items():
         if location == "home":
             game_board[(x, y)] = '✦'
@@ -58,6 +58,24 @@ def generate_game_map(game_board):
         elif location == "work":
             game_board[(x, y)] = 'W'
             update_surroundings(game_board, x, y, '|', '~', 'W')
+
+    return game_board
+
+
+def add_element_school_map(game_board):
+    for (x, y), location in game_board.items():
+        if location == "1510":
+            game_board[(x, y)] = 'P'
+            update_surroundings(game_board, x, y, '|', '=', 'P')
+        elif location == "1113":
+            game_board[(x, y)] = 'M'
+            update_surroundings(game_board, x, y, '|', '=', "M")
+        elif location == "1712":
+            game_board[(x, y)] = 'S'
+            update_surroundings(game_board, x, y, '|', '=', "S")
+        elif location == "1537":
+            game_board[(x, y)] = 'W'
+            update_surroundings(game_board, x, y, '|', '=', 'W')
 
     return game_board
 
@@ -89,26 +107,37 @@ def print_map(game_board, row, column, character):
         print()
 
 
-def map_action(character):
-    main_board_rows = 10
-    main_board_columns = 20
+def map_action(character, board_rows, board_columns, location_key):
     locations = coordinates()
-    game_board = make_board(main_board_rows, main_board_columns, locations, "coordinates")
-    game_map = generate_game_map(game_board)
+    game_board = make_board(board_rows, board_columns, locations, location_key)
+    game_map = None
+    if location_key == "coordinates":
+        game_map = add_element_main_map(game_board)
+    elif location_key == "school":
+        game_map = add_element_school_map(game_board)
+        character['X'] = 1
+        character['Y'] = 1
 
     while True:
-        print_map(game_map, main_board_rows, main_board_columns, character)
+        print_map(game_map, board_rows, board_columns, character)
         direction = mov.get_user_choice()
+
         if direction == "Back to Menu":
-            me.main_menu(character)
+            if location_key == "school":
+                character['X'] = 1
+                character['Y'] = 1
+                map_action(character, 10, 20, "coordinates")
+            else:
+                me.main_menu(character)
+
         valid_move = mov.validate_move(game_board, character, direction)
+
         if valid_move:
-            mov.move_character(character, direction, main_board_rows, main_board_columns, game_map)
+            mov.move_character(character, direction, board_rows, board_columns, game_map)
             mov.update_visited_location(character)
             message = e.trigger_description()
-            if e.is_at_location(character, locations["door"]["school"]):
-                e.trigger_event(main_board_rows, main_board_columns, game_map, character, "school", message)
-            if e.is_at_location(character, locations["door"]["home"]):
-                e.trigger_event(main_board_rows, main_board_columns, game_map, character, "home", message)
+            for door, location in locations["door"].items():
+                if e.is_at_location(character, location):
+                    e.trigger_event(board_rows, board_columns, game_map, character, door, message)
         else:
             print("Invalid move! Please choose another direction.")
