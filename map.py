@@ -13,7 +13,7 @@ def coordinates():
             (7, 5): "work"
         },
         "door": {
-            "home": [(2, 5)],
+            "home": [(2, 3), (2, 4)],
             "school": [(3, 9), (3, 11)],
             "hospital": [(6, 12), (6, 14)],
             "park": [(2, 15), (2, 17)],
@@ -105,13 +105,8 @@ def map_action(character):
         if valid_move:
             mov.move_character(character, direction, main_board_rows, main_board_columns, game_map)
             mov.update_visited_location(character)
-            if e.is_at_school(character, locations["door"]["school"]):
-                print_map(game_map, main_board_rows, main_board_columns, character)
-                school_choice = input(
-                    "Welcome to BCIT! Are you pumped for the incredible journey ahead at school? (Yes/No): ")
-                if school_choice.lower() == "yes":
-                    me.school_menu(character)
-                else:
-                    print("You decided not to enter the school.")
+            e.trigger_school_event(character, locations, game_map, main_board_rows, main_board_columns)
+            e.trigger_home_event(character, locations, game_map, main_board_rows, main_board_columns)
+
         else:
             print("Invalid move! Please choose another direction.")
