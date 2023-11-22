@@ -1,5 +1,6 @@
 import movement as mov
 import menu as me
+import event_trigger as e
 
 
 def coordinates():
@@ -17,18 +18,24 @@ def coordinates():
             "hospital": [(6, 12), (6, 14)],
             "park": [(2, 15), (2, 17)],
             "work": [(7, 4), (7, 6)]
+        },
+        "school": {
+            (2, 4): "1510",
+            (10, 4): "1537",
+            (7, 4): "1712",
+            (4, 4): "1113",
         }
     }
 
     return location_coordinates
 
 
-def make_board(row, column, locations):
+def make_board(row, column, locations, keys):
     game_board = {}
     for x in range(row):
         for y in range(column):
-            if (x, y) in locations["coordinates"]:
-                game_board[(x, y)] = locations["coordinates"][(x, y)]
+            if (x, y) in locations[keys]:
+                game_board[(x, y)] = locations[keys][(x, y)]
             else:
                 game_board[(x, y)] = " "
 
@@ -84,20 +91,27 @@ def print_map(game_board, row, column, character):
 
 
 def map_action(character):
-    rows = 10
-    columns = 20
+    main_board_rows = 10
+    main_board_columns = 20
     locations = coordinates()
-    board = make_board(rows, columns, locations)
-    game_map = generate_game_map(board)
+    game_board = make_board(main_board_rows, main_board_columns, locations, "coordinates")
+    game_map = generate_game_map(game_board)
 
     while True:
-        print_map(game_map, rows, columns, character)
+        print_map(game_map, main_board_rows, main_board_columns, character)
         direction = mov.get_user_choice()
         if direction == "Back to Menu":
             me.main_menu(character)
-        valid_move = mov.validate_move(board, character, direction)
+        valid_move = mov.validate_move(game_board, character, direction)
         if valid_move:
-            mov.move_character(character, direction, rows, columns, game_map)
+            mov.move_character(character, direction, main_board_rows, main_board_columns, game_map)
             mov.update_visited_location(character)
+            if e.is_at_school(character, locations["door"]["school"]):
+                print_map(game_map, main_board_rows, main_board_columns, character)
+                school_choice = input("You're at BCIT! Do you want to enter? (Yes/No): ")
+                if school_choice.lower() == "yes":
+                    me.school_menu(character)
+                else:
+                    print("You decided not to enter the school.")
         else:
             print("Invalid move! Please choose another direction.")
