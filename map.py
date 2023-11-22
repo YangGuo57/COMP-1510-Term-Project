@@ -6,15 +6,15 @@ import event_trigger as e
 def coordinates():
     location_coordinates = {
         "coordinates": {
-            (2, 2): "home",
-            (3, 8): "school",
+            (2, 4): "home",
+            (3, 10): "school",
             (6, 13): "hospital",
             (2, 16): "park",
             (7, 5): "work"
         },
         "door": {
-            "home": [(2, 3)],
-            "school": [(3, 7), (3, 9)],
+            "home": [(2, 5)],
+            "school": [(3, 9), (3, 11)],
             "hospital": [(6, 12), (6, 14)],
             "park": [(2, 15), (2, 17)],
             "work": [(7, 4), (7, 6)]
