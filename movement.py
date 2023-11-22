@@ -84,6 +84,7 @@ def fast_travel(character):
         if visited:
             character['X'], character['Y'] = locations["door"][destination][0]
             print(f"You've fast traveled to {destination}!")
+            mp.map_action(character)
         else:
             print(f"You need to visit {destination} at least once before fast traveling there.")
             me.main_menu(character)
