@@ -1,8 +1,5 @@
-import time
 from random import randint
-import map as mp
 import menu as me
-import movement as mov
 import create_character as cha
 
 
@@ -430,16 +427,8 @@ def game():
     answer = cha.ask_questionnaire()
     player = cha.create_character(answer)
     print(greeting_msg[2])
-    while True:
-        action = me.main_menu(player)
-        if action == 'move':
-            mp.map_action(player)
-        elif action == 'Check Status':
-            cha.print_stats(player)
-        elif action == 'Fast Travel':
-            mov.fast_travel(player)
-        else:
-            break
+    me.main_menu(player)
+
     run_weekday(player, 1)
     run_weekday(player, 2)
 
