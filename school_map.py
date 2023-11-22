@@ -21,6 +21,8 @@ def generate_school_map(game_board):
 
 
 def school_map_action(character):
+    character['X'] = 1
+    character['Y'] = 1
     school_board_rows = 13
     school_board_columns = 9
     locations = mp.coordinates()
