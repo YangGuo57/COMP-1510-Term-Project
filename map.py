@@ -107,7 +107,8 @@ def map_action(character):
             mov.update_visited_location(character)
             if e.is_at_school(character, locations["door"]["school"]):
                 print_map(game_map, main_board_rows, main_board_columns, character)
-                school_choice = input("You're at BCIT! Do you want to enter? (Yes/No): ")
+                school_choice = input(
+                    "Welcome to BCIT! Are you pumped for the incredible journey ahead at school? (Yes/No): ")
                 if school_choice.lower() == "yes":
                     me.school_menu(character)
                 else:
