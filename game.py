@@ -296,13 +296,6 @@ def random_park_event():
     pass
 
 
-def weekend_mall():
-    """
-    generate events at mall
-    """
-    pass
-
-
 def weekend_home():
     """
     player may choose to sleep, study for a course, or work on personal project
