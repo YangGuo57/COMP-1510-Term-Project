@@ -40,6 +40,22 @@ def school_menu(character):
             print("Invalid choice. Please enter a valid option.")
 
 
+def office_hour_menu(character):
+    while True:
+        print("1. Enter Office")
+        print("2. Leave Office")
+
+        choice = input("Please choose an option: ")
+        if choice == '1':
+            # trigger office hour event
+            print("Please put your office hour event code here...")
+        elif choice == '2':
+            mp.map_action(character, 13, 9, 'school')
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+
 def home_menu(character):
     while True:
         print("1. Enter home")
