@@ -8,9 +8,9 @@ def validate_move(board, character, direction):
 
     if direction == "North":
         coordinate = (x_coordinate - 1, y_coordinate)
-    elif direction == "East":
-        coordinate = (x_coordinate, y_coordinate + 1)
     elif direction == "South":
+        coordinate = (x_coordinate, y_coordinate + 1)
+    elif direction == "East":
         coordinate = (x_coordinate + 1, y_coordinate)
     else:
         coordinate = (x_coordinate, y_coordinate - 1)
@@ -22,13 +22,13 @@ def validate_move(board, character, direction):
 
 
 def get_user_choice():
-    directions = ["North", "East", "South", "West", "Back to Menu"]
+    directions = ["North", "South", "West", "East", "Back to Menu"]
 
     while True:
         for i in range(len(directions)):
             print(f"{i + 1}. {directions[i]}", end=' ')
 
-        choice = input("\nPlease input a number\n")
+        choice = input("\nPlease input a direction\n")
         if choice.isdigit():
             choice = int(choice)
             if 0 < choice <= len(directions):
