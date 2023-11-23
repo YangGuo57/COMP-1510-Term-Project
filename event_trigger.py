@@ -11,7 +11,11 @@ def trigger_description():
         "park": "   (Yes/No): ",
         "work": "   (Yes/No): ",
         "gym": "   (Yes/No): ",
-        "party": "   (Yes/No): "
+        "party": "   (Yes/No): ",
+        "1510": "      (Yes/No): ",
+        "1113": "      (Yes/No): ",
+        "1712": "      (Yes/No): ",
+        "1537": "      (Yes/No): ",
     }
 
     return message
