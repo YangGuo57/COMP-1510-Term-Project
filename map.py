@@ -47,41 +47,24 @@ def make_board(row, column, locations, keys):
     return game_board
 
 
-def add_element_main_map(game_board):
+def add_element_to_map(game_board):
+    element_mappings = {
+        "home": ('✦', '|', '-'),
+        "hospital": ('H', '|', '+'),
+        "school": ('S', '|', '-'),
+        "park": ('P', '|', '='),
+        "work": ('W', '|', '~'),
+        "1510": ('P', '|', '='),
+        "1113": ('M', '|', '='),
+        "1712": ('S', '|', '='),
+        "1537": ('W', '|', '=')
+    }
+
     for (x, y), location in game_board.items():
-        if location == "home":
-            game_board[(x, y)] = '✦'
-            update_surroundings(game_board, x, y, '|', '-', '✦')
-        elif location == "hospital":
-            game_board[(x, y)] = 'H'
-            update_surroundings(game_board, x, y, '|', '+', 'H')
-        elif location == "school":
-            game_board[(x, y)] = 'S'
-            update_surroundings(game_board, x, y, '|', '-', 'S')
-        elif location == "park":
-            game_board[(x, y)] = 'P'
-            update_surroundings(game_board, x, y, '|', '=', 'P')
-        elif location == "work":
-            game_board[(x, y)] = 'W'
-            update_surroundings(game_board, x, y, '|', '~', 'W')
-
-    return game_board
-
-
-def add_element_school_map(game_board):
-    for (x, y), location in game_board.items():
-        if location == "1510":
-            game_board[(x, y)] = 'P'
-            update_surroundings(game_board, x, y, '|', '=', 'P')
-        elif location == "1113":
-            game_board[(x, y)] = 'M'
-            update_surroundings(game_board, x, y, '|', '=', "M")
-        elif location == "1712":
-            game_board[(x, y)] = 'S'
-            update_surroundings(game_board, x, y, '|', '=', "S")
-        elif location == "1537":
-            game_board[(x, y)] = 'W'
-            update_surroundings(game_board, x, y, '|', '=', 'W')
+        if location in element_mappings:
+            symbol, door, wall = element_mappings[location]
+            game_board[(x, y)] = symbol
+            update_surroundings(game_board, x, y, door, wall, symbol)
 
     return game_board
 
@@ -124,9 +107,9 @@ def map_action(character, board_rows, board_columns, location_key):
     game_board = make_board(board_rows, board_columns, locations, location_key)
     game_map = None
     if location_key == "coordinates":
-        game_map = add_element_main_map(game_board)
+        game_map = add_element_to_map(game_board)
     elif location_key == "school":
-        game_map = add_element_school_map(game_board)
+        game_map = add_element_to_map(game_board)
         character['X'] = 1
         character['Y'] = 1
 
