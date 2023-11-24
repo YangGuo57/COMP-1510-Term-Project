@@ -44,6 +44,10 @@ def end_of_week_action(character):
     pass
 
 
+def describe_office_hour_locations(character):
+    map = {'1537', '1510', '1113', '1712', 'exit'}
+
+
 def office_hours(character, subject):
     """
     carries out office hours
@@ -176,7 +180,6 @@ def club_event(character):
     """
     carries out club event
     """
-    # stress_lost = randint(5, 8) * -1
     print('In the midst of overwhelming homework, the news of a socializing club event feels like a welcomed '
           'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '

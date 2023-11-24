@@ -63,6 +63,9 @@ def validate_weekend_location(character):
 
 
 def execute_weekend_action(character):
+    """
+    do the action
+    """
     if character['location'] == 'home':
         choice = weekend_action_user_input(character)
         describe_weekend_home_action(choice)
@@ -83,6 +86,9 @@ def execute_weekend_action(character):
 
 
 def get_user_choice_weekend_schoolwork():
+    """
+    get user choice on what kind of schoolwork to do when user is at home
+    """
     choices = ('1510', '1537', '1113', '1712', 'project')
     user_choice = input('What do you want to work on? \n'
                         'Enter 1 to work on COMP1510,\n'
@@ -101,6 +107,9 @@ def get_user_choice_weekend_schoolwork():
 
 
 def weekend_schoolwork(character, subject):
+    """
+    carry out the schoolwork and modify stats accordingly
+    """
     exp_gain = randint(10, 15) * 1 if subject == 'project' else randint(10, 15) * character['IQ']
     stress_gain = randint(8, 12)
     char.change_stat(character, subject, exp_gain)
@@ -108,11 +117,17 @@ def weekend_schoolwork(character, subject):
 
 
 def weekend_sleep(character):
+    """
+    sleep
+    """
     stress_loss = randint(15, 20) * -1
     char.change_stat(character, 'stress', stress_loss)
 
 
 def describe_weekend_home_action(action):
+    """
+    print flavour text to describe the action at home
+    """
     if action == '1':
         print('You decide to be productive (or try to be productive).')
     else:
@@ -120,6 +135,9 @@ def describe_weekend_home_action(action):
 
 
 def weekend_action_user_input(character):
+    """
+    get user choice on whether to work or sleep
+    """
     choices = {'home': ('Your desk and your laptop patiently await your presence, ready for a productive session. Yet, '
                         'your bed is whispering your name like a neglected girlfriend. What do you do?',
                         'Enter 1 to say NO to temptation and do some work, enter 2 to succumb to the calling of '
