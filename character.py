@@ -33,7 +33,8 @@ def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
-                     'visited_locations': {'home': 0, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, }}
+                     'visited_locations': {'home': 0, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, },
+                     'location': 'home'}
 
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
                            ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
@@ -116,8 +117,12 @@ def change_stat(character, attribute, amount):
         describe_exp_gain(character, attribute, amount)
         evaluate_exp(character, attribute)
     elif attribute == 'stress':
-        character[attribute] += amount
-        describe_stress_change(character, amount)
+        if character[attribute] + amount < 0:
+            describe_stress_change(character, character[attribute])
+            character[attribute] = 0
+        else:
+            character[attribute] += amount
+            describe_stress_change(character, amount)
         evaluate_stress(character)
     else:
         character[attribute] += amount
