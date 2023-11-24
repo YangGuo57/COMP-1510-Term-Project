@@ -1,6 +1,6 @@
 from random import randint
-import menu as me
-import character as cha
+import menu
+import character as char
 
 
 def greeting():
@@ -32,8 +32,8 @@ def run_weekday(character, week):
           f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
           f'the challenges that lie ahead.')
     weekday_schoolwork(character)
-    cha.evaluate_exp(character, 'all')
-    if cha.evaluate_stress(character):
+    char.evaluate_exp(character, 'all')
+    if char.evaluate_stress(character):
         # call ER function
         pass
     random_weekday_event(character)
@@ -73,8 +73,8 @@ def office_hours(character, subject):
     else:
         exp_gain += randint(10, 15) * character['IQ']
 
-    cha.change_stat(character, subject, exp_gain)
-    cha.change_stat(character, 'stress', randint(10, 15))
+    char.change_stat(character, subject, exp_gain)
+    char.change_stat(character, 'stress', randint(10, 15))
 
 
 def roll_epiphany():
@@ -105,8 +105,8 @@ def weekday_schoolwork(character):
     subjects = ('1510', '1537', '1113', '1712')
     for subject in subjects:
         experience_gained = character['IQ'] * randint(8, 12)
-        cha.change_stat(character, subject, experience_gained)
-    cha.change_stat(character, 'stress', randint(8, 12))
+        char.change_stat(character, subject, experience_gained)
+    char.change_stat(character, 'stress', randint(8, 12))
 
 
 def random_weekday_event(character):
@@ -136,7 +136,7 @@ def assessment_stat_change(character, fail, subject, assessment):
     changes character's stats based on whether character passed or failed the assessment
     """
     if fail:
-        cha.change_stat(character, 'stress', randint(10, 15))
+        char.change_stat(character, 'stress', randint(10, 15))
     else:
         stat_gain = 0
         stress_gain = randint(4, 7)
@@ -146,8 +146,8 @@ def assessment_stat_change(character, fail, subject, assessment):
         elif assessment == 'assignment':
             stat_gain = randint(10, 14) * character['IQ']
 
-        cha.change_stat(character, subject, stat_gain)
-        cha.change_stat(character, subject, stress_gain)
+        char.change_stat(character, subject, stat_gain)
+        char.change_stat(character, subject, stress_gain)
 
 
 def fail_assessment():
@@ -185,7 +185,7 @@ def trauma_bond(character):
           'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
           'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
           'looms over you, and the night ends with tears as you drift off to sleep.')
-    cha.change_stat(character, 'stress', randint(-5, -1))
+    char.change_stat(character, 'stress', randint(-5, -1))
 
 
 def club_event(character):
@@ -198,8 +198,8 @@ def club_event(character):
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
 
-    cha.change_stat(character, 'stress', randint(-8, -5))
-    cha.change_stat(character, 'EQ', randint(1, 3))
+    char.change_stat(character, 'stress', randint(-8, -5))
+    char.change_stat(character, 'EQ', randint(1, 3))
 
 
 def weekend_user_input():
@@ -316,10 +316,10 @@ def run_weekend():
 def game():
     greeting_msg = greeting()
     print(greeting_msg[1])
-    answer = cha.ask_questionnaire()
-    player = cha.create_character(answer)
+    answer = char.ask_questionnaire()
+    player = char.create_character(answer)
     print(greeting_msg[2])
-    me.main_menu(player)
+    menu.main_menu(player)
 
     run_weekday(player, 1)
     run_weekday(player, 2)
