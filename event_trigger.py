@@ -22,11 +22,7 @@ def trigger_description():
 
 
 def is_at_location(character, doors):
-    player_position = (character['X'], character['Y'])
-    for door_position in doors:
-        if player_position == door_position:
-            return True
-    return False
+    return (character['X'], character['Y']) in doors
 
 
 def trigger_event(main_board_rows, main_board_columns, game_map, character, location, messages):
