@@ -26,7 +26,7 @@ def game():
     answer = char.ask_questionnaire()
     player = char.create_character(answer)
     print(greeting_msg[2])
-    # menu.main_menu(player)
+    menu.main_menu(player)
 
     weekday.run_weekday(player, 1)
     weekday.run_weekday(player, 2)
