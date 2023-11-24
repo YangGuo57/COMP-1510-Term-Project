@@ -4,6 +4,11 @@ import event_trigger as e
 
 
 def coordinates():
+    """
+    Stores location coordinates into a dictionary.
+
+    :return:
+    """
     locations = {
         "coordinates": {
             (2, 4): "home",
@@ -36,6 +41,19 @@ def coordinates():
 
 
 def make_board(row, column, locations, keys):
+    """
+    Create game board with row and column.
+
+
+    :param row:
+    :param column:
+    :param locations:
+    :param keys:
+    :return:
+
+    >>> make_board(2, 2, {"key": {(0, 0): "home", (1, 1): "park"}}, "key")
+    {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
+    """
     game_board = {}
     for x in range(row):
         for y in range(column):
@@ -48,6 +66,20 @@ def make_board(row, column, locations, keys):
 
 
 def add_element_to_map(game_board):
+    """
+    Add elements to a game board and update the board.
+
+    :param game_board:
+    :return:
+
+    >>> board =  {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
+    >>> result = add_element_to_map(board)
+    >>> expected_result = {(0, 0): '=', (0, 1): '=', (1, 0): '|', (1, 1): '-', (-1, -1): '-',
+    ... (-1, 0): '-', (-1, 1): '-', (0, -1): '|', (1, -1): '-', (0, 2): '=', (1, 2): '=',
+    ... (2, 0): '=', (2, 1): '=', (2, 2): '='}
+    >>> result == expected_result
+    True
+    """
     element_mappings = {
         "home": ('✦', '|', '-'),
         "hospital": ('H', '|', '+'),
@@ -59,29 +91,34 @@ def add_element_to_map(game_board):
         "1712": ('S', '|', '='),
         "1537": ('W', '|', '=')
     }
+    updates = {}
 
     for (x, y), location in game_board.items():
         if location in element_mappings:
             symbol, door, wall = element_mappings[location]
             game_board[(x, y)] = symbol
-            update_surroundings(game_board, x, y, door, wall, symbol)
+
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    if (dx, dy) != (0, 0):
+                        updates[(x + dx, y + dy)] = wall
+            updates[(x, y - 1)] = door
+
+    game_board.update(updates)
 
     return game_board
 
 
-def update_surroundings(game_board, x, y, door, wall, location_symbol):
-    for row_offset in range(x - 1, x + 2):
-        for col_offset in range(y - 1, y + 2):
-            if (row_offset, col_offset) in game_board and game_board[(row_offset, col_offset)] != location_symbol:
-                game_board[(row_offset, col_offset)] = door
-
-    for col_offset in range(y - 1, y + 2):
-        for row_offset in [x - 1, x + 1]:
-            if (row_offset, col_offset) in game_board and game_board[(row_offset, col_offset)] != location_symbol:
-                game_board[(row_offset, col_offset)] = wall
-
-
 def print_map(game_board, row, column, character):
+    """
+    Print the game map.
+
+    :param game_board:
+    :param row:
+    :param column:
+    :param character:
+    :return:
+    """
     player_position = (character['X'], character['Y'])
     for row_index in range(row):
         for col_index in range(column):
