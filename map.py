@@ -112,12 +112,6 @@ def add_element_to_map(game_board):
 def print_map(game_board, row, column, character):
     """
     Print the game map.
-
-    :param game_board:
-    :param row:
-    :param column:
-    :param character:
-    :return:
     """
     player_position = (character['X'], character['Y'])
     for row_index in range(row):
