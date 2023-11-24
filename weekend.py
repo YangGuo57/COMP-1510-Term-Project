@@ -101,7 +101,7 @@ def get_user_choice_weekend_schoolwork():
 
 
 def weekend_schoolwork(character, subject):
-    exp_gain = randint(10, 15) * 1 if subject == 'project' else character['IQ']
+    exp_gain = randint(10, 15) * 1 if subject == 'project' else randint(10, 15) * character['IQ']
     stress_gain = randint(8, 12)
     char.change_stat(character, subject, exp_gain)
     char.change_stat(character, 'stress', stress_gain)
@@ -124,10 +124,10 @@ def weekend_action_user_input(character):
                         'your bed is whispering your name like a neglected girlfriend. What do you do?',
                         'Enter 1 to say NO to temptation and do some work, enter 2 to succumb to the calling of '
                         'your bed.')}
-    user_choice = input(f'{choices[character["location"][0]]}\n{choices[character["location"][1]]}')
+    user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
     while user_choice != '1' and user_choice != '2':
         print('That is not a valid command.')
-        user_choice = input(f'{choices[character["location"][0]]}\n{choices[character["location"][1]]}')
+        user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
     return user_choice
 
 

@@ -2,6 +2,7 @@ from random import randint
 import menu
 import character as char
 import weekday
+import weekend
 
 
 def greeting():
