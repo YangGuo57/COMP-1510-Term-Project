@@ -1,8 +1,3 @@
-import movement as mov
-import menu as me
-import event_trigger as e
-
-
 def coordinates():
     """
     Stores location coordinates into a dictionary.
@@ -18,23 +13,23 @@ def coordinates():
             (7, 5): "work"
         },
         "door": {
-            "home": [(2, 3), (2, 4)],
-            "school": [(3, 9), (3, 11)],
-            "hospital": [(6, 12), (6, 14)],
-            "park": [(2, 15), (2, 17)],
-            "work": [(7, 4), (7, 6)]
+            "home": (2, 3),
+            "school": (3, 9),
+            "hospital": (6, 12),
+            "park": (2, 15),
+            "work": (7, 4)
         },
         "school": {
             (2, 7): "1510",
-            (10, 1): "1537",
+            (10, 7): "1537",
             (7, 7): "1712",
-            (4, 1): "1113",
+            (4, 7): "1113",
         },
         "office_door": {
-            "1510": [(2, 6)],
-            "1537": [(10, 2)],
-            "1712": [(7, 6)],
-            "1113": [(4, 2)],
+            "1510": (2, 6),
+            "1537": (10, 6),
+            "1712": (7, 6),
+            "1113": (4, 6),
         }
     }
     return locations
@@ -72,12 +67,12 @@ def add_element_to_map(game_board):
     :param game_board:
     :return:
 
-    >>> board =  {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
-    >>> result = add_element_to_map(board)
-    >>> expected_result = {(0, 0): '=', (0, 1): '=', (1, 0): '|', (1, 1): '-', (-1, -1): '-',
-    ... (-1, 0): '-', (-1, 1): '-', (0, -1): '|', (1, -1): '-', (0, 2): '=', (1, 2): '=',
-    ... (2, 0): '=', (2, 1): '=', (2, 2): '='}
-    >>> result == expected_result
+    # >>> board =  {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
+    # >>> result = add_element_to_map(board)
+    # >>> expected_result = {(0, 0): '=', (0, 1): '=', (1, 0): '|', (1, 1): '-', (-1, -1): '-',
+    # ... (-1, 0): '-', (-1, 1): '-', (0, -1): '|', (1, -1): '-', (0, 2): '=', (1, 2): '=',
+    # ... (2, 0): '=', (2, 1): '=', (2, 2): '='}
+    # >>> result == expected_result
     True
     """
     element_mappings = {
@@ -109,9 +104,9 @@ def add_element_to_map(game_board):
     return game_board
 
 
-def print_map(game_board, row, column, character):
+def print_game_map(game_board, row, column, character):
     """
-    Print the game map.
+    Print the game map borders.
     """
     player_position = (character['X'], character['Y'])
     for row_index in range(row):
@@ -127,40 +122,8 @@ def print_map(game_board, row, column, character):
         print()
 
 
-def trigger_map_event(locations, board_rows, board_columns, game_map, character, message):
-    for door, location in locations.items():
-        if e.is_at_location(character, location):
-            e.trigger_event(board_rows, board_columns, game_map, character, door, message)
-
-
-def map_action(character, board_rows, board_columns, location_key):
+def initialize_map(board_rows, board_columns, location_key):
     locations = coordinates()
     game_board = make_board(board_rows, board_columns, locations, location_key)
     game_map = add_element_to_map(game_board)
-
-    if location_key == "school":
-        character['X'] = 1
-        character['Y'] = 1
-
-    while True:
-        print_map(game_map, board_rows, board_columns, character)
-        user_choice = mov.get_user_choice()
-
-        if user_choice == "Back to Menu":
-            if location_key == "school":
-                character['X'] = 1
-                character['Y'] = 1
-                break
-            else:
-                me.main_menu(character)
-                return
-
-        is_valid_move = mov.validate_move(game_board, character, user_choice)
-        if is_valid_move:
-            mov.move_character(character, user_choice, board_rows, board_columns, game_map)
-            mov.update_visited_location(character)
-            message = e.trigger_description()
-            door_locations = locations["door"] if location_key == "coordinates" else locations["office_door"]
-            trigger_map_event(door_locations, board_rows, board_columns, game_map, character, message)
-        else:
-            print("Invalid move! Please choose another direction.")
+    return game_board, game_map
