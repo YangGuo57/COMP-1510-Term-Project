@@ -1,7 +1,6 @@
-import map as mp
 import movement as mov
 import character as cha
-import random
+import event_trigger as e
 
 
 def main_menu(character):
@@ -13,7 +12,7 @@ def main_menu(character):
 
         choice = input("Please choose an option: ")
         if choice == '1':
-            mp.map_action(character, 10, 20, 'coordinates')
+            e.trigger_action(character, 10, 20, 'coordinates')
         elif choice == '2':
             cha.print_stats(character)
         elif choice == '3':
@@ -25,47 +24,19 @@ def main_menu(character):
             print("Invalid choice. Please enter a valid option.")
 
 
-def school_menu(character):
+def sub_menu(character):
     while True:
-        print("1. Enter School")
-        print("2. Leave School")
+        print("1. Enter")
+        print("2. Leave")
 
         choice = input("Please choose an option: ")
         if choice == '1':
-            mp.map_action(character, 13, 9, 'school')
-        elif choice == '2':
-            mp.map_action(character, 10, 20, 'coordinates')
+            # event call goes here
+            e.enter_school(character)
             break
-        else:
-            print("Invalid choice. Please enter a valid option.")
 
-
-def office_hour_menu(character):
-    while True:
-        print("1. Enter Office")
-        print("2. Leave Office")
-
-        choice = input("Please choose an option: ")
-        if choice == '1':
-            # trigger office hour event
-            print("Please put your office hour event code here...")
         elif choice == '2':
-            mp.map_action(character, 13, 9, 'school')
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
-
-def home_menu(character):
-    while True:
-        print("1. Enter home")
-        print("2. Leave home")
-
-        choice = input("Please choose an option: ")
-        if choice == '1':
-            cha.change_stat(character, 'stress', random.randint(-20, -15))
-        elif choice == '2':
-            mp.map_action(character, 10, 20, 'coordinates')
+            e.trigger_action(character, 10, 20, 'coordinates')
             break
         else:
             print("Invalid choice. Please enter a valid option.")
