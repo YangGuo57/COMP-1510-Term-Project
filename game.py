@@ -1,4 +1,6 @@
 from random import randint
+
+import map
 import menu
 import character as char
 import weekday
@@ -26,10 +28,13 @@ def game():
     answer = char.ask_questionnaire()
     player = char.create_character(answer)
     print(greeting_msg[2])
-    menu.main_menu(player)
-
+    # school_map = map.initialize_map(11, 11, 'school')
+    # print(school_map)
+    # map.print_game_map(school_map, 11, 11, player)
+    # menu.main_menu(player)
+    #
     weekday.run_weekday(player, 1)
-    weekday.run_weekday(player, 2)
+    # weekday.run_weekday(player, 2)
 
 
 if __name__ == '__main__':

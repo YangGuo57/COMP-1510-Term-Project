@@ -13,10 +13,18 @@ def trigger_description():
         "work": "   (Yes/No): ",
         "gym": "   (Yes/No): ",
         "party": "   (Yes/No): ",
-        "1510": "      (Yes/No): ",
-        "1113": "      (Yes/No): ",
-        "1712": "      (Yes/No): ",
-        "1537": "      (Yes/No): ",
+        "1510": "The office of the COMP1510 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1113": "The office of the COMP1113 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1712": "The office of the COMP1712 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1537": "The office of the COMP1537 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
     }
 
     return message
@@ -55,7 +63,7 @@ def is_at_door(character):
                 me.sub_menu(character)
                 return
 
-    print("Character is not at any door.")
+    # print("Character is not at any door.")
 
 
 def enter_school(character):
@@ -74,6 +82,17 @@ def classroom_event():
     Put everything about classroom event here.
     """
     print("This trigger a classroom event")
+
+
+def confirm_entry(location):
+    """
+    Asks user to confirm whether to enter the door. Return 1 if entry is confirmed, 2 if entry is denied
+    """
+    locations = trigger_description()
+    confirm = input(f'{locations[location]}')
+    while confirm != '1' and confirm != '2':
+        confirm = input(f'{locations[location]}')
+    return confirm
 
 
 def trigger_action(character, board_rows, board_columns, location_key):
@@ -103,4 +122,7 @@ def trigger_action(character, board_rows, board_columns, location_key):
 
             for office, door_coordinates in office_doors.items():
                 if (character['X'], character['Y']) == door_coordinates:
-                    classroom_event()
+                    mp.print_game_map(game_map, board_rows, board_columns, character)
+                    user_office_choice = confirm_entry(office)
+                    if user_office_choice == '1':
+                        return office

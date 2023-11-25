@@ -1,5 +1,6 @@
 import character as char
 from random import randint
+import event_trigger as event
 
 
 def run_weekday(character, week):
@@ -29,19 +30,22 @@ def end_of_week_action(character):
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
-    choice = False
-    while not choice:
-        # ask player for directions
-        # validate direction
-        # move character
-        # check location to see if character has reached a classroom or is going home
-        # ask player to confirm action
-        # if player denies action, repeat while loop
-        # if player confirms action, carry out action depending on location of character
-        # office_hours(character, subject) if player goes to office hours
-        # home_rest(character) if player goes home
-        break
-    pass
+    subject = event.trigger_action(character, 13, 9, "school")
+    office_hours(character, subject)
+    # choice = False
+    # while not choice:
+    #
+    #     # ask player for directions
+    #     # validate direction
+    #     # move character
+    #     # check location to see if character has reached a classroom or is going home
+    #     # ask player to confirm action
+    #     # if player denies action, repeat while loop
+    #     # if player confirms action, carry out action depending on location of character
+    #     # office_hours(character, subject) if player goes to office hours
+    #     # home_rest(character) if player goes home
+    #     break
+    # pass
 
 
 def describe_office_hour_locations(character):
