@@ -1,5 +1,6 @@
 import menu as me
 import map as mp
+import event_trigger as e
 
 
 def validate_move(board, character, direction):
@@ -71,7 +72,7 @@ def update_visited_location(character):
     locations = mp.coordinates()
 
     for location, door_positions in locations["door"].items():
-        if player_position in door_positions:
+        if player_position == door_positions:
             character['visited_locations'][location] += 1
             break
 
@@ -82,9 +83,9 @@ def fast_travel(character):
     if destination.lower() in locations["door"]:
         visited = character['visited_locations'][destination]
         if visited:
-            character['X'], character['Y'] = locations["door"][destination][0]
+            character['X'], character['Y'] = locations["door"][destination]
             print(f"You've fast traveled to {destination}!")
-            mp.map_action(character, 10, 20, 'coordinates')
+            e.trigger_action(character, 10, 20, 'coordinates')
         else:
             print(f"You need to visit {destination} at least once before fast traveling there.")
             me.main_menu(character)
