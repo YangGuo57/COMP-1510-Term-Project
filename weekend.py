@@ -19,11 +19,18 @@ def run_weekend(character):
     # set player location to home
     char.set_character_location(character, 'home')
     locations = event.trigger_description()
+    job_attendance = False
 
     while actions > 0:
         if character['location'] == 'outside':
             # trigger events on big map
             event.trigger_action(character, 10, 20, 'coordinates')
+
+            # if character at park, call weekend_park
+            # elif character at school, call weekend_school
+            # elif character at work, job_attendance = weekend_job
+            # elif character at hospital, call weekend_hospital
+
         else:
             # trigger events at home
             user_choice = event.confirm_entry(character['location'])
@@ -31,28 +38,19 @@ def run_weekend(character):
             execute_weekend_home_action(character)
         actions -= 1
 
+    evaluate_job_attendance(character, job_attendance)
+
 
 def execute_weekend_home_action(character):
     """
     do the action
     """
-    if character['location'] == 'home' or character['location'] == 'bed':
-        choice = weekend_action_user_input(character)
-        describe_weekend_home_action(choice)
-        if choice == '1':
-            weekend_schoolwork(character, get_user_choice_weekend_schoolwork())
-        else:
-            weekend_sleep(character)
-    # else:
-    #     while True:
-    #         # ask user for move input
-    #         # validate move
-    #         # move character
-    #         # evaluate character location
-    #         # describe location
-    #         # get user choice if character is at a destination
-    #         # execute action at location
-    #         break
+    choice = weekend_action_user_input(character)
+    describe_weekend_home_action(choice)
+    if choice == '1':
+        weekend_schoolwork(character, get_user_choice_weekend_schoolwork())
+    else:
+        weekend_sleep(character)
 
 
 def weekend_location_user_input(location):
@@ -71,23 +69,6 @@ def weekend_location_user_input(location):
         user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
 
     return 'home' if user_choice == '1' else 'outside'
-
-
-def describe_weekend_action():
-    """
-    describes character coordinates after character moves via directions or fast travel
-    """
-    pass
-
-
-def validate_weekend_location(character):
-    """
-    evaluates what happens at player's coordinates (nothing? does it call another function?) return bool
-    """
-    pass
-
-
-
 
 
 def get_user_choice_weekend_schoolwork():
@@ -154,60 +135,96 @@ def weekend_action_user_input(character):
     return user_choice
 
 
-
-
-def confirm_weekend_action():
-    """
-    if validate_weekend_location returns True
-    ask player if player wants to enter this location
-    if so, actions -= 1
-    call action-specific function
-    """
-    pass
-
-
-def weekend_school():
+def weekend_school(character):
     """
     generates random events at school on a weekend
     """
-    pass
+    print('The school is closed weekends. Why are you even here?')
+    roll = randint(1, 2)
+    stress_change = 0
+    increase_in_EQ = 0
+    print(roll)
+    if roll == 1:
+        print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
+              'on their hands?')
+        stress_change += randint(5, 8) * -1
+        increase_in_EQ += randint(1, 3) / 10
+    else:
+        print('You accidentally walk into a hobo because you did not pay attention to where you were going. The hobo '
+              'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
+              'but the encounter leaves you feeling a bit shaken.')
+        stress_change += randint(5, 8)
+        increase_in_EQ += randint(3, 5) / 10
+    char.change_stat(character, 'EQ', increase_in_EQ)
+    char.change_stat(character, 'stress', stress_change)
 
 
-def weekend_gym():
-    """
-    weekend events at gym
-    """
-    pass
-
-
-def weekend_hospital():
+def weekend_hospital(character):
     """
     weekend events at hospital
     """
-    pass
+    print('As you step inside Vancouver General Hospital, the scent of disinfectants greets you. Inside, '
+          'it\'s serious with doctors and nurses bustling around, and you stand at the entrance feeling a bit lost. '
+          'A nurse notices you and walks up to you.')
+    if not character['vaccinated']:
+        print('"You must be here for your annual vaccination," she says, "Now don\'t stand there and block the way, '
+              'the lineup for getting your vaccine is this way."\n'
+              'She grabs you by your arm and tries to lead you deeper into the hospital.')
+        user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
+        while user_choice != '1' and user_choice != '2':
+            print('That is not a valid option.')
+            user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
+        if user_choice == '1':
+            print('The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?')
+            char.change_stat(character, 'IQ', 0.5)
+            character['vaccinated'] = True
+        else:
+            print('You manage to slip away from the nurse\'s grasp and escape from the hospital.')
+    else:
+        print('"What are you doing here?" she says, "You\'re not sick and you already got your vaccination!'
+              'Now don\'t stand there and block the way, go home."\n'
+              'The nurse ushers you out of the hospital.')
 
 
-def weekend_job():
+def weekend_job(character):
     """
     work at part-time job
     attend_work = True
     """
-    pass
+    if character['job']:
+        print('You begin your shift at the cafe. The aroma of freshly brewed coffee fills the air as you learn '
+              'the ropes—taking orders, serving customers, and maybe even mastering the art of crafting the perfect '
+              'cup. Even though this does not relate to what you learn in school, you begin to feel more confident '
+              'navigating work relationships.')
+        char.change_stat(character, 'wealth', 10)
+        increase_in_EQ = randint(1, 3) / 10
+        char.change_stat(character, 'EQ', increase_in_EQ)
+    else:
+        print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment'
+              'is heavily distracting. You don\'t get anything done.')
+    stress_gain = randint(5, 8)
+    char.change_stat(character, 'stress', stress_gain)
+    return True
 
 
-def evaluate_job_attendance():
+
+def evaluate_job_attendance(character, skip):
     """
     keeps track of how many times player has skipped work
     if > 2 times, player is fired
     """
-    pass
+    if character['job'] and skip:
+        character['skip_job'] += 1
+        print('Uh oh, did you forget to go to work this weekend?')
+        evaluate_firing_from_job(character)
 
 
-def weekend_party():
-    """
-    weekend events at party
-    """
-    pass
+def evaluate_firing_from_job(character):
+    if character['skip_job'] >= 3:
+        print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
+              'you over the phone.')
+        character['job'] = False
+        char.change_stat(character, 'EQ', -2)
 
 
 def weekend_park(character):
@@ -217,7 +234,7 @@ def weekend_park(character):
     random_park_event() if character has not applied to a job posting
     """
     applied_to_job = False
-    if character['job'] == False:
+    if not character['job']:
         applied_to_job = generate_job_posting(character)
 
     if not applied_to_job:
@@ -233,7 +250,7 @@ def generate_job_posting(character):
     :return:
     """
     print(f'As you take in the fresh air and enjoy the greenery, you notice a piece of paper fluttering in the '
-          f'breeze. Snatching it from the air, you realize it\'s a job posting - a local coffee shop is looking '
+          f'breeze. Snatching it from the air, you realize it\'s a job posting - a local cafe is looking '
           f'for a weekend part-timer,  just a stone\'s throw away from your home! Extra money will always come '
           f'in handy... but it comes at the cost of sacrificing precious weekend hours. Should you apply?')
     user_choice = input(f'Enter "1" to apply, "2" to ignore.')
@@ -319,10 +336,3 @@ def flea_market(character):
     else:
         print(f'{messages["leave flea"]}')
         return False
-
-
-def weekend_home():
-    """
-    player may choose to sleep, study for a course, or work on personal project
-    """
-    pass

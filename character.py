@@ -34,7 +34,7 @@ def create_character(answers):
                                            "1537": 0,
                                            "1712": 0,
                                            "1113": 0},
-                     'location': 'home', 'job': False}
+                     'location': 'home', 'job': False, 'vaccinated': False, 'skip_job': 0}
 
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
                            ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
@@ -128,7 +128,10 @@ def change_stat(character, attribute, amount):
         character[attribute] += amount
         describe_wealth_change(character, amount)
     else:
-        character[attribute] += amount
+        if character[attribute] + amount < 0:
+            character[attribute] = 0
+        else:
+            character[attribute] += amount
         describe_flat_stat_gain(character, attribute, amount)
 
 
@@ -145,16 +148,25 @@ def describe_flat_stat_gain(character, attribute, amount):
     """
     describes how an attribute that is not exp related has changed (ie. EQ, IQ, project)
     """
+    changes = 'increases'
     if attribute == 'EQ':
-        print(f'Through meaningful human interactions, you unlock the power to navigate relationships with empathy '
-              f'and resilience. You feel more confident talking to humans now.')
+        if amount > 0:
+            print('Through meaningful human interactions, you become more emotionally savvy. You feel more confident '
+                  'talking to humans now.')
+        else:
+            print('Clearly you are not very good at handling human interactions, nor are you a responsible person.'
+                  'Perhaps you should work on them if you want to get hired in the future...')
+            changes = 'decreases'
+            amount *= -1
     elif attribute == 'IQ':
-        print(f'Whoa, it\'s as if your brain is  waking up from a century-long slumber. You\'ve never felt this '
-              f'intelligent before in your entire life.')
+        print('Whoa, it\'s as if your brain is waking up from a century-long slumber. You\'ve never felt this '
+              'intelligent before in your entire life.')
     elif attribute == 'project':
-        pass
+        print('You start grinding your personal project. You\'re not really sure what you\'re doing... If your coding '
+              'instructor saw your spaghetti code, he would have a heart attack. Thankfully, your GitHub repo is '
+              'private for now so no one can see the heinous code you\'ve written.')
 
-    print(f'Your {attribute} increased by {amount}. It is now {character[attribute]}')
+    print(f'Your {attribute} {changes} by {amount}. It is now {character[attribute]}.')
 
 
 def describe_stress_change(character, amount):
@@ -164,10 +176,10 @@ def describe_stress_change(character, amount):
     if amount > 0:
         print(f'The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to '
               f'get some rest regularly so you don\'t burn out!')
-        print(f'Your stress increased by {amount}')
+        print(f'Your stress increases by {amount}')
     else:
         print(f'You feel rejuvenated as if a great load has been taken off your shoulders.')
-        print(f'Your stress decreased by {amount * -1}')
+        print(f'Your stress decreases by {amount * -1}')
     print(f'Your stress level is now {character["stress"]}.')
 
 
@@ -178,8 +190,9 @@ def set_character_location(character, location):
 def describe_wealth_change(character, amount):
     if amount < 0:
         print('You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"')
-        print(f'Your wealth decreased by {amount * -1}. Your bank account balance is now {character["wealth"]}.')
+        print(f'Your wealth decreases by {amount * -1}. Your bank account balance is now {character["wealth"]}. \n'
+              f'Maybe you should save up to pay for next term\'s tuition...')
     else:
-        print(f'Earning money puts a smile on your face, who doesn\'t love money?')
-        print(f'Your wealth increased by {amount}.Your bank account balance is now {character["wealth"]}.')
+        print('Earning money puts a smile on your face, who doesn\'t love money?')
+        print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')
 
