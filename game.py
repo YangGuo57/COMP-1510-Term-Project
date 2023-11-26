@@ -5,6 +5,7 @@ import menu
 import character as char
 import weekday
 import weekend
+import event_trigger as event
 
 
 def greeting():
@@ -33,7 +34,12 @@ def game():
     # map.print_game_map(school_map, 11, 11, player)
     # menu.main_menu(player)
     #
-    weekday.run_weekday(player, 1)
+    # locations = event.trigger_description()
+    # print(locations['bed']["description"])
+    # weekday.run_weekday(player, 1)
+
+    # weekend.weekend_park(player)
+    weekend.run_weekend(player)
     # weekday.run_weekday(player, 2)
 
 

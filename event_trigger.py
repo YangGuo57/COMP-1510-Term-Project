@@ -6,8 +6,8 @@ import movement as mov
 def trigger_description():
     message = {
         "school": "Welcome to BCIT! Are you pumped for the incredible journey ahead at school? (Yes/No): ",
-        "home": "You arrive home, worn out from the day's endeavors, seeking solace within the familiar walls of "
-                "your sanctuary.Do you want to take a break and unwind in the cozy embrace of home? (Yes/No): ",
+        "home-door": "You arrive home, worn out from the day's endeavors, seeking solace within the familiar walls of "
+                     "your sanctuary.Do you want to take a break and unwind in the cozy embrace of home? (Yes/No): ",
         "hospital": "   (Yes/No): ",
         "park": "   (Yes/No): ",
         "work": "   (Yes/No): ",
@@ -25,6 +25,12 @@ def trigger_description():
         "1537": "The office of the COMP1537 instructor stands before you. Do you want to bug the instructor about "
                 "material you don't understand? \n"
                 "Enter '1' to enter the office, '2' to think about it some more.",
+        "home": {'description': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor '
+                                'stroll or indulge in the comforts of your home? \n'
+                                'Enter "1" to stay home, enter "2" to leave the house.',
+                 '1': 'home',
+                 '2': 'outside'}
+
     }
 
     return message
@@ -60,7 +66,10 @@ def is_at_door(character):
         if (character['X'], character['Y']) == door_coordinates:
             if location == "school":
                 print(f"Character is at the door of {location}.")
-                me.sub_menu(character)
+                me.sub_menu(character, location)
+            elif location == 'park':
+                print(f'You are at the entrance of Stanley Park. Do you want to enter and take a leisurely stroll?')
+                me.sub_menu(character, location)
                 return
 
     # print("Character is not at any door.")
@@ -89,7 +98,7 @@ def confirm_entry(location):
     Asks user to confirm whether to enter the door. Return 1 if entry is confirmed, 2 if entry is denied
     """
     locations = trigger_description()
-    confirm = input(f'{locations[location]}')
+    confirm = input(f'{locations[location].get("description")}')
     while confirm != '1' and confirm != '2':
         confirm = input(f'{locations[location]}')
     return confirm
@@ -109,6 +118,7 @@ def trigger_action(character, board_rows, board_columns, location_key):
     office_doors = mp.coordinates()["office_door"]
     while True:
         mp.print_game_map(game_map, board_rows, board_columns, character)
+        print(character)
         user_choice = mov.get_user_choice()
 
         if user_choice == "Back to Menu":
@@ -119,10 +129,11 @@ def trigger_action(character, board_rows, board_columns, location_key):
             break
         if process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
             is_at_door(character)
+            if character['location'] == 'school':
+                for office, door_coordinates in office_doors.items():
+                    if (character['X'], character['Y']) == door_coordinates:
+                        mp.print_game_map(game_map, board_rows, board_columns, character)
+                        user_office_choice = confirm_entry(office)
+                        if user_office_choice == '1':
+                            return office
 
-            for office, door_coordinates in office_doors.items():
-                if (character['X'], character['Y']) == door_coordinates:
-                    mp.print_game_map(game_map, board_rows, board_columns, character)
-                    user_office_choice = confirm_entry(office)
-                    if user_office_choice == '1':
-                        return office
