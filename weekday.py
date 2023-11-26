@@ -36,20 +36,6 @@ def end_of_week_action(character, school_map):
         go_home(character)
     else:
         office_hours(character, subject)
-    # choice = False
-    # while not choice:
-    #
-    #     # ask player for directions
-    #     # validate direction
-    #     # move character
-    #     # check location to see if character has reached a classroom or is going home
-    #     # ask player to confirm action
-    #     # if player denies action, repeat while loop
-    #     # if player confirms action, carry out action depending on location of character
-    #     # office_hours(character, subject) if player goes to office hours
-    #     # home_rest(character) if player goes home
-    #     break
-    # pass
 
 
 def go_home(character):

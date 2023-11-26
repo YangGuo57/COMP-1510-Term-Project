@@ -92,7 +92,6 @@ def confirm_entry(location):
         return confirm
 
 
-
 def handle_school_event(character, school_map):
     map.print_game_map(school_map, character)
     while True:
