@@ -17,19 +17,17 @@ def coordinates():
             "school": (3, 9),
             "hospital": (6, 12),
             "park": (2, 15),
-            "work": (7, 4)
+            "work": (7, 4),
+            "1510": (2, 6),
+            "1537": (10, 6),
+            "1712": (7, 6),
+            "1113": (4, 6),
         },
         "school": {
             (2, 7): "1510",
             (10, 7): "1537",
             (7, 7): "1712",
             (4, 7): "1113",
-        },
-        "office_door": {
-            "1510": (2, 6),
-            "1537": (10, 6),
-            "1712": (7, 6),
-            "1113": (4, 6),
         }
     }
     return locations
@@ -104,26 +102,34 @@ def add_element_to_map(game_board):
     return game_board
 
 
-def print_game_map(game_board, row, column, character):
-    """
-    Print the game map borders.
-    """
-    player_position = (character['X'], character['Y'])
-    for row_index in range(row):
-        for col_index in range(column):
-            if (row_index, col_index) == player_position:
-                print('*', end=' ')
-            elif row_index == 0 or row_index == row - 1:
-                print('-', end=' ')
-            elif col_index == 0 or col_index == column - 1:
-                print('|', end=' ')
-            else:
-                print(game_board[(row_index, col_index)], end=' ')
-        print()
-
-
 def initialize_map(board_rows, board_columns, location_key):
     locations = coordinates()
     game_board = make_board(board_rows, board_columns, locations, location_key)
     game_map = add_element_to_map(game_board)
-    return game_board, game_map
+    game_map["rows"] = board_rows
+    game_map["columns"] = board_columns
+    game_map["board"] = game_board
+
+    return game_map
+
+
+def print_game_map(game_map, character):
+    """
+    Print the game map borders.
+    """
+    rows = game_map["rows"]
+    columns = game_map["columns"]
+    board = game_map["board"]
+    player_position = (character['X'], character['Y'])
+
+    for row_index in range(rows):
+        for col_index in range(columns):
+            if (row_index, col_index) == player_position:
+                print('*', end=' ')
+            elif row_index == 0 or row_index == rows - 1:
+                print('-', end=' ')
+            elif col_index == 0 or col_index == columns - 1:
+                print('|', end=' ')
+            else:
+                print(board[(row_index, col_index)], end=' ')
+        print()

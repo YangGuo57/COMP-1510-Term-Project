@@ -1,6 +1,4 @@
-import menu as me
-import map as mp
-import event_trigger as e
+import map
 
 
 def validate_move(board, character, direction):
@@ -23,33 +21,37 @@ def validate_move(board, character, direction):
 
 
 def get_user_choice():
-    directions = ["North", "South", "West", "East", "Back to Menu"]
+    directions = ["North", "South", "West", "East"]
+    print("Choose a direction:")
+    for i, direction in enumerate(directions, 1):
+        print(f"{i}. {direction}", end=' ')
+    print("\n5. Go Back")
 
     while True:
-        for i in range(len(directions)):
-            print(f"{i + 1}. {directions[i]}", end=' ')
-
-        choice = input("\nPlease input a direction\n")
+        choice = input("Please input your choice: ")
         if choice.isdigit():
             choice = int(choice)
-            if 0 < choice <= len(directions):
-                select_direction = directions[choice - 1]
-                return select_direction
+            if 1 <= choice <= 5:
+                if choice == 5:
+                    return "Back"
+                return directions[choice - 1]
             else:
-                print("Please choose a valid direction number!")
+                print("Please choose a valid number!")
         else:
-            print("Please choose a valid direction number!")
+            print("Please enter a number!")
 
 
-def move_character(character, direction, row, column, game_board):
+def move_character(character, direction, game_map):
     x_coordinate = character["X"]
     y_coordinate = character["Y"]
+    rows = game_map["rows"]
+    columns = game_map["columns"]
 
     if direction == "North" and x_coordinate > 1:
         x_coordinate -= 1
-    elif direction == "East" and y_coordinate < column - 2:
+    elif direction == "East" and y_coordinate < columns - 2:
         y_coordinate += 1
-    elif direction == "South" and x_coordinate < row - 2:
+    elif direction == "South" and x_coordinate < rows - 2:
         x_coordinate += 1
     elif direction == "West" and y_coordinate > 1:
         y_coordinate -= 1
@@ -58,7 +60,7 @@ def move_character(character, direction, row, column, game_board):
         return
 
     new_position = (x_coordinate, y_coordinate)
-    location = game_board[new_position]
+    location = game_map[new_position]
 
     if location in [' ', '|']:
         character["X"] = x_coordinate
@@ -69,8 +71,7 @@ def move_character(character, direction, row, column, game_board):
 
 def update_visited_location(character):
     player_position = (character['X'], character['Y'])
-    locations = mp.coordinates()
-
+    locations = map.coordinates()
     for location, door_positions in locations["door"].items():
         if player_position == door_positions:
             character['visited_locations'][location] += 1
@@ -78,17 +79,14 @@ def update_visited_location(character):
 
 
 def fast_travel(character):
-    locations = mp.coordinates()
+    locations = map.coordinates()
     destination = input("Please input fast travel destination: home, school, hospital, park, work:")
     if destination.lower() in locations["door"]:
         visited = character['visited_locations'][destination]
         if visited:
             character['X'], character['Y'] = locations["door"][destination]
             print(f"You've fast traveled to {destination}!")
-            e.trigger_action(character, 10, 20, 'coordinates')
         else:
             print(f"You need to visit {destination} at least once before fast traveling there.")
-            me.main_menu(character)
     else:
         print("Invalid destination.")
-        me.main_menu(character)

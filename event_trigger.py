@@ -11,7 +11,6 @@ def trigger_description():
         "hospital": "   (Yes/No): ",
         "park": "   (Yes/No): ",
         "work": "   (Yes/No): ",
-        "gym": "   (Yes/No): ",
         "party": "   (Yes/No): ",
         "1510": "The office of the COMP1510 instructor stands before you. Do you want to bug the instructor about "
                 "material you don't understand? \n"
@@ -36,20 +35,12 @@ def trigger_description():
     return message
 
 
-def process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
+def process_movement(user_choice, game_map, character):
     """
     Processes the player's movement choice in the game.
-
-    :param user_choice:
-    :param game_board:
-    :param character:
-    :param board_rows:
-    :param board_columns:
-    :param game_map:
-    :return:
     """
-    if mov.validate_move(game_board, character, user_choice):
-        mov.move_character(character, user_choice, board_rows, board_columns, game_map)
+    if mov.validate_move(game_map, character, user_choice):
+        mov.move_character(character, user_choice, game_map)
         mov.update_visited_location(character)
         return True
     else:
@@ -57,11 +48,11 @@ def process_movement(user_choice, game_board, character, board_rows, board_colum
         return False
 
 
-def is_at_door(character):
+def at_entrance(character):
     """
-    Determines if the character is at any defined door location.
+    return door location: "home", "school", "hospital", "park", "work"
     """
-    locations = mp.coordinates()
+    locations = map.coordinates()
     for location, door_coordinates in locations['door'].items():
         if (character['X'], character['Y']) == door_coordinates:
             if location == "school":
@@ -70,27 +61,11 @@ def is_at_door(character):
             elif location == 'park':
                 print(f'You are at the entrance of Stanley Park. Do you want to enter and take a leisurely stroll?')
                 me.sub_menu(character, location)
-                return
+                return location
 
     # print("Character is not at any door.")
 
-
-def enter_school(character):
-    """
-    Prints school map when entering school
-
-    :param character:
-    :return:
-    """
-    character['X'], character['Y'] = 1, 1
-    trigger_action(character, 13, 9, "school")
-
-
-def classroom_event():
-    """
-    Put everything about classroom event here.
-    """
-    print("This trigger a classroom event")
+    return None
 
 
 def confirm_entry(location):
@@ -128,7 +103,7 @@ def trigger_action(character, board_rows, board_columns, location_key):
             me.main_menu(character)
             break
         if process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
-            is_at_door(character)
+            at_entrance(character)
             if character['location'] == 'school':
                 for office, door_coordinates in office_doors.items():
                     if (character['X'], character['Y']) == door_coordinates:
@@ -136,4 +111,3 @@ def trigger_action(character, board_rows, board_columns, location_key):
                         user_office_choice = confirm_entry(office)
                         if user_office_choice == '1':
                             return office
-
