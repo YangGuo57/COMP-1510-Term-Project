@@ -111,7 +111,6 @@ def handle_school_event(character, school_map):
 
 
 def handle_map_event(character, main_map):
-    message = trigger_description()
     while True:
         map.print_game_map(main_map, character)
         choice = menu.main_menu()
@@ -125,18 +124,6 @@ def handle_map_event(character, main_map):
                         return confirm_entry('home entrance')
                     elif location:
                         return confirm_entry(location)
-                    # if location == "home":
-                    #     print("home")
-                    # elif location == "school":
-                    #     print(111)
-                    #     # handle_school_event(character, main_map)
-                    # elif location == "hospital":
-                    #     print("hospital")
-                    # elif location == "park":
-                    #     return confirm_entry(location)
-                    #
-                    # elif location == "work":
-                    #     print("work")
                 if user_choice == "Back":
                     break
         elif choice == '2':
@@ -148,30 +135,3 @@ def handle_map_event(character, main_map):
             break
         else:
             print("Invalid choice. Please enter a valid option.")
-
-
-
-
-# def handle_school_event(character, school_map, main_map):
-#     message = trigger_description()
-#     print(message['school'])
-#     while True:
-#         school_choice = menu.inside_school_menu()
-#         if school_choice == '1':
-#             character['X'], character['Y'] = 1, 1
-#             map.print_game_map(school_map, character)
-#             while True:
-#                 user_choice = mov.get_user_choice()
-#                 if process_movement(user_choice, school_map, character):
-#                     map.print_game_map(school_map, character)
-#                     location = at_entrance(character)
-#                     if location in ["1510", "1113", "1712", "1537"]:
-#                         entry_confirmation = confirm_entry(location)
-#                         if entry_confirmation == '1':
-#                             handle_school_specific_event()
-#                 if user_choice == "Back":
-#                     break
-#         elif school_choice == '2':
-#             character['X'], character['Y'] = 3, 9
-#             map.print_game_map(main_map, character)
-#             break
