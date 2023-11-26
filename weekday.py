@@ -22,6 +22,7 @@ def run_weekday(character, week):
         # call ER function
         pass
     random_weekday_event(character)
+    char.set_character_location(character, 'school')
     end_of_week_action(character)
 
 

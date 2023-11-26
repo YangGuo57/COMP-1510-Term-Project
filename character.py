@@ -34,7 +34,7 @@ def create_character(answers):
                                            "1537": 0,
                                            "1712": 0,
                                            "1113": 0},
-                     'location': 'home'}
+                     'location': 'home', 'job': False}
 
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
                            ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
@@ -124,6 +124,9 @@ def change_stat(character, attribute, amount):
             character[attribute] += amount
             describe_stress_change(character, amount)
         evaluate_stress(character)
+    elif attribute == 'wealth':
+        character[attribute] += amount
+        describe_wealth_change(character, amount)
     else:
         character[attribute] += amount
         describe_flat_stat_gain(character, attribute, amount)
@@ -146,7 +149,8 @@ def describe_flat_stat_gain(character, attribute, amount):
         print(f'Through meaningful human interactions, you unlock the power to navigate relationships with empathy '
               f'and resilience. You feel more confident talking to humans now.')
     elif attribute == 'IQ':
-        pass
+        print(f'Whoa, it\'s as if your brain is  waking up from a century-long slumber. You\'ve never felt this '
+              f'intelligent before in your entire life.')
     elif attribute == 'project':
         pass
 
@@ -165,3 +169,17 @@ def describe_stress_change(character, amount):
         print(f'You feel rejuvenated as if a great load has been taken off your shoulders.')
         print(f'Your stress decreased by {amount * -1}')
     print(f'Your stress level is now {character["stress"]}.')
+
+
+def set_character_location(character, location):
+    character['location'] = location
+
+
+def describe_wealth_change(character, amount):
+    if amount < 0:
+        print('You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"')
+        print(f'Your wealth decreased by {amount * -1}. Your bank account balance is now {character["wealth"]}.')
+    else:
+        print(f'Earning money puts a smile on your face, who doesn\'t love money?')
+        print(f'Your wealth increased by {amount}.Your bank account balance is now {character["wealth"]}.')
+

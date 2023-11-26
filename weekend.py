@@ -1,5 +1,7 @@
 from random import randint
 import character as char
+import event_trigger as event
+import character as char
 
 
 def run_weekend(character):
@@ -15,16 +17,43 @@ def run_weekend(character):
           'yours.')
 
     # set player location to home
-    # check player location
-
+    char.set_character_location(character, 'home')
+    locations = event.trigger_description()
 
     while actions > 0:
-        user_choice = weekend_location_user_input(character['location'])
-        set_character_location(character, user_choice)
-        execute_weekend_action(character)
+        if character['location'] == 'outside':
+            # trigger events on big map
+            event.trigger_action(character, 10, 20, 'coordinates')
+        else:
+            # trigger events at home
+            user_choice = event.confirm_entry(character['location'])
+            char.set_character_location(character, locations[character['location']][user_choice])
+            execute_weekend_home_action(character)
         actions -= 1
 
-    pass
+
+def execute_weekend_home_action(character):
+    """
+    do the action
+    """
+    if character['location'] == 'home' or character['location'] == 'bed':
+        choice = weekend_action_user_input(character)
+        describe_weekend_home_action(choice)
+        if choice == '1':
+            weekend_schoolwork(character, get_user_choice_weekend_schoolwork())
+        else:
+            weekend_sleep(character)
+    # else:
+    #     while True:
+    #         # ask user for move input
+    #         # validate move
+    #         # move character
+    #         # evaluate character location
+    #         # describe location
+    #         # get user choice if character is at a destination
+    #         # execute action at location
+    #         break
+
 
 def weekend_location_user_input(location):
     """
@@ -44,10 +73,6 @@ def weekend_location_user_input(location):
     return 'home' if user_choice == '1' else 'outside'
 
 
-def set_character_location(character, location):
-    character['location'] = location
-
-
 def describe_weekend_action():
     """
     describes character coordinates after character moves via directions or fast travel
@@ -62,27 +87,7 @@ def validate_weekend_location(character):
     pass
 
 
-def execute_weekend_action(character):
-    """
-    do the action
-    """
-    if character['location'] == 'home':
-        choice = weekend_action_user_input(character)
-        describe_weekend_home_action(choice)
-        if choice == '1':
-            weekend_schoolwork(character, get_user_choice_weekend_schoolwork())
-        else:
-            weekend_sleep(character)
-    else:
-        while True:
-            # ask user for move input
-            # validate move
-            # move character
-            # evaluate character location
-            # describe location
-            # get user choice if character is at a destination
-            # execute action at location
-            break
+
 
 
 def get_user_choice_weekend_schoolwork():
@@ -205,23 +210,115 @@ def weekend_party():
     pass
 
 
-def weekend_park():
+def weekend_park(character):
     """
     weekend events at park
-    print map of park
     does player have a job? if not, generate job posting
-    player can move freely
-    evaluate player coordinates after each move
-    random_park_event()
+    random_park_event() if character has not applied to a job posting
     """
-    pass
+    applied_to_job = False
+    if character['job'] == False:
+        applied_to_job = generate_job_posting(character)
+
+    if not applied_to_job:
+        random_park_event(character)
+    print('That was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
+          'some spare change, perhaps you should go check it out?')
 
 
-def random_park_event():
+def generate_job_posting(character):
+    """
+    Generates job posting is character is unemployed. Returns boolean to represent whether character applied to job.
+    :param character:
+    :return:
+    """
+    print(f'As you take in the fresh air and enjoy the greenery, you notice a piece of paper fluttering in the '
+          f'breeze. Snatching it from the air, you realize it\'s a job posting - a local coffee shop is looking '
+          f'for a weekend part-timer,  just a stone\'s throw away from your home! Extra money will always come '
+          f'in handy... but it comes at the cost of sacrificing precious weekend hours. Should you apply?')
+    user_choice = input(f'Enter "1" to apply, "2" to ignore.')
+    while user_choice != '1' and user_choice != '2':
+        print('That is not a valid input!')
+        user_choice = input(f'Enter "1" to apply, "2" to ignore.')
+    if user_choice == '1':
+        print('You applied and got the job immediately! Guess they were really desperate for help. Don\'t forget '
+              'to go to work every weekend!')
+        character['job'] = True
+        return True
+    else:
+        print('You decide your free time on the weekend is more important. You throw the job posting into the '
+              'garbage can, because littering is bad. You venture deeper into the park.')
+        return False
+
+
+
+def random_park_event(character):
     """
     generate random event in the park
     """
-    pass
+    roll = randint(1, 10)
+
+    if roll in range(5, 7):
+        print(f'{generate_park_message_to_print(roll)}')
+        stress_loss = randint(-20, -15)
+        char.change_stat(character, 'stress', stress_loss)
+    elif roll in range(7, 9):
+        enter = flea_market(character)
+        if not enter:
+            roll -= 5
+    elif roll in range(9, 11):
+        print(f'{generate_park_message_to_print(roll)}')
+        char.change_stat(character, 'wealth', 10)
+    if roll in range(1, 5):
+        print(f'{generate_park_message_to_print(roll)}')
+        stress_loss = randint(-10, -5)
+        char.change_stat(character, 'stress', stress_loss)
+
+
+def generate_park_message_to_print(roll):
+    messages = {
+        range(1, 5): 'Taking a deep breath of the fresh air in Stanley Park helps ease your anxiety as you walk.',
+        range(5, 7): 'A stray cat approaches, meowing softly. You give it a gentle tummy rub, and it responds with '
+                     'happy purring. Seeing this carefree, adorable little creature revel in the simple joys of life '
+                     'inspires you to adopt a similar mentality.',
+        range(7, 9): {'default': 'It seems there is a weekend flea market going on today at Stanley Park. Should you '
+                                 'go check it out?\nEnter "1" to check out the flea market, "2" to continue walking.',
+                      'enter flea': 'You decide to explore the flea market.',
+                      'kool-aid': 'An eccentric old lady grabs you and pulls you to her stall, excitedly pitching her '
+                                  '"Mega Brain Power Elixir." She claims it can turn even the least brainy person into '
+                                  'a genius. Despite your attempts to leave, she\'s persistent. Feeling cornered, '
+                                  'you give in and buy a ridiculously expensive bottle of the mysterious liquid. With '
+                                  'reluctance, you gulp it down, and it tastes like Kool-Aid.',
+                      'no kool-aid': 'You see so many things you want to buy. You reach for your wallet, but Alas, '
+                                     'there\'s no money inside. The sight of your empty wallet makes you sad. With a '
+                                     'sigh, you turn around and leave the park.',
+                      'leave flea': 'You decide to keep walking.'},
+        range(9, 11): 'How lucky! You find some money on the ground!'
+    }
+    for key in messages:
+        if roll in key:
+            return messages[key]
+
+
+def flea_market(character):
+    messages = generate_park_message_to_print(7)
+    user_choice = input(f'{messages["default"]}')
+    while user_choice != '1' and user_choice != '2':
+        user_choice = input(f'{messages["default"]}')
+    if user_choice == '1':
+        print(f'{messages["enter flea"]}')
+        if character['wealth'] >= 60:
+            print(f'{messages["kool-aid"]}')
+            char.change_stat(character, 'wealth', -60)
+            char.change_stat(character, 'IQ', 0.5)
+        else:
+            print(f'{messages["no kool-aid"]}')
+            stress_gain = randint(10, 15)
+            char.change_stat(character, 'stress', stress_gain)
+        return True
+    else:
+        print(f'{messages["leave flea"]}')
+        return False
 
 
 def weekend_home():
