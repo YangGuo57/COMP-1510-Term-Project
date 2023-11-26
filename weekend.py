@@ -4,7 +4,7 @@ import event_trigger as event
 import character as char
 
 
-def run_weekend(character):
+def run_weekend(character, main_map):
     """
     initialize actions
     print weekend prompt to screen

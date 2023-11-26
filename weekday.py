@@ -3,7 +3,7 @@ from random import randint
 import event_trigger as event
 
 
-def run_weekday(character, week):
+def run_weekday(character, week, school_map):
     """
     print weekday prompt to screen (eg. It is now week 5, only 2 more weeks until midterms...)
     increase exp in all subjects
@@ -23,16 +23,19 @@ def run_weekday(character, week):
         pass
     random_weekday_event(character)
     char.set_character_location(character, 'school')
-    end_of_week_action(character)
+    end_of_week_action(character, school_map)
 
 
-def end_of_week_action(character):
+def end_of_week_action(character, school_map):
     print('At last, you made it through another week. It is Friday afternoon, and you find yourself at crossroads. '
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
-    subject = event.trigger_action(character, 13, 9, "school")
-    office_hours(character, subject)
+    subject = event.handle_school_event(character, school_map)
+    if subject == 'Back':
+        go_home(character)
+    else:
+        office_hours(character, subject)
     # choice = False
     # while not choice:
     #
@@ -47,6 +50,12 @@ def end_of_week_action(character):
     #     # home_rest(character) if player goes home
     #     break
     # pass
+
+
+def go_home(character):
+    print('You decide to call it a day and head home to get some rest.')
+    stress_loss = randint(8, 12) * -1
+    char.change_stat(character, 'stress', stress_loss)
 
 
 def describe_office_hour_locations(character):

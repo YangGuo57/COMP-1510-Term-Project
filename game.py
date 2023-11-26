@@ -33,40 +33,40 @@ def game():
     main_map = map.initialize_map(10, 20, 'coordinates')
     school_map = map.initialize_map(13, 9, 'school')
 
-    while True:
-        current_map = main_map
-        map.print_game_map(main_map, player)
-        choice = menu.main_menu()
-        if choice == '1':
-            while True:
-                user_choice = mov.get_user_choice()
-                if event.process_movement(user_choice, current_map, player):
-                    map.print_game_map(current_map, player)
-                    location = event.at_entrance(player)
-                    if location == "home":
-                        print("home")
-                    elif location == "school":
-                        event.handle_school_event(player, school_map, main_map)
-                    elif location == "hospital":
-                        print("hospital")
-                    elif location == "park":
-                        print("park")
-                    elif location == "work":
-                        print("work")
-                if user_choice == "Back":
-                    break
-        elif choice == '2':
-            character.print_stats(player)
-        elif choice == '3':
-            mov.fast_travel(player)
-        elif choice == '4':
-            print("Exiting the game...")
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
+    # while True:
+    #     current_map = main_map
+    #     map.print_game_map(main_map, player)
+    #     choice = menu.main_menu()
+    #     if choice == '1':
+    #         while True:
+    #             user_choice = mov.get_user_choice()
+    #             if event.process_movement(user_choice, current_map, player):
+    #                 map.print_game_map(current_map, player)
+    #                 location = event.at_entrance(player)
+    #                 if location == "home":
+    #                     print("home")
+    #                 elif location == "school":
+    #                     event.handle_school_event(player, school_map, main_map)
+    #                 elif location == "hospital":
+    #                     print("hospital")
+    #                 elif location == "park":
+    #                     print("park")
+    #                 elif location == "work":
+    #                     print("work")
+    #             if user_choice == "Back":
+    #                 break
+    #     elif choice == '2':
+    #         character.menu_print_stats(player)
+    #     elif choice == '3':
+    #         mov.fast_travel(player)
+    #     elif choice == '4':
+    #         print("Exiting the game...")
+    #         break
+    #     else:
+    #         print("Invalid choice. Please enter a valid option.")
 
-    # weekday.run_weekday(player, 1)
-    # weekday.run_weekday(player, 2)
+    weekday.run_weekday(player, 1, school_map)
+    # weekend.run_weekend(character, school_map)
 
 
 if __name__ == '__main__':

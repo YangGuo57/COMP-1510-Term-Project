@@ -76,33 +76,47 @@ def confirm_entry(location):
     return confirm
 
 
-def handle_school_specific_event():
-    """
-    Perform your action during office hours
-    """
-    print("After you confirm entry, perform your action! ")
-
-
-def handle_school_event(character, school_map, main_map):
+def handle_school_event(character, school_map):
     message = trigger_description()
     print(message['school'])
+    map.print_game_map(school_map, character)
     while True:
-        school_choice = menu.inside_school_menu()
-        if school_choice == '1':
-            character['X'], character['Y'] = 1, 1
+        user_choice = mov.get_user_choice(character)
+        if user_choice == "Back":
+            return user_choice
+        elif process_movement(user_choice, school_map, character):
             map.print_game_map(school_map, character)
-            while True:
-                user_choice = mov.get_user_choice()
-                if process_movement(user_choice, school_map, character):
+            location = at_entrance(character)
+            if location in ["1510", "1113", "1712", "1537"]:
+                entry_confirmation = confirm_entry(location)
+                if entry_confirmation == '1':
+                    return location
+                else:
                     map.print_game_map(school_map, character)
-                    location = at_entrance(character)
-                    if location in ["1510", "1113", "1712", "1537"]:
-                        entry_confirmation = confirm_entry(location)
-                        if entry_confirmation == '1':
-                            handle_school_specific_event()
-                if user_choice == "Back":
-                    break
-        elif school_choice == '2':
-            character['X'], character['Y'] = 3, 9
-            map.print_game_map(main_map, character)
-            break
+
+
+
+
+# def handle_school_event(character, school_map, main_map):
+#     message = trigger_description()
+#     print(message['school'])
+#     while True:
+#         school_choice = menu.inside_school_menu()
+#         if school_choice == '1':
+#             character['X'], character['Y'] = 1, 1
+#             map.print_game_map(school_map, character)
+#             while True:
+#                 user_choice = mov.get_user_choice()
+#                 if process_movement(user_choice, school_map, character):
+#                     map.print_game_map(school_map, character)
+#                     location = at_entrance(character)
+#                     if location in ["1510", "1113", "1712", "1537"]:
+#                         entry_confirmation = confirm_entry(location)
+#                         if entry_confirmation == '1':
+#                             handle_school_specific_event()
+#                 if user_choice == "Back":
+#                     break
+#         elif school_choice == '2':
+#             character['X'], character['Y'] = 3, 9
+#             map.print_game_map(main_map, character)
+#             break

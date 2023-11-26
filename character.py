@@ -49,19 +49,21 @@ def create_character(answers):
     return new_character
 
 
-def print_stats(new_character):
-    character = new_character
+def print_stats(character):
+    print("Your current attributes: ")
+    print("IQ:", character['IQ'])
+    print("EQ:", character['EQ'])
+    print("stress:", character['stress'])
+    print("wealth:", character['wealth'])
+    print("exp:", character['exp'])
+    print("lvl:", character['lvl'])
+
+
+def menu_print_stats(character):
     while True:
         input_status = input("Please type 'status' to see your current stats (type 'menu' back to main):")
         if input_status.lower() == 'status':
-            print("Your current attributes: ")
-            print("IQ:", character['IQ'])
-            print("EQ:", character['EQ'])
-            print("stress:", character['stress'])
-            print("wealth:", character['wealth'])
-            print("exp:", character['exp'])
-            print("lvl:", character['lvl'])
-
+            print_stats(character)
         elif input_status.lower() == 'menu':
             break
         else:

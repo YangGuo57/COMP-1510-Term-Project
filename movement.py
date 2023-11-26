@@ -1,4 +1,5 @@
 import map
+import character as char
 
 
 def validate_move(board, character, direction):
@@ -20,12 +21,14 @@ def validate_move(board, character, direction):
     return False
 
 
-def get_user_choice():
+def get_user_choice(character):
     directions = ["North", "South", "West", "East"]
     print("Choose a direction:")
     for i, direction in enumerate(directions, 1):
         print(f"{i}. {direction}", end=' ')
-    print("\n5. Go Back")
+    if character['location'] == 'school':
+        print("\n5. Go home")
+        print("6. Check your stats")
 
     while True:
         choice = input("Please input your choice: ")
@@ -35,6 +38,8 @@ def get_user_choice():
                 if choice == 5:
                     return "Back"
                 return directions[choice - 1]
+            elif character['location'] == 'school' and choice == 6:
+                char.print_stats(character)
             else:
                 print("Please choose a valid number!")
         else:
