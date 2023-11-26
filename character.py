@@ -61,7 +61,6 @@ def print_stats(new_character):
             print("wealth:", character['wealth'])
             print("exp:", character['exp'])
             print("lvl:", character['lvl'])
-            print(character['visited_locations'])
 
         elif input_status.lower() == 'menu':
             break
@@ -195,4 +194,3 @@ def describe_wealth_change(character, amount):
     else:
         print('Earning money puts a smile on your face, who doesn\'t love money?')
         print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')
-

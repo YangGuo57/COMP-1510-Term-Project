@@ -1,5 +1,5 @@
-import map as mp
-import menu as me
+import map
+import menu
 import movement as mov
 
 
@@ -57,13 +57,10 @@ def at_entrance(character):
         if (character['X'], character['Y']) == door_coordinates:
             if location == "school":
                 print(f"Character is at the door of {location}.")
-                me.sub_menu(character, location)
             elif location == 'park':
                 print(f'You are at the entrance of Stanley Park. Do you want to enter and take a leisurely stroll?')
-                me.sub_menu(character, location)
-                return location
 
-    # print("Character is not at any door.")
+            return location
 
     return None
 
@@ -73,44 +70,10 @@ def confirm_entry(location):
     Asks user to confirm whether to enter the door. Return 1 if entry is confirmed, 2 if entry is denied
     """
     locations = trigger_description()
-    confirm = input(f'{locations[location].get("description")}')
+    confirm = input(f'{locations[location]}')
     while confirm != '1' and confirm != '2':
         confirm = input(f'{locations[location]}')
     return confirm
-
-
-def trigger_action(character, board_rows, board_columns, location_key):
-    """
-    Manages the player character's actions on a given game map.
-
-    :param character:
-    :param board_rows:
-    :param board_columns:
-    :param location_key:
-    :return:
-    """
-    game_board, game_map = mp.initialize_map(board_rows, board_columns, location_key)
-    office_doors = mp.coordinates()["office_door"]
-    while True:
-        mp.print_game_map(game_map, board_rows, board_columns, character)
-        print(character)
-        user_choice = mov.get_user_choice()
-
-        if user_choice == "Back to Menu":
-            if location_key == "school":
-                character['X'], character['Y'] = 3, 9
-                return
-            me.main_menu(character)
-            break
-        if process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
-            at_entrance(character)
-            if character['location'] == 'school':
-                for office, door_coordinates in office_doors.items():
-                    if (character['X'], character['Y']) == door_coordinates:
-                        mp.print_game_map(game_map, board_rows, board_columns, character)
-                        user_office_choice = confirm_entry(office)
-                        if user_office_choice == '1':
-                            return office
 
 
 def handle_school_specific_event():
@@ -132,13 +95,11 @@ def handle_school_event(character, school_map, main_map):
                 user_choice = mov.get_user_choice()
                 if process_movement(user_choice, school_map, character):
                     map.print_game_map(school_map, character)
-
                     location = at_entrance(character)
                     if location in ["1510", "1113", "1712", "1537"]:
                         entry_confirmation = confirm_entry(location)
                         if entry_confirmation == '1':
                             handle_school_specific_event()
-
                 if user_choice == "Back":
                     break
         elif school_choice == '2':
