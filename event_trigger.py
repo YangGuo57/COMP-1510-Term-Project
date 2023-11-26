@@ -1,17 +1,16 @@
-import map as mp
-import menu as me
+import map
+import menu
 import movement as mov
 
 
 def trigger_description():
     message = {
-        "school": "Welcome to BCIT! Are you pumped for the incredible journey ahead at school? (Yes/No): ",
+        "school": "Welcome to BCIT! Are you pumped for the incredible journey ahead at school?",
         "home": "You arrive home, worn out from the day's endeavors, seeking solace within the familiar walls of "
                 "your sanctuary.Do you want to take a break and unwind in the cozy embrace of home? (Yes/No): ",
         "hospital": "   (Yes/No): ",
         "park": "   (Yes/No): ",
         "work": "   (Yes/No): ",
-        "gym": "   (Yes/No): ",
         "party": "   (Yes/No): ",
         "1510": "The office of the COMP1510 instructor stands before you. Do you want to bug the instructor about "
                 "material you don't understand? \n"
@@ -30,20 +29,12 @@ def trigger_description():
     return message
 
 
-def process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
+def process_movement(user_choice, game_map, character):
     """
     Processes the player's movement choice in the game.
-
-    :param user_choice:
-    :param game_board:
-    :param character:
-    :param board_rows:
-    :param board_columns:
-    :param game_map:
-    :return:
     """
-    if mov.validate_move(game_board, character, user_choice):
-        mov.move_character(character, user_choice, board_rows, board_columns, game_map)
+    if mov.validate_move(game_map, character, user_choice):
+        mov.move_character(character, user_choice, game_map)
         mov.update_visited_location(character)
         return True
     else:
@@ -51,37 +42,16 @@ def process_movement(user_choice, game_board, character, board_rows, board_colum
         return False
 
 
-def is_at_door(character):
+def at_entrance(character):
     """
-    Determines if the character is at any defined door location.
+    return door location: "home", "school", "hospital", "park", "work"
     """
-    locations = mp.coordinates()
+    locations = map.coordinates()
     for location, door_coordinates in locations['door'].items():
         if (character['X'], character['Y']) == door_coordinates:
-            if location == "school":
-                print(f"Character is at the door of {location}.")
-                me.sub_menu(character)
-                return
+            return location
 
-    # print("Character is not at any door.")
-
-
-def enter_school(character):
-    """
-    Prints school map when entering school
-
-    :param character:
-    :return:
-    """
-    character['X'], character['Y'] = 1, 1
-    trigger_action(character, 13, 9, "school")
-
-
-def classroom_event():
-    """
-    Put everything about classroom event here.
-    """
-    print("This trigger a classroom event")
+    return None
 
 
 def confirm_entry(location):
@@ -95,34 +65,35 @@ def confirm_entry(location):
     return confirm
 
 
-def trigger_action(character, board_rows, board_columns, location_key):
+def handle_school_specific_event():
     """
-    Manages the player character's actions on a given game map.
+    Perform your action during office hours
+    """
+    print("After you confirm entry, perform your action! ")
 
-    :param character:
-    :param board_rows:
-    :param board_columns:
-    :param location_key:
-    :return:
-    """
-    game_board, game_map = mp.initialize_map(board_rows, board_columns, location_key)
-    office_doors = mp.coordinates()["office_door"]
+
+def handle_school_event(character, school_map, main_map):
+    message = trigger_description()
+    print(message['school'])
     while True:
-        mp.print_game_map(game_map, board_rows, board_columns, character)
-        user_choice = mov.get_user_choice()
+        school_choice = menu.inside_school_menu()
+        if school_choice == '1':
+            character['X'], character['Y'] = 1, 1
+            map.print_game_map(school_map, character)
+            while True:
+                user_choice = mov.get_user_choice()
+                if process_movement(user_choice, school_map, character):
+                    map.print_game_map(school_map, character)
 
-        if user_choice == "Back to Menu":
-            if location_key == "school":
-                character['X'], character['Y'] = 3, 9
-                return
-            me.main_menu(character)
+                    location = at_entrance(character)
+                    if location in ["1510", "1113", "1712", "1537"]:
+                        entry_confirmation = confirm_entry(location)
+                        if entry_confirmation == '1':
+                            handle_school_specific_event()
+
+                if user_choice == "Back":
+                    break
+        elif school_choice == '2':
+            character['X'], character['Y'] = 3, 9
+            map.print_game_map(main_map, character)
             break
-        if process_movement(user_choice, game_board, character, board_rows, board_columns, game_map):
-            is_at_door(character)
-
-            for office, door_coordinates in office_doors.items():
-                if (character['X'], character['Y']) == door_coordinates:
-                    mp.print_game_map(game_map, board_rows, board_columns, character)
-                    user_office_choice = confirm_entry(office)
-                    if user_office_choice == '1':
-                        return office
