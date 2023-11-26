@@ -1,6 +1,3 @@
-import menu as me
-
-
 def ask_questionnaire():
     answers = []
     questions = ('When new work is assigned to you, what do you do?\n'
@@ -64,7 +61,7 @@ def print_stats(new_character):
             print(character['visited_locations'])
 
         elif input_status.lower() == 'menu':
-            me.main_menu(character)
+            break
         else:
             print("Invalid input. Please type 'status' to see your current attributes.")
             continue
