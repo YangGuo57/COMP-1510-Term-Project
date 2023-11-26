@@ -17,27 +17,37 @@ def run_weekend(character, main_map):
           'yours.')
 
     # set player location to home
+    character['X'] = 2
+    character['Y'] = 3
     char.set_character_location(character, 'home')
     locations = event.trigger_description()
     job_attendance = False
 
     while actions > 0:
-        if character['location'] == 'outside':
-            # trigger events on big map
-            event.trigger_action(character, 10, 20, 'coordinates')
-
-            # if character at park, call weekend_park
-            # elif character at school, call weekend_school
-            # elif character at work, job_attendance = weekend_job
-            # elif character at hospital, call weekend_hospital
-
-        else:
+        if character['location'] == 'home':
             # trigger events at home
             user_choice = event.confirm_entry(character['location'])
-            char.set_character_location(character, locations[character['location']][user_choice])
-            execute_weekend_home_action(character)
+            if user_choice == '1':
+                execute_weekend_home_action(character)
+            else:
+                char.set_character_location(character, locations[character['location']][user_choice])
+        if character['location'] == 'outside':
+            # trigger events on big map
+            user_choice = event.handle_map_event(character, main_map)
+            if user_choice == '1':
+                location = event.at_entrance(character)
+                if location == 'park':
+                    weekend_park(character)
+                elif location == 'work':
+                    weekend_job(character)
+                elif location == 'hospital':
+                    weekend_hospital(character)
+                elif location == 'school':
+                    weekend_school(character)
+                elif location == 'home':
+                    char.set_character_location(character, location)
+                    execute_weekend_home_action(character)
         actions -= 1
-
     evaluate_job_attendance(character, job_attendance)
 
 
@@ -53,22 +63,22 @@ def execute_weekend_home_action(character):
         weekend_sleep(character)
 
 
-def weekend_location_user_input(location):
-    """
-    get user input on what to do on weekend - whether to stay home or go outside
-    returns 'home' or 'outside'
-    """
-    flavour_text = {'home': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor stroll'
-                            ' or indulge in the comforts of your home?',
-                    'outside': 'The day is still bright. What would you like to do?'}
-    commands = {'home': 'Enter 1 to stay home, enter 2 to leave the house.',
-                'outside': 'Enter 1 to go home, enter 2 to stay outside.'}
-
-    user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
-    while user_choice != '1' or '2':
-        user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
-
-    return 'home' if user_choice == '1' else 'outside'
+# def weekend_location_user_input(location):
+#     """
+#     get user input on what to do on weekend - whether to stay home or go outside
+#     returns 'home' or 'outside'
+#     """
+#     flavour_text = {'home': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor stroll'
+#                             ' or indulge in the comforts of your home?',
+#                     'outside': 'The day is still bright. What would you like to do?'}
+#     commands = {'home': 'Enter 1 to stay home, enter 2 to leave the house.',
+#                 'outside': 'Enter 1 to go home, enter 2 to stay outside.'}
+#
+#     user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
+#     while user_choice != '1' or '2':
+#         user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
+#
+#     return 'home' if user_choice == '1' else 'outside'
 
 
 def get_user_choice_weekend_schoolwork():

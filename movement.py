@@ -29,6 +29,8 @@ def get_user_choice(character):
     if character['location'] == 'school':
         print("\n5. Go home")
         print("6. Check your stats")
+    else:
+        print()
 
     while True:
         choice = input("Please input your choice: ")
@@ -77,7 +79,7 @@ def move_character(character, direction, game_map):
 def update_visited_location(character):
     player_position = (character['X'], character['Y'])
     locations = map.coordinates()
-    for location, door_positions in locations["door"].items():
+    for location, door_positions in locations["door"]["main"].items():
         if player_position == door_positions:
             character['visited_locations'][location] += 1
             break
@@ -86,10 +88,10 @@ def update_visited_location(character):
 def fast_travel(character):
     locations = map.coordinates()
     destination = input("Please input fast travel destination: home, school, hospital, park, work:")
-    if destination.lower() in locations["door"]:
+    if destination.lower() in locations["door"]["main"]:
         visited = character['visited_locations'][destination]
         if visited:
-            character['X'], character['Y'] = locations["door"][destination]
+            character['X'], character['Y'] = locations["door"]["main"][destination]
             print(f"You've fast traveled to {destination}!")
         else:
             print(f"You need to visit {destination} at least once before fast traveling there.")
