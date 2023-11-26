@@ -63,24 +63,6 @@ def execute_weekend_home_action(character):
         weekend_sleep(character)
 
 
-# def weekend_location_user_input(location):
-#     """
-#     get user input on what to do on weekend - whether to stay home or go outside
-#     returns 'home' or 'outside'
-#     """
-#     flavour_text = {'home': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor stroll'
-#                             ' or indulge in the comforts of your home?',
-#                     'outside': 'The day is still bright. What would you like to do?'}
-#     commands = {'home': 'Enter 1 to stay home, enter 2 to leave the house.',
-#                 'outside': 'Enter 1 to go home, enter 2 to stay outside.'}
-#
-#     user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
-#     while user_choice != '1' or '2':
-#         user_choice = input(f'{flavour_text[location]}\n{commands[location]}')
-#
-#     return 'home' if user_choice == '1' else 'outside'
-
-
 def get_user_choice_weekend_schoolwork():
     """
     get user choice on what kind of schoolwork to do when user is at home
