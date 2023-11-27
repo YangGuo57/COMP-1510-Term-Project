@@ -1,12 +1,7 @@
-from random import randint
-
 import map
-import menu
 import character
 import weekday
 import weekend
-import movement as mov
-import event_trigger as event
 
 
 def greeting():
@@ -33,8 +28,12 @@ def game():
     main_map = map.initialize_map(10, 20, 'coordinates')
     school_map = map.initialize_map(13, 9, 'school')
 
-    weekday.run_weekday(player, 1, school_map)
-    weekend.run_weekend(player, main_map)
+    for week in range(1, 8):
+        print(f"========== Week {week} ==========")
+        weekday.run_weekday(player, week, school_map)
+        weekend.run_weekend(player, main_map)
+        if week == 7:
+            print("Midterm exams are starting!")
 
 
 if __name__ == '__main__':
