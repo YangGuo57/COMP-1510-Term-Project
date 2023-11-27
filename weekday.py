@@ -16,14 +16,27 @@ def run_weekday(character, week, school_map):
     print(f'It is now week {week} of the term. The looming presence of the {exam} reminds you that in {7 - week} weeks '
           f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
           f'the challenges that lie ahead.')
-    weekday_schoolwork(character)
-    char.evaluate_exp(character, 'all')
-    if char.evaluate_stress(character):
-        # call ER function
-        pass
-    random_weekday_event(character)
-    char.set_character_location(character, 'school')
-    end_of_week_action(character, school_map)
+
+    while True:
+        print("Are you ready to attend classes for schoolwork? Type 1 to continue: ")
+        attend_class = input()
+        if attend_class == '1':
+            weekday_schoolwork(character)
+            char.evaluate_exp(character, 'all')
+            if char.evaluate_stress(character):
+                # call ER function
+                pass
+            if input("Do you want to initiate a random school event? Type '1' to continue, "
+                     "type anything else to skip: ").strip() == '1':
+                random_weekday_event(character)
+            else:
+                print("Skipping the random school event.")
+            char.set_character_location(character, 'school')
+            end_of_week_action(character, school_map)
+            break
+        else:
+            print("As a first-year freshman, you are required to attend school. "
+                  "Please type 1 to continue with schoolwork.")
 
 
 def end_of_week_action(character, school_map):
