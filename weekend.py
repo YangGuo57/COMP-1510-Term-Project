@@ -307,10 +307,10 @@ def generate_park_message_to_print(roll):
                                  'go check it out?\nEnter "1" to check out the flea market, "2" to continue walking.',
                       'enter flea': 'You decide to explore the flea market.',
                       'kool-aid': 'An eccentric old lady grabs you and pulls you to her stall, excitedly pitching her '
-                                  '"Mega Brain Power Elixir." She claims it can turn even the least brainy person into '
-                                  'a genius. Despite your attempts to leave, she\'s persistent. Feeling cornered, '
-                                  'you give in and buy a ridiculously expensive bottle of the mysterious liquid. With '
-                                  'reluctance, you gulp it down, and it tastes like Kool-Aid.',
+                                  '"Mega Brain Power Elixir" to you. She claims it can turn even the dumbest person '
+                                  'into a genius. Despite your attempts to leave, she\'s persistent. Feeling cornered, '
+                                  'you give in and buy a ridiculously expensive bottle of the mysterious liquid. '
+                                  'You chug it down. Hmmmm... kinda tastes like Kool-Aid.',
                       'no kool-aid': 'You see so many things you want to buy. You reach for your wallet, but Alas, '
                                      'there\'s no money inside. The sight of your empty wallet makes you sad. With a '
                                      'sigh, you turn around and leave the park.',
