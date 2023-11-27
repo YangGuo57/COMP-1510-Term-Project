@@ -93,6 +93,12 @@ def confirm_entry(location):
 
 
 def handle_school_event(character, school_map):
+    """
+    move on school map and trigger events
+    :param character:
+    :param school_map:
+    :return:
+    """
     map.print_game_map(school_map, character)
     while True:
         user_choice = mov.get_user_choice(character)
@@ -110,6 +116,12 @@ def handle_school_event(character, school_map):
 
 
 def handle_map_event(character, main_map):
+    """
+    move on main map and trigger events
+    :param character:
+    :param main_map:
+    :return:
+    """
     while True:
         map.print_game_map(main_map, character)
         choice = menu.main_menu()

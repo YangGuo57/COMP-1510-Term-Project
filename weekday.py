@@ -27,6 +27,12 @@ def run_weekday(character, week, school_map):
 
 
 def end_of_week_action(character, school_map):
+    """
+    freely move on school_map during office hours
+    :param character:
+    :param school_map:
+    :return:
+    """
     print('At last, you made it through another week. It is Friday afternoon, and you find yourself at crossroads. '
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
@@ -39,13 +45,14 @@ def end_of_week_action(character, school_map):
 
 
 def go_home(character):
+    """
+    character does not attend office hours and goes home
+    :param character:
+    :return:
+    """
     print('You decide to call it a day and head home to get some rest.')
     stress_loss = randint(8, 12) * -1
     char.change_stat(character, 'stress', stress_loss)
-
-
-def describe_office_hour_locations(character):
-    map = {'1537', '1510', '1113', '1712', 'exit'}
 
 
 def office_hours(character, subject):

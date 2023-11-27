@@ -22,6 +22,7 @@ def run_weekend(character, main_map):
     char.set_character_location(character, 'home')
     locations = event.trigger_description()
     job_attendance = False
+    applied_to_job = 0
 
     while actions > 0:
         if character['location'] == 'home':
@@ -37,7 +38,7 @@ def run_weekend(character, main_map):
             if user_choice == '1':
                 location = event.at_entrance(character)
                 if location == 'park':
-                    weekend_park(character)
+                    applied_to_job += weekend_park(character)
                 elif location == 'work':
                     weekend_job(character)
                 elif location == 'hospital':
@@ -48,7 +49,8 @@ def run_weekend(character, main_map):
                     char.set_character_location(character, location)
                     execute_weekend_home_action(character)
         actions -= 1
-    evaluate_job_attendance(character, job_attendance)
+    if not applied_to_job:
+        evaluate_job_attendance(character, job_attendance)
 
 
 def execute_weekend_home_action(character):
@@ -181,7 +183,6 @@ def weekend_hospital(character):
 def weekend_job(character):
     """
     work at part-time job
-    attend_work = True
     """
     if character['job']:
         print('You begin your shift at the cafe. The aroma of freshly brewed coffee fills the air as you learn '
@@ -212,6 +213,11 @@ def evaluate_job_attendance(character, skip):
 
 
 def evaluate_firing_from_job(character):
+    """
+    Should player be fired?
+    :param character:
+    :return:
+    """
     if character['skip_job'] >= 3:
         print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
@@ -233,6 +239,8 @@ def weekend_park(character):
         random_park_event(character)
     print('That was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
           'some spare change, perhaps you should go check it out?')
+
+    return applied_to_job
 
 
 def generate_job_posting(character):
@@ -285,6 +293,11 @@ def random_park_event(character):
 
 
 def generate_park_message_to_print(roll):
+    """
+    generate messages for random park event
+    :param roll:
+    :return:
+    """
     messages = {
         range(1, 5): 'Taking a deep breath of the fresh air in Stanley Park helps ease your anxiety as you walk.',
         range(5, 7): 'A stray cat approaches, meowing softly. You give it a gentle tummy rub, and it responds with '
@@ -310,6 +323,9 @@ def generate_park_message_to_print(roll):
 
 
 def flea_market(character):
+    """
+    carry out flea market
+    """
     messages = generate_park_message_to_print(7)
     user_choice = input(f'{messages["default"]}')
     while user_choice != '1' and user_choice != '2':
