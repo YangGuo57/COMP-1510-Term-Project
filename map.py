@@ -17,7 +17,7 @@ def coordinates():
                      "school": (3, 9),
                      "hospital": (6, 12),
                      "park": (2, 15),
-                     "work": (7, 4),},
+                     "work": (7, 4)},
             "school": {
                 "1510": (2, 6),
                 "1537": (10, 6),
