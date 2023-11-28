@@ -1,10 +1,10 @@
 from random import randint
-import character as char
 import event_trigger as event
 import character as char
+import game
 
 
-def run_weekend(character, main_map):
+def run_weekend(character, main_map, week):
     """
     initialize actions
     print weekend prompt to screen
@@ -33,9 +33,10 @@ def run_weekend(character, main_map):
             else:
                 char.set_character_location(character, locations[character['location']][user_choice])
         if character['location'] == 'outside':
-            # trigger events on big map
-            user_choice = event.handle_map_event(character, main_map)
-            if user_choice == '1':
+            choice = event.handle_map_event(character, main_map)
+            if choice == 'Exit':
+                return False
+            if choice == '1':
                 location = event.at_entrance(character)
                 if location == 'park':
                     applied_to_job += weekend_park(character)
@@ -51,6 +52,9 @@ def run_weekend(character, main_map):
         actions -= 1
     if not applied_to_job:
         evaluate_job_attendance(character, job_attendance)
+
+    game.save_game(character, week, False)
+    return True
 
 
 def execute_weekend_home_action(character):
@@ -200,7 +204,6 @@ def weekend_job(character):
     return True
 
 
-
 def evaluate_job_attendance(character, skip):
     """
     keeps track of how many times player has skipped work
@@ -266,7 +269,6 @@ def generate_job_posting(character):
         print('You decide your free time on the weekend is more important. You throw the job posting into the '
               'garbage can, because littering is bad. You venture deeper into the park.')
         return False
-
 
 
 def random_park_event(character):

@@ -1,6 +1,7 @@
 import character as char
 from random import randint
 import event_trigger as event
+import game
 
 
 def run_weekday(character, week, school_map):
@@ -34,9 +35,8 @@ def run_weekday(character, week, school_map):
             char.set_character_location(character, 'school')
             end_of_week_action(character, school_map)
             break
-        else:
-            print("As a first-year freshman, you are required to attend school. "
-                  "Please type 1 to continue with schoolwork.")
+
+    game.save_game(character, week, False)
 
 
 def end_of_week_action(character, school_map):
