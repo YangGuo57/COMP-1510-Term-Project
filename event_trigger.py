@@ -1,5 +1,5 @@
 import map
-import menu
+import utils
 import movement as mov
 import character as char
 
@@ -124,7 +124,7 @@ def handle_map_event(character, main_map):
     """
     while True:
         map.print_game_map(main_map, character)
-        choice = menu.main_menu()
+        choice = utils.main_menu()
         if choice == '1':
             while True:
                 user_choice = mov.get_user_choice(character)
@@ -142,7 +142,7 @@ def handle_map_event(character, main_map):
         elif choice == '3':
             mov.fast_travel(character)
         elif choice == '4':
-            print("Exiting the game...")
-            break
+            print("Thank you for playing! Your progress has been successfully saved. Goodbye!")
+            return False
         else:
             print("Invalid choice. Please enter a valid option.")
