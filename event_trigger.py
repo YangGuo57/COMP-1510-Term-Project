@@ -143,6 +143,6 @@ def handle_map_event(character, main_map):
             mov.fast_travel(character)
         elif choice == '4':
             print("Thank you for playing! Your progress has been successfully saved. Goodbye!")
-            return False
+            return 'Exit'
         else:
             print("Invalid choice. Please enter a valid option.")
