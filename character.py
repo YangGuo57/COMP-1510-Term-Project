@@ -30,10 +30,10 @@ def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
+                     'midterm': {'1510': None, '1537': None, '1113': None, '1712': None},
+                     'final': {'1510': None, '1537': None, '1113': None, '1712': None},
                      'visited_locations': {'home': 0, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, "1510": 0,
-                                           "1537": 0,
-                                           "1712": 0,
-                                           "1113": 0},
+                                           "1537": 0, "1712": 0, "1113": 0},
                      'location': 'home', 'job': False, 'vaccinated': False, 'skip_job': 0}
 
     questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),

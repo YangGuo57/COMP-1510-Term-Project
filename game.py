@@ -63,18 +63,25 @@ def game():
     pass_midterm = True
     pass_final = True
 
+    player['lvl']['1510'] = 3
+    player['lvl']['1537'] = 4
+
     for current_week in range(week, 5):
         print(f"========== Week {current_week} ==========")
         if current_week == 1:
             if not exam.take_exam(player, 'midterm'):
                 pass_midterm = False
                 break
+        elif current_week == 2:
+            if not exam.take_exam(player, 'final'):
+                pass_final = False
+                break
 
-        if not is_weekend:
+        elif not is_weekend:
             weekday.run_weekday(player, current_week, school_map)
             is_weekend = True
 
-        if is_weekend:
+        elif is_weekend:
             weekend_result = weekend.run_weekend(player, main_map, current_week)
             save_game(player, current_week, is_weekend)
             if not weekend_result:
@@ -84,7 +91,9 @@ def game():
         save_game(player, current_week, is_weekend)
 
     if not pass_midterm:
-        print('GAME OVER')
+        print('GAME OVER YOU FAILED YOUR MIDTERMS')
+    elif not pass_final:
+        print('GAME OVER YOU FAILED YOUR FINALS')
     else:
         print('test')
 

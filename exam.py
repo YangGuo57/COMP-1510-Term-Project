@@ -32,6 +32,8 @@ def take_exam(character, exam):
 
     statuses = exam_status()
     subjects = ['1510', '1537', '1113', '1712']
+    min_threshold = (85, 70, 55)
+    letter_grades = ('A', 'B', 'C')
     pass_or_fail = True
 
     for subject in subjects:
@@ -49,6 +51,14 @@ def take_exam(character, exam):
                   f'this {exam} was a learning experience in itself, and you feel relieved now that one more {exam} '
                   f'is over.')
             reward_character(character, subject)
+            if exam == 'midterm':
+                character['midterm'][subject] = grade
+            elif exam == 'final':
+                average = min_threshold[letter_grades.index(character['midterm'][subject])] + min_threshold[
+                    letter_grades.index(grade)] / 2
+                for threshold in min_threshold:
+                    if average > threshold:
+                        character['final'][subject] = letter_grades[min_threshold.index(threshold)]
     print(f'At last, the {exam}s are over. You let out a huge sigh of relief, and when you get home, you pass out '
           f'immediately on your bed. You are so exhausted you do not want to do anything productive this weekend, and '
           f'that\'s okay. You deserve a break.')
