@@ -18,6 +18,9 @@ def run_weekday(character, week, school_map):
           f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
           f'the challenges that lie ahead.')
 
+    character['X'] = 1
+    character['Y'] = 1
+
     while True:
         print("Are you ready to attend classes for schoolwork? Type 1 to continue: ")
         attend_class = input()
@@ -51,7 +54,7 @@ def end_of_week_action(character, school_map):
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
     subject = event.handle_school_event(character, school_map)
-    if subject == 'Back':
+    if subject == 'back':
         go_home(character)
     else:
         office_hours(character, subject)
@@ -155,7 +158,7 @@ def assessment_stat_change(character, fail, subject, assessment):
             stat_gain = randint(10, 14) * character['IQ']
 
         char.change_stat(character, subject, stat_gain)
-        char.change_stat(character, subject, stress_gain)
+        char.change_stat(character, 'stress', stress_gain)
 
 
 def fail_assessment():

@@ -4,7 +4,7 @@ import weekday
 import weekend
 import json
 import utils
-import midterm
+import exam
 
 
 def save_game(player, week, is_weekend, filename='game_save.json'):
@@ -60,14 +60,20 @@ def game():
 
     main_map = map.initialize_map(10, 20, 'coordinates')
     school_map = map.initialize_map(13, 9, 'school')
+    pass_midterm = True
+    pass_final = True
 
-    for current_week in range(week, 3):
+    for current_week in range(week, 5):
         print(f"========== Week {current_week} ==========")
+        if current_week == 1:
+            if not exam.take_exam(player, 'midterm'):
+                pass_midterm = False
+                break
+
         if not is_weekend:
             weekday.run_weekday(player, current_week, school_map)
             is_weekend = True
 
-        # Exit the game
         if is_weekend:
             weekend_result = weekend.run_weekend(player, main_map, current_week)
             save_game(player, current_week, is_weekend)
@@ -76,8 +82,11 @@ def game():
             is_weekend = False
 
         save_game(player, current_week, is_weekend)
-        if current_week == 1:
-            midterm.run_midterm(player)
+
+    if not pass_midterm:
+        print('GAME OVER')
+    else:
+        print('test')
 
 
 if __name__ == '__main__':

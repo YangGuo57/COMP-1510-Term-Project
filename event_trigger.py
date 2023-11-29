@@ -102,7 +102,7 @@ def handle_school_event(character, school_map):
     map.print_game_map(school_map, character)
     while True:
         user_choice = mov.get_user_choice(character)
-        if user_choice == "Back":
+        if user_choice == "back":
             return user_choice
         elif process_movement(user_choice, school_map, character):
             map.print_game_map(school_map, character)

@@ -119,7 +119,7 @@ def change_stat(character, attribute, amount):
         evaluate_exp(character, attribute)
     elif attribute == 'stress':
         if character[attribute] + amount < 0:
-            describe_stress_change(character, character[attribute])
+            describe_stress_change(character, amount)
             character[attribute] = 0
         else:
             character[attribute] += amount

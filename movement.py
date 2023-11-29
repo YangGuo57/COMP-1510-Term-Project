@@ -22,30 +22,27 @@ def validate_move(board, character, direction):
 
 
 def get_user_choice(character):
-    directions = ["North", "South", "West", "East"]
-    print("Choose a direction:")
-    for i, direction in enumerate(directions, 1):
-        print(f"{i}. {direction}", end=' ')
+    commands = {'w': "North", 's': "South", 'a': "West", 'd': "East"}
+    school_commands = {'back': 'To go home', 'stats': 'To see your stats'}
+
+    prompt_string = 'Choose a command:\n'
+    for i, command in enumerate(commands, 1):
+        prompt_string += f"To go {commands[command]}, type {command} \n"
     if character['location'] == 'school':
-        print("\n5. Go home")
-        print("6. Check your stats")
-    else:
-        print()
+        prompt_string += f'{school_commands["back"]}, type back \n'
+        prompt_string += f'{school_commands["stats"]}, type stats\n'
 
     while True:
-        choice = input("Please input your choice: ")
-        if choice.isdigit():
-            choice = int(choice)
-            if 1 <= choice <= 5:
-                if choice == 5:
-                    return "Back"
-                return directions[choice - 1]
-            elif character['location'] == 'school' and choice == 6:
+        choice = input(f'{prompt_string}')
+        if choice in commands:
+            return commands[choice]
+        elif choice in school_commands:
+            if character['location'] == 'school' and choice == 'stats':
                 char.print_stats(character)
             else:
-                print("Please choose a valid number!")
+                return choice
         else:
-            print("Please enter a number!")
+            print('Enter a valid input!')
 
 
 def move_character(character, direction, game_map):
