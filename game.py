@@ -1,9 +1,10 @@
 import map
-import character
+import character as char
 import weekday
 import weekend
 import json
 import utils
+import midterm
 
 
 def save_game(player, week, is_weekend, filename='game_save.json'):
@@ -28,8 +29,8 @@ def load_game(filename='game_save.json'):
 
 def start_new_game(greeting_msg):
     print(greeting_msg[1])
-    answer = character.ask_questionnaire()
-    player = character.create_character(answer)
+    answer = char.ask_questionnaire()
+    player = char.create_character(answer)
     print(greeting_msg[2])
     week = 1
     return player, week
@@ -60,7 +61,7 @@ def game():
     main_map = map.initialize_map(10, 20, 'coordinates')
     school_map = map.initialize_map(13, 9, 'school')
 
-    for current_week in range(week, 8):
+    for current_week in range(week, 3):
         print(f"========== Week {current_week} ==========")
         if not is_weekend:
             weekday.run_weekday(player, current_week, school_map)
@@ -75,8 +76,8 @@ def game():
             is_weekend = False
 
         save_game(player, current_week, is_weekend)
-        if current_week == 7:
-            print("Midterm exams are starting!")
+        if current_week == 1:
+            midterm.run_midterm(player)
 
 
 if __name__ == '__main__':
