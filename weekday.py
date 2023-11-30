@@ -82,7 +82,7 @@ def office_hours(character, subject):
     if epiphany:
         exp_gain += 100
     else:
-        exp_gain += randint(10, 15) * character['IQ']
+        exp_gain += randint(15, 20) * character['IQ']
 
     char.change_stat(character, subject, exp_gain)
     char.change_stat(character, 'stress', randint(10, 15))
@@ -115,9 +115,9 @@ def weekday_schoolwork(character):
     """
     subjects = ('1510', '1537', '1113', '1712')
     for subject in subjects:
-        experience_gained = character['IQ'] * randint(8, 12)
+        experience_gained = character['IQ'] * randint(15, 20)
         char.change_stat(character, subject, experience_gained)
-    char.change_stat(character, 'stress', randint(8, 12))
+    char.change_stat(character, 'stress', randint(5, 10))
 
 
 def random_weekday_event(character):
@@ -147,15 +147,15 @@ def assessment_stat_change(character, fail, subject, assessment):
     changes character's stats based on whether character passed or failed the assessment
     """
     if fail:
-        char.change_stat(character, 'stress', randint(10, 15))
+        char.change_stat(character, 'stress', randint(8, 12))
     else:
         stat_gain = 0
         stress_gain = randint(4, 7)
 
         if assessment == 'quiz':
-            stat_gain = randint(6, 10) * character['IQ']
+            stat_gain = randint(15, 20) * character['IQ']
         elif assessment == 'assignment':
-            stat_gain = randint(10, 14) * character['IQ']
+            stat_gain = randint(25, 30) * character['IQ']
 
         char.change_stat(character, subject, stat_gain)
         char.change_stat(character, 'stress', stress_gain)
@@ -196,7 +196,7 @@ def trauma_bond(character):
           'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
           'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
           'looms over you, and the night ends with tears as you drift off to sleep.')
-    char.change_stat(character, 'stress', randint(-5, -1))
+    char.change_stat(character, 'stress', randint(-15, -10))
 
 
 def club_event(character):
@@ -208,5 +208,5 @@ def club_event(character):
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
 
-    char.change_stat(character, 'stress', randint(-8, -5))
+    char.change_stat(character, 'stress', randint(-15, -10))
     char.change_stat(character, 'EQ', randint(1, 3))

@@ -74,27 +74,29 @@ def game():
     pass_final = True
     pass_interview = False
 
-    player['lvl']['1510'] = 5
-    player['lvl']['1537'] = 5
-    player['lvl']['1113'] = 5
-    player['lvl']['1712'] = 5
+    # player['lvl']['1510'] = 5
+    # player['lvl']['1537'] = 5
+    # player['lvl']['1113'] = 5
+    # player['lvl']['1712'] = 5
     # player['midterm'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
     # player['final'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
     # print(exam.calculate_average(player))
 
-    for current_week in range(week, 5):
+    for current_week in range(week, 15):
         print(f"========== Week {current_week} ==========")
-        if current_week == 1:
+        if current_week == 7:
             if not exam.take_exam(player, 'midterm'):
                 pass_midterm = False
                 break
-        elif current_week == 2:
+            is_weekend = True
+        elif current_week == 13:
+            is_weekend = True
             if not exam.take_exam(player, 'final'):
                 pass_final = False
                 break
             if exam.calculate_average(player) != 'A':
                 break
-        elif current_week == 3:
+        elif current_week == 14:
             pass_interview = exam.take_coop_interview(player)
             break
 

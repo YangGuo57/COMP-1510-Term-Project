@@ -3,7 +3,7 @@ from random import randint, choice
 
 import utils
 
-TOTAL_WEEKS = 3
+TOTAL_WEEKS = 14
 
 questions = (
     'How do you prioritize tasks when you have multiple deadlines to meet?\n'
@@ -32,7 +32,7 @@ def take_coop_interview(character):
         score += answer_key[answer_index][answers[answer_index]]
     score *= character['EQ']
 
-    threshold_to_pass = 4 * TOTAL_WEEKS + 13 * TOTAL_WEEKS / 2
+    threshold_to_pass = 4 * TOTAL_WEEKS + 17 * TOTAL_WEEKS / 2
 
     if (character['project'] + score) < threshold_to_pass:
         return False
@@ -116,9 +116,9 @@ def calculate_average(character):
 
 
 def evaluate_exam(character, subject, exam):
-    fail = {'midterm': 2, 'final': 2}
-    lvl_requirements = {'midterm': {2: 'F', 3: 'C', 4: 'B', 5: 'A'},
-                        'final': {2: 'F', 3: 'C', 4: 'B', 5: 'A'}}
+    fail = {'midterm': 1, 'final': 4}
+    lvl_requirements = {'midterm': {1: 'F', 2: 'C', 3: 'B', 4: 'A'},
+                        'final': {3: 'F', 4: 'C', 5: 'B', 6: 'A'}}
     if character['lvl'][subject] in lvl_requirements[exam].keys():
         return lvl_requirements[exam][character['lvl'][subject]]
     else:

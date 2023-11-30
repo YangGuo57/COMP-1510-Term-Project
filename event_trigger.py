@@ -138,9 +138,16 @@ def handle_map_event(character, main_map):
                 if user_choice == "Back":
                     break
         elif choice == '2':
-            char.menu_print_stats(character)
+            char.print_stats(character)
+            # char.menu_print_stats(character)
         elif choice == '3':
             mov.fast_travel(character)
+            map.print_game_map(main_map, character)
+            location = at_entrance(character)
+            if location == 'home':
+                return confirm_entry('home entrance')
+            elif location:
+                return confirm_entry(location)
         elif choice == '4':
             print("Thank you for playing! Your progress has been successfully saved. Goodbye!")
             return 'Exit'

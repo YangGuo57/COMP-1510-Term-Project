@@ -34,14 +34,17 @@ def run_weekend(character, main_map, week):
                 char.set_character_location(character, locations[character['location']][user_choice])
         if character['location'] == 'outside':
             choice = event.handle_map_event(character, main_map)
-            if choice == 'Exit':
-                return False
+            # if choice == 'Exit':
+            #     return False
+            while choice != '1':
+                choice = event.handle_map_event(character, main_map)
             if choice == '1':
                 location = event.at_entrance(character)
                 if location == 'park':
                     applied_to_job += weekend_park(character)
                 elif location == 'work':
                     weekend_job(character)
+                    job_attendance = True
                 elif location == 'hospital':
                     weekend_hospital(character)
                 elif location == 'school':
@@ -50,7 +53,7 @@ def run_weekend(character, main_map, week):
                     char.set_character_location(character, location)
                     execute_weekend_home_action(character)
         actions -= 1
-    if not applied_to_job:
+    if not applied_to_job and 'job' in character:
         evaluate_job_attendance(character, job_attendance)
 
     game.save_game(character, week, False)
@@ -94,8 +97,8 @@ def weekend_schoolwork(character, subject):
     """
     carry out the schoolwork and modify stats accordingly
     """
-    exp_gain = randint(10, 15) * 1 if subject == 'project' else randint(10, 15) * character['IQ']
-    stress_gain = randint(8, 12)
+    exp_gain = randint(15, 20) * 1 if subject == 'project' else randint(15, 20) * character['IQ']
+    stress_gain = randint(5, 10)
     char.change_stat(character, subject, exp_gain)
     char.change_stat(character, 'stress', stress_gain)
 
@@ -104,7 +107,7 @@ def weekend_sleep(character):
     """
     sleep
     """
-    stress_loss = randint(15, 20) * -1
+    stress_loss = randint(25, 30) * -1
     char.change_stat(character, 'stress', stress_loss)
 
 
@@ -145,13 +148,13 @@ def weekend_school(character):
     if roll == 1:
         print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
               'on their hands?')
-        stress_change += randint(5, 8) * -1
+        stress_change += randint(10, 15) * -1
         increase_in_EQ += randint(1, 3) / 10
     else:
         print('You accidentally walk into a hobo because you did not pay attention to where you were going. The hobo '
               'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
               'but the encounter leaves you feeling a bit shaken.')
-        stress_change += randint(5, 8)
+        stress_change += randint(10, 15)
         increase_in_EQ += randint(1, 3)
     char.change_stat(character, 'EQ', increase_in_EQ)
     char.change_stat(character, 'stress', stress_change)
@@ -174,7 +177,7 @@ def weekend_hospital(character):
             user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
         if user_choice == '1':
             print('The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?')
-            char.change_stat(character, 'IQ', 0.5)
+            char.change_stat(character, 'IQ', 1)
             character['vaccinated'] = True
         else:
             print('You manage to slip away from the nurse\'s grasp and escape from the hospital.')
@@ -188,12 +191,12 @@ def weekend_job(character):
     """
     work at part-time job
     """
-    if character['job']:
+    if 'job' in character and character['job']:
         print('You begin your shift at the cafe. The aroma of freshly brewed coffee fills the air as you learn '
               'the ropes—taking orders, serving customers, and maybe even mastering the art of crafting the perfect '
               'cup. Even though this does not relate to what you learn in school, you begin to feel more confident '
               'navigating work relationships.')
-        char.change_stat(character, 'wealth', 10)
+        char.change_stat(character, 'wealth', 20)
         increase_in_EQ = randint(1, 3)
         char.change_stat(character, 'EQ', increase_in_EQ)
     else:
@@ -209,7 +212,7 @@ def evaluate_job_attendance(character, skip):
     keeps track of how many times player has skipped work
     if > 2 times, player is fired
     """
-    if character['job'] and skip:
+    if character['job'] and not skip:
         character['skip_job'] += 1
         print('Uh oh, did you forget to go to work this weekend?')
         evaluate_firing_from_job(character)
@@ -235,7 +238,7 @@ def weekend_park(character):
     random_park_event() if character has not applied to a job posting
     """
     applied_to_job = False
-    if not character['job']:
+    if 'job' not in character:
         applied_to_job = generate_job_posting(character)
 
     if not applied_to_job:
@@ -290,7 +293,7 @@ def random_park_event(character):
         char.change_stat(character, 'wealth', 10)
     if roll in range(1, 5):
         print(f'{generate_park_message_to_print(roll)}')
-        stress_loss = randint(-10, -5)
+        stress_loss = randint(-15, -10)
         char.change_stat(character, 'stress', stress_loss)
 
 

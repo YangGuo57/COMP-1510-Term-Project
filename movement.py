@@ -1,5 +1,6 @@
 import map
 import character as char
+import event_trigger as event
 
 
 def validate_move(board, character, direction):
@@ -70,7 +71,8 @@ def move_character(character, direction, game_map):
         character["X"] = x_coordinate
         character["Y"] = y_coordinate
     else:
-        print("You hit a wall!")
+        if not event.at_entrance(character):
+            print("You hit a wall!")
 
 
 def update_visited_location(character):
