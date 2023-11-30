@@ -27,9 +27,19 @@ def load_game(filename='game_save.json'):
         return None, None, False
 
 
+def determine_game_ending(character, coop):
+    gpa = exam.calculate_average(character)
+    print(gpa)
+    endings = utils.ending_descriptions()
+    if coop:
+        print(f'{endings["coop"]}')
+    else:
+        print(f'{endings[gpa]}')
+
+
 def start_new_game(greeting_msg):
     print(greeting_msg[1])
-    answer = char.ask_questionnaire()
+    answer = utils.ask_questionnaire('new')
     player = char.create_character(answer)
     print(greeting_msg[2])
     week = 1
@@ -62,9 +72,15 @@ def game():
     school_map = map.initialize_map(13, 9, 'school')
     pass_midterm = True
     pass_final = True
+    pass_interview = False
 
-    player['lvl']['1510'] = 3
-    player['lvl']['1537'] = 4
+    player['lvl']['1510'] = 5
+    player['lvl']['1537'] = 5
+    player['lvl']['1113'] = 5
+    player['lvl']['1712'] = 5
+    # player['midterm'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
+    # player['final'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
+    # print(exam.calculate_average(player))
 
     for current_week in range(week, 5):
         print(f"========== Week {current_week} ==========")
@@ -76,12 +92,16 @@ def game():
             if not exam.take_exam(player, 'final'):
                 pass_final = False
                 break
+            if exam.calculate_average(player) != 'A':
+                break
+        elif current_week == 3:
+            pass_interview = exam.take_coop_interview(player)
+            break
 
-        elif not is_weekend:
+        if not is_weekend:
             weekday.run_weekday(player, current_week, school_map)
             is_weekend = True
-
-        elif is_weekend:
+        if is_weekend:
             weekend_result = weekend.run_weekend(player, main_map, current_week)
             save_game(player, current_week, is_weekend)
             if not weekend_result:
@@ -90,12 +110,13 @@ def game():
 
         save_game(player, current_week, is_weekend)
 
+    print(player)
     if not pass_midterm:
         print('GAME OVER YOU FAILED YOUR MIDTERMS')
     elif not pass_final:
         print('GAME OVER YOU FAILED YOUR FINALS')
     else:
-        print('test')
+        determine_game_ending(player, pass_interview)
 
 
 if __name__ == '__main__':

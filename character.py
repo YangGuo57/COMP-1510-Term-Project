@@ -1,31 +1,3 @@
-def ask_questionnaire():
-    answers = []
-    questions = ('When new work is assigned to you, what do you do?\n'
-                 '1. Get started on it right away\n'
-                 '2. Leave it until the last minute\n',
-                 'How would you describe your lifestyle?\n'
-                 '1. You live in the moment\n'
-                 '2. You reflect on the past and you plan for your future\n',
-                 'Which of the following statements best describes you?\n'
-                 '1. You are a social butterfly\n'
-                 '2. You need time to recharge your social battery\n',
-                 'What do you do when there is learning material you don\'t understand?\n'
-                 '1. This seldom happens; you are able to solve all challenges thrown at you\n'
-                 '2. You seek help from online resources or from other people\n')
-
-    print('Please choose one of the two options that best describes you, and enter the NUMBER representing '
-          'that option.')
-
-    for question in questions:
-        answer = input(question)
-        while answer != '1' and answer != '2':
-            print('That is not a valid entry. Enter the NUMBER representing the option that best describes you.')
-            answer = input(question)
-        answers.append(int(answer) - 1)
-
-    return answers
-
-
 def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},

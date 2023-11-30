@@ -152,7 +152,7 @@ def weekend_school(character):
               'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
               'but the encounter leaves you feeling a bit shaken.')
         stress_change += randint(5, 8)
-        increase_in_EQ += randint(3, 5) / 10
+        increase_in_EQ += randint(1, 3)
     char.change_stat(character, 'EQ', increase_in_EQ)
     char.change_stat(character, 'stress', stress_change)
 
@@ -194,7 +194,7 @@ def weekend_job(character):
               'cup. Even though this does not relate to what you learn in school, you begin to feel more confident '
               'navigating work relationships.')
         char.change_stat(character, 'wealth', 10)
-        increase_in_EQ = randint(1, 3) / 10
+        increase_in_EQ = randint(1, 3)
         char.change_stat(character, 'EQ', increase_in_EQ)
     else:
         print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment'
@@ -225,7 +225,7 @@ def evaluate_firing_from_job(character):
         print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
         character['job'] = False
-        char.change_stat(character, 'EQ', -2)
+        char.change_stat(character, 'EQ', -10)
 
 
 def weekend_park(character):
