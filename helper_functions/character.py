@@ -52,7 +52,7 @@ def print_stats(character):
     print("exp:", character['exp'])
     print("lvl:", character['lvl'])
     print("personal project progress:", character['project'])
-    if 'job' in character['job'] and character['job']:
+    if 'job' in character and character['job']:
         print('employed: True')
 
 
