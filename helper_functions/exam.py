@@ -1,22 +1,5 @@
-import character as char
 from random import randint, choice
-
-import utils
-
-questions = (
-    'How do you prioritize tasks when you have multiple deadlines to meet?\n'
-    '1. Do the task that\'s due first\n'
-    '2. Do the task that\'s more important\n',
-    'How do you handle stress and pressure in the workplace? \n'
-    '1. Cry\n'
-    '2. Bottle all the stress in at work and release the bottle when you are outside of work\n',
-    'How do you stay organized and keep track of multiple tasks or projects simultaneously?\n'
-    '1. Use a Trello board or some other type of planning tool\n'
-    '2. Use your brain to remember everything\n',
-    'How do you approach decision-making when faced with incomplete information?\n'
-    '1. Ask your coworkers, then if you still don\'t have enough information, ask your boss\n'
-    '2. Ask your boss, then if you still don\'t have enough information, ask your coworkers\n'
-)
+from helper_functions import TOTAL_WEEKS, exam_status, SUBJECTS, character as char
 
 
 def take_coop_interview(character):
@@ -24,14 +7,14 @@ def take_coop_interview(character):
           'one person interviewing you! You introduce yourself as you nervously sit down in the lone empty chair in '
           'the room. Your interviewer clears his throat, and starts asking you some questions, how will you answer?')
     answer_key = ((0, 1), (0, 1), (1, 0), (1, 0))
-    answers = utils.ask_questionnaire('coop')
+    answers = char.ask_questionnaire('coop')
     score = 0
 
     for answer_index in range(len(answers)):
         score += answer_key[answer_index][answers[answer_index]]
     score *= character['EQ']
 
-    threshold_to_pass = 4 * utils.TOTAL_WEEKS + 17 * utils.TOTAL_WEEKS / 2
+    threshold_to_pass = 4 * TOTAL_WEEKS + 17 * TOTAL_WEEKS / 2
 
     if (character['project'] + score) < threshold_to_pass:
         return False
@@ -45,10 +28,10 @@ def take_exam(character, exam):
           f'living off of coffee. God forbid the Tim Hortons downstairs closes for today... You are no different from '
           f'them. If you are not yet ready to take the exam, that\'s too bad because the exam starts NOW.')
 
-    statuses = utils.exam_status()
+    statuses = exam_status()
     pass_or_fail = True
 
-    for subject in utils.SUBJECTS:
+    for subject in SUBJECTS:
         input(f"\nPress '1' to start the exam for COMP{subject}: ")
         print(f"The COMP{subject} exam is underway...")
 
@@ -79,7 +62,7 @@ def calculate_average(character):
     averages = 0
     subject_counter = 0
 
-    for subject in utils.SUBJECTS:
+    for subject in SUBJECTS:
         average = (min_threshold[letter_grades.index(character['midterm'][subject])] + min_threshold[
             letter_grades.index(character['final'][subject])]) / 2
         averages = averages * subject_counter + average

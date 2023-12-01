@@ -1,10 +1,6 @@
-import map
-import character as char
-import weekday
-import weekend
+from helper_functions import (weekday, exam, weekend, map, character, TOTAL_WEEKS,
+                              ending_descriptions, greeting)
 import json
-import utils
-import exam
 
 
 def save_game(player, week, is_weekend, filename='game_save.json'):
@@ -27,10 +23,10 @@ def load_game(filename='game_save.json'):
         return None, None, False
 
 
-def determine_game_ending(character, coop):
-    gpa = exam.calculate_average(character)
+def determine_game_ending(player, coop):
+    gpa = exam.calculate_average(player)
     print(gpa)
-    endings = utils.ending_descriptions()
+    endings = ending_descriptions()
     if coop:
         print(f'{endings["coop"]}')
     else:
@@ -39,15 +35,15 @@ def determine_game_ending(character, coop):
 
 def start_new_game(greeting_msg):
     print(greeting_msg[1])
-    answer = utils.ask_questionnaire('new')
-    player = char.create_character(answer)
+    answer = character.ask_questionnaire('new')
+    player = character.create_character(answer)
     print(greeting_msg[2])
     week = 1
     return player, week
 
 
 def game():
-    greeting_msg = utils.greeting()
+    greeting_msg = greeting()
     print("Welcome to Survive CST!")
     print("1. Start New Game")
     print("2. Load Previous Game")
@@ -82,29 +78,29 @@ def game():
     # player['final'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
     # print(exam.calculate_average(player))
 
-    for current_week in range(week, 15):
+    for current_week in range(week, TOTAL_WEEKS + 1):
         print(f"========== Week {current_week} ==========")
-        if current_week == 7:
+        if current_week == TOTAL_WEEKS // 2:
             if not exam.take_exam(player, 'midterm'):
                 pass_midterm = False
                 break
             is_weekend = True
-        elif current_week == 13:
+        elif current_week == TOTAL_WEEKS - 1:
             is_weekend = True
             if not exam.take_exam(player, 'final'):
                 pass_final = False
                 break
             if exam.calculate_average(player) != 'A':
                 break
-        elif current_week == 14:
+        elif current_week == TOTAL_WEEKS:
             pass_interview = exam.take_coop_interview(player)
             break
 
         if not is_weekend:
-            weekday.run_weekday(player, current_week, school_map)
+            weekday.weekday(player, current_week, school_map)
             is_weekend = True
         if is_weekend:
-            weekend_result = weekend.run_weekend(player, main_map, current_week)
+            weekend_result = weekend.weekend(player, main_map, current_week)
             save_game(player, current_week, is_weekend)
             if not weekend_result:
                 break

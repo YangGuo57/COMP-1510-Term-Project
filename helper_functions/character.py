@@ -1,15 +1,18 @@
+from helper_functions import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
+
+
 def create_character(answers):
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'midterm': {'1510': None, '1537': None, '1113': None, '1712': None},
                      'final': {'1510': None, '1537': None, '1113': None, '1712': None},
-                     'visited_locations': {'home': 0, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, "1510": 0,
+                     'visited_locations': {'home': 1, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, "1510": 0,
                                            "1537": 0, "1712": 0, "1113": 0},
                      'location': 'home', 'vaccinated': False, 'skip_job': 0}
 
-    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 1}), ({'wealth': 40}, {'wealth': 20, 'EQ': 1}),
-                           ({'EQ': 1}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
+    questionnaire_stats = (({'IQ': 1.0}, {'IQ': 0.5, 'EQ': 5}), ({'wealth': 40}, {'wealth': 20, 'EQ': 5}),
+                           ({'EQ': 5}, {'wealth': 20}), ({'IQ': 0.5}, {'wealth': 20}))
 
     questionnaire_index = 0
     for answer in answers:
@@ -21,6 +24,21 @@ def create_character(answers):
     return new_character
 
 
+def ask_questionnaire(setting):
+    answers = []
+    questions = coop_interview_questions() if setting == 'coop' else initial_game_questions()
+
+    print('Choose one of the two options that best describes you, and enter the NUMBER representing that option.')
+    for question in questions:
+        answer = input(question)
+        while answer != '1' and answer != '2':
+            print('That is not a valid entry. Enter the NUMBER representing the option that best describes you.')
+            answer = input(question)
+        answers.append(int(answer) - 1)
+
+    return answers
+
+
 def print_stats(character):
     print("Your current attributes: ")
     print("IQ:", character['IQ'])
@@ -29,18 +47,9 @@ def print_stats(character):
     print("wealth:", character['wealth'])
     print("exp:", character['exp'])
     print("lvl:", character['lvl'])
-
-
-# def menu_print_stats(character):
-#     while True:
-#         input_status = input("Please type 'status' to see your current stats (type 'menu' back to main):")
-#         if input_status.lower() == 'status':
-#             print_stats(character)
-#         elif input_status.lower() == 'menu':
-#             break
-#         else:
-#             print("Invalid input. Please type 'status' to see your current attributes.")
-#             continue
+    print("personal project progress:", character('project'))
+    if 'job' in character['job'] and character['job']:
+        print('employed: True')
 
 
 def evaluate_exp(character, subject):
@@ -52,7 +61,7 @@ def evaluate_exp(character, subject):
     threshold = 100
 
     if subject == 'all':
-        subject = ('1510', '1537', '1113', '1712')
+        subject = SUBJECTS
     else:
         subject = subject,
         subject = tuple(subject)
@@ -66,37 +75,45 @@ def evaluate_exp(character, subject):
             print(f'Your COMP{each_subject} level increased by 1. It is now level {character["lvl"][each_subject]}.')
 
 
-def evaluate_stress(character):
+def describe_stress(character):
     """
-    evaluates whether character need to go to ER
+    prints to console stress warnings
     """
     if character['stress'] > 100:
-        print('Suddenly the world is spinning and darkness befalls over your eyes... You succumbed to the pressure'
-              'of life and you lay on the ground, unconscious. Thankfully, a passerby sees your motionless body and'
-              'dials 911 for assistance.')
-        return True
+        print('HAHAHAHAHAHAHA WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF')
     elif character['stress'] > 90:
-        print('You feel your heart palpitating and you can\'t breathe... Maybe you should get some rest?')
+        print('You feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?')
     elif character['stress'] > 80:
-        print('You feel a sudden light-headedness... Maybe you should take it easy?')
+        print('You feel like like your brain is no longer registering what you\'re reading... Maybe you should take it '
+              'easy?')
 
-    return False
+
+def determine_stress_multiplier(character):
+    stress_multiplier = 1
+    if character['stress'] > 100:
+        stress_multiplier -= 1
+    elif character['stress'] > 90:
+        stress_multiplier -= 0.6
+    elif character['stress'] > 80:
+        stress_multiplier -= 0.3
+    return stress_multiplier
 
 
 def change_stat(character, attribute, amount):
-    subjects = ('1510', '1537', '1712', '1113')
-    if attribute in subjects:
+    if attribute not in PRODUCTIVE_STATS:
+        amount *= determine_stress_multiplier(character)
+
+    if attribute in SUBJECTS:
         character['exp'][attribute] += amount
         describe_exp_gain(character, attribute, amount)
         evaluate_exp(character, attribute)
     elif attribute == 'stress':
         if character[attribute] + amount < 0:
-            describe_stress_change(character, amount)
             character[attribute] = 0
         else:
             character[attribute] += amount
-            describe_stress_change(character, amount)
-        evaluate_stress(character)
+        describe_stress_change(character, amount)
+        describe_stress(character)
     elif attribute == 'wealth':
         character[attribute] += amount
         describe_wealth_change(character, amount)
@@ -119,7 +136,7 @@ def describe_exp_gain(character, attribute, amount):
 
 def describe_flat_stat_gain(character, attribute, amount):
     """
-    describes how an attribute that is not exp related has changed (ie. EQ, IQ, project)
+    describes how an attribute that is not exp related has changed (EQ, IQ, project)
     """
     changes = 'increases'
     if attribute == 'EQ':
@@ -163,8 +180,7 @@ def set_character_location(character, location):
 def describe_wealth_change(character, amount):
     if amount < 0:
         print('You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"')
-        print(f'Your wealth decreases by {amount * -1}. Your bank account balance is now {character["wealth"]}. \n'
-              f'Maybe you should save up to pay for next term\'s tuition...')
+        print(f'Your wealth decreases by {amount * -1}. Your bank account balance is now {character["wealth"]}.')
     else:
         print('Earning money puts a smile on your face, who doesn\'t love money?')
         print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')

@@ -1,39 +1,4 @@
-def coordinates():
-    """
-    Stores location coordinates into a dictionary.
-
-    :return:
-    """
-    locations = {
-        "coordinates": {
-            (2, 4): "home",
-            (3, 10): "school",
-            (6, 13): "hospital",
-            (2, 16): "park",
-            (7, 5): "work"
-        },
-        "door": {
-            "main": {"home": (2, 3),
-                     "school": (3, 9),
-                     "hospital": (6, 12),
-                     "park": (2, 15),
-                     "work": (7, 4)},
-            "school": {
-                "1510": (2, 6),
-                "1537": (10, 6),
-                "1712": (7, 6),
-                "1113": (4, 6),
-            }
-
-        },
-        "school": {
-            (2, 7): "1510",
-            (10, 7): "1537",
-            (7, 7): "1712",
-            (4, 7): "1113",
-        }
-    }
-    return locations
+from helper_functions import coordinates
 
 
 def make_board(row, column, locations, keys):

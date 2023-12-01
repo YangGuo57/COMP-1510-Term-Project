@@ -1,11 +1,9 @@
-import character as char
 from random import randint
-import event_trigger as event
 import game
-import utils
+from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event
 
 
-def run_weekday(character, week, school_map):
+def weekday(character, week, school_map):
     """
     print weekday prompt to screen (eg. It is now week 5, only 2 more weeks until midterms...)
     increase exp in all subjects
@@ -14,10 +12,12 @@ def run_weekday(character, week, school_map):
     evaluate_stress()
     generate random event
     """
-    exam = 'midterms' if week < 7 else 'finals'
-    print(f'It is now week {week} of the term. The looming presence of the {exam} reminds you that in {7 - week} weeks '
-          f'you will be at the mercy of these exams. Here\'s to hoping for a productive week as you prepare to face '
-          f'the challenges that lie ahead.')
+    exam = 'midterms' if week <= 7 else 'finals'
+    exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == "midterms" else TOTAL_WEEKS - week - 1
+    end_of_term_countdown = TOTAL_WEEKS - week
+    print(f'It is now week {week} of the term, only {end_of_term_countdown} weeks until end of term 1! The looming '
+          f'presence of the {exam} reminds you that in {exam_countdown} weeks you will be at the mercy of these exams. '
+          f'Here\'s to hoping for a productive week as you prepare to face  the challenges that lie ahead.')
 
     character['X'] = 1
     character['Y'] = 1
@@ -28,9 +28,6 @@ def run_weekday(character, week, school_map):
         if attend_class == '1':
             weekday_schoolwork(character)
             char.evaluate_exp(character, 'all')
-            if char.evaluate_stress(character):
-                # call ER function
-                pass
             if input("Do you want to initiate a random school event? Type '1' to continue, "
                      "type anything else to skip: ").strip() == '1':
                 random_weekday_event(character)
@@ -54,7 +51,7 @@ def end_of_week_action(character, school_map):
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
-    subject = event.handle_school_event(character, school_map)
+    subject = event.move_during_office_hours(character, school_map)
     if subject == 'back':
         go_home(character)
     else:
@@ -68,7 +65,7 @@ def go_home(character):
     :return:
     """
     print('You decide to call it a day and head home to get some rest.')
-    stress_loss = randint(8, 12) * -1
+    stress_loss = randint(10, 15) * -1
     char.change_stat(character, 'stress', stress_loss)
 
 
@@ -114,7 +111,7 @@ def weekday_schoolwork(character):
     adds stress
     calls other functions to print stat changes
     """
-    for subject in utils.SUBJECTS:
+    for subject in SUBJECTS:
         experience_gained = character['IQ'] * randint(15, 20)
         char.change_stat(character, subject, experience_gained)
     char.change_stat(character, 'stress', randint(5, 10))
@@ -128,7 +125,7 @@ def random_weekday_event(character):
     """
     roll = randint(1, 4)
     subject = roll_subject()
-    fail = fail_assessment()
+    fail = True if randint(0, 1) else False
 
     if roll == 1:
         club_event(character)
@@ -161,13 +158,6 @@ def assessment_stat_change(character, fail, subject, assessment):
         char.change_stat(character, 'stress', stress_gain)
 
 
-def fail_assessment():
-    """
-    decides whether character passes or fails the assessment randomly at 50% chance
-    """
-    return True if randint(0, 1) else False
-
-
 def print_assessment_results(fail, subject, assessment):
     """
     prints flavour text to screen, describing whether character has passed or failed the assessment
@@ -183,8 +173,7 @@ def roll_subject():
     randomly rolls one subject out of four subjects at 25% chance
     """
     roll = randint(0, 3)
-    subjects = ('1510', '1537', '1113', '1712')
-    return subjects[roll]
+    return SUBJECTS[roll]
 
 
 def trauma_bond(character):

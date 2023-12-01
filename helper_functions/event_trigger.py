@@ -1,43 +1,4 @@
-import map
-import utils
-import movement as mov
-import character as char
-
-
-def trigger_description():
-    message = {
-        "school": "You are at the entrance to BCIT. Do you want to enter?\n"
-                  "Enter '1' to enter the building, '2' to leave.",
-        "home entrance": "You arrive at the doorsteps of your home, feeling a bit worn out from all the walking. Do "
-                         "you want to go home?\n"
-                         "Enter '1' to enter your house, '2' to leave.",
-        "hospital": "You are at the doorsteps of the Vancouver General Hospital. Do you want to enter?\n"
-                    "Enter '1' to enter the hospital, '2' to leave. ",
-        "park": 'You are at the entrance of Stanley Park. Do you want to enter and take a leisurely stroll? \n'
-                'Enter "1" to enter the park, "2" to leave.',
-        "work": "You are at the entrance of a local cafe. Do you want to enter?\n"
-                "Enter '1' to enter the cafe, '2' to leave.",
-        "1510": "The office of the COMP1510 instructor stands before you. Do you want to bug the instructor about "
-                "material you don't understand? \n"
-                "Enter '1' to enter the office, '2' to think about it some more.",
-        "1113": "The office of the COMP1113 instructor stands before you. Do you want to bug the instructor about "
-                "material you don't understand? \n"
-                "Enter '1' to enter the office, '2' to think about it some more.",
-        "1712": "The office of the COMP1712 instructor stands before you. Do you want to bug the instructor about "
-                "material you don't understand? \n"
-                "Enter '1' to enter the office, '2' to think about it some more.",
-        "1537": "The office of the COMP1537 instructor stands before you. Do you want to bug the instructor about "
-                "material you don't understand? \n"
-                "Enter '1' to enter the office, '2' to think about it some more.",
-        "home": {'description': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor '
-                                'stroll or indulge in the comforts of your home? \n'
-                                'Enter "1" to stay home, enter "2" to leave the house.',
-                 '1': 'home',
-                 '2': 'outside'}
-
-    }
-
-    return message
+from helper_functions import trigger_description, SUBJECTS, movement as mov, character as char, map
 
 
 def process_movement(user_choice, game_map, character):
@@ -92,7 +53,7 @@ def confirm_entry(location):
         return confirm
 
 
-def handle_school_event(character, school_map):
+def move_during_office_hours(character, school_map):
     """
     move on school map and trigger events
     :param character:
@@ -100,14 +61,17 @@ def handle_school_event(character, school_map):
     :return:
     """
     map.print_game_map(school_map, character)
+
     while True:
         user_choice = mov.get_user_choice(character)
+
         if user_choice == "back":
             return user_choice
         elif process_movement(user_choice, school_map, character):
             map.print_game_map(school_map, character)
             location = at_entrance(character)
-            if location in ["1510", "1113", "1712", "1537"]:
+
+            if location in SUBJECTS:
                 entry_confirmation = confirm_entry(location)
                 if entry_confirmation == '1':
                     return location
@@ -115,7 +79,7 @@ def handle_school_event(character, school_map):
                     map.print_game_map(school_map, character)
 
 
-def handle_map_event(character, main_map):
+def move_on_weekends(character, main_map):
     """
     move on main map and trigger events
     :param character:
@@ -124,7 +88,8 @@ def handle_map_event(character, main_map):
     """
     while True:
         map.print_game_map(main_map, character)
-        choice = utils.main_menu()
+        choice = main_menu()
+
         if choice == '1':
             while True:
                 user_choice = mov.get_user_choice(character)
@@ -139,7 +104,6 @@ def handle_map_event(character, main_map):
                     break
         elif choice == '2':
             char.print_stats(character)
-            # char.menu_print_stats(character)
         elif choice == '3':
             mov.fast_travel(character)
             map.print_game_map(main_map, character)
@@ -153,3 +117,13 @@ def handle_map_event(character, main_map):
             return 'Exit'
         else:
             print("Invalid choice. Please enter a valid option.")
+
+
+def main_menu():
+    print("1. Move")
+    print("2. Check Status")
+    print("3. Fast Travel")
+    print("4. Exit")
+
+    choice = input("Please choose an option: ")
+    return choice

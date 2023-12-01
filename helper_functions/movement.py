@@ -1,6 +1,4 @@
-import map
-import character as char
-import event_trigger as event
+from helper_functions import map, character as char, event_trigger as event
 
 
 def validate_move(board, character, direction):

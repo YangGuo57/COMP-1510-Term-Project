@@ -1,10 +1,9 @@
-from random import randint
-import event_trigger as event
-import character as char
 import game
+from random import randint
+from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char
 
 
-def run_weekend(character, main_map, week):
+def weekend(character, main_map, week):
     """
     initialize actions
     print weekend prompt to screen
@@ -34,9 +33,9 @@ def run_weekend(character, main_map, week):
                 char.set_character_location(character, locations[character['location']][user_choice])
         if character['location'] == 'outside':
             # trigger events on the big map
-            choice = event.handle_map_event(character, main_map)
+            choice = event.move_on_weekends(character, main_map)
             while choice != '1':
-                choice = event.handle_map_event(character, main_map)
+                choice = event.move_on_weekends(character, main_map)
             if choice == '1':
                 location = event.at_entrance(character)
                 if location == 'park':
@@ -76,21 +75,20 @@ def get_user_choice_weekend_schoolwork():
     """
     get user choice on what kind of schoolwork to do when user is at home
     """
-    choices = ('1510', '1537', '1113', '1712', 'project')
     user_choice = input('What do you want to work on? \n'
                         'Enter 1 to work on COMP1510,\n'
-                        'enter 2 to work on COMP1537,\n'
-                        'enter 3 to work on COMP1113,\n'
-                        'enter 4 to work on COMP1712,\n'
-                        'enter 5 to work on your personal project.')
-    while user_choice not in '12345':
+                        'Enter 2 to work on COMP1537,\n'
+                        'Enter 3 to work on COMP1113,\n'
+                        'Enter 4 to work on COMP1712,\n'
+                        'Enter 5 to work on your personal project.')
+    while user_choice not in ('1', '2', '3', '4', '5'):
         user_choice = input('What do you want to work on? \n'
                             'Enter 1 to work on COMP1510,\n'
-                            'enter 2 to work on COMP1537,\n'
-                            'enter 3 to work on COMP1113,\n'
-                            'enter 4 to work on COMP1712,\n'
-                            'enter 5 to work on your personal project.')
-    return choices[int(user_choice) - 1]
+                            'Enter 2 to work on COMP1537,\n'
+                            'Enter 3 to work on COMP1113,\n'
+                            'Enter 4 to work on COMP1712,\n'
+                            'Enter 5 to work on your personal project.')
+    return PRODUCTIVE_STATS[int(user_choice) - 1]
 
 
 def weekend_schoolwork(character, subject):
@@ -143,20 +141,20 @@ def weekend_school(character):
     print('The school is closed weekends. Why are you even here?')
     roll = randint(1, 2)
     stress_change = 0
-    increase_in_EQ = 0
+    increase_in_eq = 0
     print(roll)
     if roll == 1:
         print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
               'on their hands?')
         stress_change += randint(10, 15) * -1
-        increase_in_EQ += randint(1, 3) / 10
+        increase_in_eq += randint(1, 3) / 10
     else:
         print('You accidentally walk into a hobo because you did not pay attention to where you were going. The hobo '
               'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
               'but the encounter leaves you feeling a bit shaken.')
         stress_change += randint(10, 15)
-        increase_in_EQ += randint(1, 3)
-    char.change_stat(character, 'EQ', increase_in_EQ)
+        increase_in_eq += randint(1, 3)
+    char.change_stat(character, 'EQ', increase_in_eq)
     char.change_stat(character, 'stress', stress_change)
 
 
@@ -197,8 +195,8 @@ def weekend_job(character):
               'cup. Even though this does not relate to what you learn in school, you begin to feel more confident '
               'navigating work relationships.')
         char.change_stat(character, 'wealth', 20)
-        increase_in_EQ = randint(1, 3)
-        char.change_stat(character, 'EQ', increase_in_EQ)
+        increase_in_eq = randint(1, 3)
+        char.change_stat(character, 'EQ', increase_in_eq)
     else:
         print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment'
               'is heavily distracting. You don\'t get anything done.')

@@ -1,15 +1,6 @@
 TOTAL_WEEKS = 14
 SUBJECTS = ('1510', '1537', '1113', '1712')
-
-
-def main_menu():
-    print("1. Move")
-    print("2. Check Status")
-    print("3. Fast Travel")
-    print("4. Exit")
-
-    choice = input("Please choose an option: ")
-    return choice
+PRODUCTIVE_STATS = ('1510', '1537', '1113', '1712', 'project')
 
 
 def greeting():
@@ -61,21 +52,6 @@ def initial_game_questions():
     return questions
 
 
-def ask_questionnaire(setting):
-    answers = []
-    questions = coop_interview_questions() if setting == 'coop' else initial_game_questions()
-
-    print('Choose one of the two options that best describes you, and enter the NUMBER representing that option.')
-    for question in questions:
-        answer = input(question)
-        while answer != '1' and answer != '2':
-            print('That is not a valid entry. Enter the NUMBER representing the option that best describes you.')
-            answer = input(question)
-        answers.append(int(answer) - 1)
-
-    return answers
-
-
 def ending_descriptions():
     endings = {
         'coop': 'Fantastic news, you passed the interview with flying colours! Not only did you secure an impressive A '
@@ -97,6 +73,7 @@ def ending_descriptions():
     }
     return endings
 
+
 def exam_status():
     status = {
         'A': ("Yay, you studied really hard for this subject and you\'re feeling confident!",
@@ -117,3 +94,75 @@ def exam_status():
               'question... Nice try.')
     }
     return status
+
+
+def coordinates():
+    """
+    Stores location coordinates into a dictionary.
+
+    :return:
+    """
+    locations = {
+        "coordinates": {
+            (2, 4): "home",
+            (3, 10): "school",
+            (6, 13): "hospital",
+            (2, 16): "park",
+            (7, 5): "work"
+        },
+        "door": {
+            "main": {"home": (2, 3),
+                     "school": (3, 9),
+                     "hospital": (6, 12),
+                     "park": (2, 15),
+                     "work": (7, 4)},
+            "school": {
+                "1510": (2, 6),
+                "1537": (10, 6),
+                "1712": (7, 6),
+                "1113": (4, 6),
+            }
+
+        },
+        "school": {
+            (2, 7): "1510",
+            (10, 7): "1537",
+            (7, 7): "1712",
+            (4, 7): "1113",
+        }
+    }
+    return locations
+
+
+def trigger_description():
+    message = {
+        "school": "You are at the entrance to BCIT. Do you want to enter?\n"
+                  "Enter '1' to enter the building, '2' to leave.",
+        "home entrance": "You arrive at the doorsteps of your home, feeling a bit worn out from all the walking. Do "
+                         "you want to go home?\n"
+                         "Enter '1' to enter your house, '2' to leave.",
+        "hospital": "You are at the doorsteps of the Vancouver General Hospital. Do you want to enter?\n"
+                    "Enter '1' to enter the hospital, '2' to leave. ",
+        "park": 'You are at the entrance of Stanley Park. Do you want to enter and take a leisurely stroll? \n'
+                'Enter "1" to enter the park, "2" to leave.',
+        "work": "You are at the entrance of a local cafe. Do you want to enter?\n"
+                "Enter '1' to enter the cafe, '2' to leave.",
+        "1510": "The office of the COMP1510 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1113": "The office of the COMP1113 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1712": "The office of the COMP1712 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "1537": "The office of the COMP1537 instructor stands before you. Do you want to bug the instructor about "
+                "material you don't understand? \n"
+                "Enter '1' to enter the office, '2' to think about it some more.",
+        "home": {'description': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor '
+                                'stroll or indulge in the comforts of your home? \n'
+                                'Enter "1" to stay home, enter "2" to leave the house.',
+                 '1': 'home',
+                 '2': 'outside'}
+    }
+    return message
