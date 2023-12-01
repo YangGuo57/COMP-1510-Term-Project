@@ -33,9 +33,8 @@ def run_weekend(character, main_map, week):
             else:
                 char.set_character_location(character, locations[character['location']][user_choice])
         if character['location'] == 'outside':
+            # trigger events on the big map
             choice = event.handle_map_event(character, main_map)
-            # if choice == 'Exit':
-            #     return False
             while choice != '1':
                 choice = event.handle_map_event(character, main_map)
             if choice == '1':
@@ -53,6 +52,7 @@ def run_weekend(character, main_map, week):
                     char.set_character_location(character, location)
                     execute_weekend_home_action(character)
         actions -= 1
+
     if not applied_to_job and 'job' in character:
         evaluate_job_attendance(character, job_attendance)
 

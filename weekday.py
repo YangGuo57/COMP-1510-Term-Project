@@ -2,6 +2,7 @@ import character as char
 from random import randint
 import event_trigger as event
 import game
+import utils
 
 
 def run_weekday(character, week, school_map):
@@ -113,8 +114,7 @@ def weekday_schoolwork(character):
     adds stress
     calls other functions to print stat changes
     """
-    subjects = ('1510', '1537', '1113', '1712')
-    for subject in subjects:
+    for subject in utils.SUBJECTS:
         experience_gained = character['IQ'] * randint(15, 20)
         char.change_stat(character, subject, experience_gained)
     char.change_stat(character, 'stress', randint(5, 10))
