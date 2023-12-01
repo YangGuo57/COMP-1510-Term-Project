@@ -1,6 +1,7 @@
 from helper_functions import (weekday, exam, weekend, map, character, TOTAL_WEEKS,
-                              ending_descriptions, greeting)
+                              ending_descriptions, greeting, ascii)
 import json
+from time import sleep
 
 
 def save_game(player, week, is_weekend, filename='game_save.json'):
@@ -34,6 +35,7 @@ def determine_game_ending(player, coop):
 
 
 def start_new_game(greeting_msg):
+    sleep(0.5)
     print(greeting_msg[1])
     answer = character.ask_questionnaire('new')
     player = character.create_character(answer)
@@ -44,6 +46,7 @@ def start_new_game(greeting_msg):
 
 def game():
     greeting_msg = greeting()
+    sleep(0.5)
     print("Welcome to Survive CST!")
     print("1. Start New Game")
     print("2. Load Previous Game")
@@ -51,6 +54,7 @@ def game():
         load_choice = input("Please choose an option (1 or 2): ")
         if load_choice == '1':
             print("Starting a fresh new journey in Survive CST!")
+            sleep(0.5)
             player, week = start_new_game(greeting_msg)
             is_weekend = False
             break
@@ -79,6 +83,9 @@ def game():
     # print(exam.calculate_average(player))
 
     for current_week in range(week, TOTAL_WEEKS + 1):
+        sleep(0.5)
+        ascii.print_ascii('new_week')
+
         print(f"========== Week {current_week} ==========")
         if current_week == TOTAL_WEEKS // 2:
             if not exam.take_exam(player, 'midterm'):
@@ -100,6 +107,7 @@ def game():
             weekday.weekday(player, current_week, school_map)
             is_weekend = True
         if is_weekend:
+            ascii.print_ascii('weekend')
             weekend_result = weekend.weekend(player, main_map, current_week)
             save_game(player, current_week, is_weekend)
             if not weekend_result:

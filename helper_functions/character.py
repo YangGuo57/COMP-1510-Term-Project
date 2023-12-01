@@ -1,4 +1,5 @@
 from helper_functions import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
+from time import sleep
 
 
 def create_character(answers):
@@ -29,13 +30,16 @@ def ask_questionnaire(setting):
     questions = coop_interview_questions() if setting == 'coop' else initial_game_questions()
 
     print('Choose one of the two options that best describes you, and enter the NUMBER representing that option.')
+    sleep(0.5)
     for question in questions:
         answer = input(question)
         while answer != '1' and answer != '2':
             print('That is not a valid entry. Enter the NUMBER representing the option that best describes you.')
+            sleep(0.5)
             answer = input(question)
         answers.append(int(answer) - 1)
 
+    sleep(0.5)
     return answers
 
 

@@ -1,6 +1,7 @@
 import game
 from random import randint
 from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char
+from time import sleep
 
 
 def weekend(character, main_map, week):
@@ -98,6 +99,7 @@ def weekend_schoolwork(character, subject):
     exp_gain = randint(15, 20) * 1 if subject == 'project' else randint(15, 20) * character['IQ']
     stress_gain = randint(5, 10)
     char.change_stat(character, subject, exp_gain)
+    sleep(0.5)
     char.change_stat(character, 'stress', stress_gain)
 
 
@@ -347,3 +349,5 @@ def flea_market(character):
     else:
         print(f'{messages["leave flea"]}')
         return False
+
+

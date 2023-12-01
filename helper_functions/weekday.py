@@ -1,6 +1,7 @@
 from random import randint
 import game
 from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event
+from time import sleep
 
 
 def weekday(character, week, school_map):
@@ -15,6 +16,7 @@ def weekday(character, week, school_map):
     exam = 'midterms' if week <= 7 else 'finals'
     exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == "midterms" else TOTAL_WEEKS - week - 1
     end_of_term_countdown = TOTAL_WEEKS - week
+    sleep(1)
     print(f'It is now week {week} of the term, only {end_of_term_countdown} weeks until end of term 1! The looming '
           f'presence of the {exam} reminds you that in {exam_countdown} weeks you will be at the mercy of these exams. '
           f'Here\'s to hoping for a productive week as you prepare to face  the challenges that lie ahead.')
@@ -23,20 +25,25 @@ def weekday(character, week, school_map):
     character['Y'] = 1
 
     while True:
+        sleep(1)
         print("Are you ready to attend classes for schoolwork? Type 1 to continue: ")
         attend_class = input()
         if attend_class == '1':
+            sleep(0.5)
             weekday_schoolwork(character)
             char.evaluate_exp(character, 'all')
+            sleep(1)
             if input("Do you want to initiate a random school event? Type '1' to continue, "
                      "type anything else to skip: ").strip() == '1':
                 random_weekday_event(character)
             else:
                 print("Skipping the random school event.")
+            sleep(1)
             char.set_character_location(character, 'school')
             end_of_week_action(character, school_map)
             break
 
+    sleep(0.5)
     game.save_game(character, week, False)
 
 
@@ -51,6 +58,7 @@ def end_of_week_action(character, school_map):
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
+    sleep(1)
     subject = event.move_during_office_hours(character, school_map)
     if subject == 'back':
         go_home(character)
@@ -65,6 +73,7 @@ def go_home(character):
     :return:
     """
     print('You decide to call it a day and head home to get some rest.')
+    sleep(0.5)
     stress_loss = randint(10, 15) * -1
     char.change_stat(character, 'stress', stress_loss)
 
@@ -76,6 +85,7 @@ def office_hours(character, subject):
     epiphany = roll_epiphany()
     exp_gain = 0
     print_epiphany_office_hours(subject, epiphany)
+    sleep(0.5)
 
     if epiphany:
         exp_gain += 100
@@ -83,6 +93,7 @@ def office_hours(character, subject):
         exp_gain += randint(15, 20) * character['IQ']
 
     char.change_stat(character, subject, exp_gain)
+    sleep(0.5)
     char.change_stat(character, 'stress', randint(10, 15))
 
 
@@ -114,6 +125,7 @@ def weekday_schoolwork(character):
     for subject in SUBJECTS:
         experience_gained = character['IQ'] * randint(15, 20)
         char.change_stat(character, subject, experience_gained)
+    sleep(1)
     char.change_stat(character, 'stress', randint(5, 10))
 
 
@@ -133,9 +145,11 @@ def random_weekday_event(character):
         trauma_bond(character)
     elif roll == 3:
         print_assessment_results(fail, subject, 'quiz')
+        sleep(1)
         assessment_stat_change(character, fail, subject, 'quiz')
     else:
         print_assessment_results(fail, subject, 'assignment')
+        sleep(1)
         assessment_stat_change(character, fail, subject, 'assignment')
 
 
@@ -155,6 +169,7 @@ def assessment_stat_change(character, fail, subject, assessment):
             stat_gain = randint(25, 30) * character['IQ']
 
         char.change_stat(character, subject, stat_gain)
+        sleep(0.5)
         char.change_stat(character, 'stress', stress_gain)
 
 
@@ -185,6 +200,7 @@ def trauma_bond(character):
           'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
           'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
           'looms over you, and the night ends with tears as you drift off to sleep.')
+    sleep(1)
     char.change_stat(character, 'stress', randint(-15, -10))
 
 
@@ -196,6 +212,6 @@ def club_event(character):
           'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
-
+    sleep(1)
     char.change_stat(character, 'stress', randint(-15, -10))
     char.change_stat(character, 'EQ', randint(1, 3))
