@@ -19,6 +19,7 @@ def weekend(character, main_map, week):
     # set player location to home
     character['X'] = 2
     character['Y'] = 3
+    sleep(0.5)
     char.set_character_location(character, 'home')
     locations = event.trigger_description()
     job_attendance = False
@@ -38,6 +39,7 @@ def weekend(character, main_map, week):
             while choice != '1':
                 choice = event.move_on_weekends(character, main_map)
             if choice == '1':
+                sleep(0.5)
                 location = event.at_entrance(character)
                 if location == 'park':
                     applied_to_job += weekend_park(character)
@@ -65,7 +67,9 @@ def execute_weekend_home_action(character):
     do the action
     """
     choice = weekend_action_user_input(character)
+    sleep(0.5)
     describe_weekend_home_action(choice)
+    sleep(0.5)
     if choice == '1':
         weekend_schoolwork(character, get_user_choice_weekend_schoolwork())
     else:
@@ -83,6 +87,8 @@ def get_user_choice_weekend_schoolwork():
                         'Enter 4 to work on COMP1712,\n'
                         'Enter 5 to work on your personal project.')
     while user_choice not in ('1', '2', '3', '4', '5'):
+        print('That is not a valid entry.')
+        sleep(0.5)
         user_choice = input('What do you want to work on? \n'
                             'Enter 1 to work on COMP1510,\n'
                             'Enter 2 to work on COMP1537,\n'
@@ -132,6 +138,7 @@ def weekend_action_user_input(character):
     user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
     while user_choice != '1' and user_choice != '2':
         print('That is not a valid command.')
+        sleep(0.5)
         user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
     return user_choice
 
@@ -141,6 +148,7 @@ def weekend_school(character):
     generates random events at school on a weekend
     """
     print('The school is closed weekends. Why are you even here?')
+    sleep(0.5)
     roll = randint(1, 2)
     stress_change = 0
     increase_in_eq = 0
@@ -156,7 +164,9 @@ def weekend_school(character):
               'but the encounter leaves you feeling a bit shaken.')
         stress_change += randint(10, 15)
         increase_in_eq += randint(1, 3)
+    sleep(0.5)
     char.change_stat(character, 'EQ', increase_in_eq)
+    sleep(0.5)
     char.change_stat(character, 'stress', stress_change)
 
 
@@ -167,16 +177,20 @@ def weekend_hospital(character):
     print('As you step inside Vancouver General Hospital, the scent of disinfectants greets you. Inside, '
           'it\'s serious with doctors and nurses bustling around, and you stand at the entrance feeling a bit lost. '
           'A nurse notices you and walks up to you.')
+    sleep(0.5)
     if not character['vaccinated']:
         print('"You must be here for your annual vaccination," she says, "Now don\'t stand there and block the way, '
               'the lineup for getting your vaccine is this way."\n'
               'She grabs you by your arm and tries to lead you deeper into the hospital.')
+        sleep(0.5)
         user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
         while user_choice != '1' and user_choice != '2':
             print('That is not a valid option.')
+            sleep(0.5)
             user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
         if user_choice == '1':
             print('The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?')
+            sleep(0.5)
             char.change_stat(character, 'IQ', 1)
             character['vaccinated'] = True
         else:
@@ -196,12 +210,15 @@ def weekend_job(character):
               'the ropes—taking orders, serving customers, and maybe even mastering the art of crafting the perfect '
               'cup. Even though this does not relate to what you learn in school, you begin to feel more confident '
               'navigating work relationships.')
+        sleep(0.5)
         char.change_stat(character, 'wealth', 20)
         increase_in_eq = randint(1, 3)
+        sleep(0.5)
         char.change_stat(character, 'EQ', increase_in_eq)
     else:
         print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment'
               'is heavily distracting. You don\'t get anything done.')
+        sleep(0.5)
     stress_gain = randint(5, 8)
     char.change_stat(character, 'stress', stress_gain)
     return True
@@ -214,6 +231,7 @@ def evaluate_job_attendance(character, skip):
     """
     if character['job'] and not skip:
         character['skip_job'] += 1
+        sleep(1)
         print('Uh oh, did you forget to go to work this weekend?')
         evaluate_firing_from_job(character)
 
@@ -225,6 +243,7 @@ def evaluate_firing_from_job(character):
     :return:
     """
     if character['skip_job'] >= 3:
+        sleep(1)
         print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
         character['job'] = False
@@ -243,6 +262,7 @@ def weekend_park(character):
 
     if not applied_to_job:
         random_park_event(character)
+    sleep(1)
     print('That was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
           'some spare change, perhaps you should go check it out?')
 
@@ -259,9 +279,11 @@ def generate_job_posting(character):
           f'breeze. Snatching it from the air, you realize it\'s a job posting - a local cafe is looking '
           f'for a weekend part-timer,  just a stone\'s throw away from your home! Extra money will always come '
           f'in handy... but it comes at the cost of sacrificing precious weekend hours. Should you apply?')
+    sleep(1)
     user_choice = input(f'Enter "1" to apply, "2" to ignore.')
     while user_choice != '1' and user_choice != '2':
         print('That is not a valid input!')
+        sleep(0.5)
         user_choice = input(f'Enter "1" to apply, "2" to ignore.')
     if user_choice == '1':
         print('You applied and got the job immediately! Guess they were really desperate for help. Don\'t forget '
@@ -282,6 +304,7 @@ def random_park_event(character):
 
     if roll in range(5, 7):
         print(f'{generate_park_message_to_print(roll)}')
+        sleep(0.5)
         stress_loss = randint(-20, -15)
         char.change_stat(character, 'stress', stress_loss)
     elif roll in range(7, 9):
@@ -290,9 +313,11 @@ def random_park_event(character):
             roll -= 5
     elif roll in range(9, 11):
         print(f'{generate_park_message_to_print(roll)}')
+        sleep(0.5)
         char.change_stat(character, 'wealth', 10)
     if roll in range(1, 5):
         print(f'{generate_park_message_to_print(roll)}')
+        sleep(0.5)
         stress_loss = randint(-15, -10)
         char.change_stat(character, 'stress', stress_loss)
 
@@ -332,18 +357,26 @@ def flea_market(character):
     carry out flea market
     """
     messages = generate_park_message_to_print(7)
+    sleep(0.5)
     user_choice = input(f'{messages["default"]}')
     while user_choice != '1' and user_choice != '2':
+        print('That is not a valid entry.')
+        sleep(0.5)
         user_choice = input(f'{messages["default"]}')
     if user_choice == '1':
         print(f'{messages["enter flea"]}')
+        sleep(0.5)
         if character['wealth'] >= 60:
             print(f'{messages["kool-aid"]}')
+            sleep(0.5)
             char.change_stat(character, 'wealth', -60)
+            sleep(0.5)
             char.change_stat(character, 'IQ', 0.5)
         else:
             print(f'{messages["no kool-aid"]}')
+            sleep(0.5)
             stress_gain = randint(10, 15)
+            sleep(0.5)
             char.change_stat(character, 'stress', stress_gain)
         return True
     else:

@@ -1,11 +1,13 @@
 from random import randint, choice
 from helper_functions import TOTAL_WEEKS, exam_status, SUBJECTS, character as char
+from time import sleep
 
 
 def take_coop_interview(character):
     print('As you step into the interview room, you are greeted with a few pairs of eyes - wow, there are more than '
           'one person interviewing you! You introduce yourself as you nervously sit down in the lone empty chair in '
           'the room. Your interviewer clears his throat, and starts asking you some questions, how will you answer?')
+    sleep(0.5)
     answer_key = ((0, 1), (0, 1), (1, 0), (1, 0))
     answers = char.ask_questionnaire('coop')
     score = 0
@@ -27,16 +29,20 @@ def take_exam(character, exam):
           f'you see are the blank stares of your sleep-deprived classmates who pulled consecutive all-nighters and are '
           f'living off of coffee. God forbid the Tim Hortons downstairs closes for today... You are no different from '
           f'them. If you are not yet ready to take the exam, that\'s too bad because the exam starts NOW.')
-
+    sleep(0.5)
     statuses = exam_status()
     pass_or_fail = True
 
     for subject in SUBJECTS:
+        sleep(0.5)
         input(f"\nPress '1' to start the exam for COMP{subject}: ")
+        sleep(0.5)
         print(f"The COMP{subject} exam is underway...")
 
         grade = evaluate_exam(character, subject, exam)
+        sleep(0.5)
         print(choice(statuses[grade]))
+        sleep(0.5)
 
         if grade == 'F':
             print(f"You failed COMP{subject}. Better luck next time.")
@@ -45,11 +51,13 @@ def take_exam(character, exam):
             print(f'Phew, you passed and you got {"an" if grade == "A" else "a"} {grade} in COMP{subject}. Writing '
                   f'this {exam} was a learning experience in itself, and you feel relieved now that one more {exam} '
                   f'is over.')
+            sleep(0.5)
             reward_character(character, subject)
             if exam == 'midterm':
                 character['midterm'][subject] = grade
             elif exam == 'final':
                 character['final'][subject] = grade
+    sleep(0.5)
     print(f'At last, the {exam}s are over. You let out a huge sigh of relief, and when you get home, you pass out '
           f'immediately on your bed. You are so exhausted you do not want to do anything productive this weekend, and '
           f'that\'s okay. You deserve a break.')
@@ -88,4 +96,5 @@ def reward_character(character, subject):
     exp_gain = randint(10, 15) * character['IQ']
 
     char.change_stat(character, subject, exp_gain)
+    sleep(0.5)
     char.change_stat(character, 'stress', stress_loss)
