@@ -12,7 +12,7 @@ def greeting():
            "you came to this foreign city in hopes that computer science is the right career for you. As you step out "
            "of the elevator, you tell yourself: Don't stress, learn lots, make friends, get co-op, and most "
            "importantly, have fun!",
-        3: "",
+        3: "Just remember: do NOT fail any midterms or finals, because you'll get kicked out of the program!",
     }
 
     return greeting_dict

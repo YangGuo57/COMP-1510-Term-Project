@@ -110,9 +110,9 @@ def game():
 
     print(player)
     if not pass_midterm:
-        print('GAME OVER YOU FAILED YOUR MIDTERMS')
+        print('GAME OVER! YOU FAILED YOUR MIDTERMS :(')
     elif not pass_final:
-        print('GAME OVER YOU FAILED YOUR FINALS')
+        print('GAME OVER! YOU FAILED YOUR FINALS :(')
     else:
         determine_game_ending(player, pass_interview)
 
