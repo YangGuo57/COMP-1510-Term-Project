@@ -1,9 +1,9 @@
 def print_ascii(time):
     if time == 'new_week':
-        ascii = new_week_ascii_art()
+        ascii_art = new_week_ascii_art()
     else:
-        ascii = weekend_ascii_art()
-    for line in ascii:
+        ascii_art = weekend_ascii_art()
+    for line in ascii_art:
         print(line)
 
 

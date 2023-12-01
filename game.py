@@ -20,7 +20,7 @@ def load_game(filename='game_save.json'):
             game_data = json.load(file)
         return game_data['character'], game_data['week'], game_data.get('is_weekend', False)
     except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error loading the game: {e}")
+        print(f'Error loading the game: {e}')
         return None, None, False
 
 
@@ -40,6 +40,7 @@ def start_new_game(greeting_msg):
     answer = character.ask_questionnaire('new')
     player = character.create_character(answer)
     print(greeting_msg[2])
+    print(greeting_msg[3])
     week = 1
     return player, week
 
@@ -47,13 +48,13 @@ def start_new_game(greeting_msg):
 def game():
     greeting_msg = greeting()
     sleep(0.5)
-    print("Welcome to Survive CST!")
-    print("1. Start New Game")
-    print("2. Load Previous Game")
+    print('Welcome to Survive CST!')
+    print('1. Start New Game')
+    print('2. Load Previous Game')
     while True:
-        load_choice = input("Please choose an option (1 or 2): ")
+        load_choice = input('Please choose an option (1 or 2): ')
         if load_choice == '1':
-            print("Starting a fresh new journey in Survive CST!")
+            print('Starting a fresh new journey in Survive CST!')
             sleep(0.5)
             player, week = start_new_game(greeting_msg)
             is_weekend = False
@@ -61,7 +62,7 @@ def game():
         elif load_choice == '2':
             player, week, is_weekend = load_game()
             if player is None:
-                print("No previous save found. Starting a new adventure!")
+                print('No previous save found. Starting a new adventure!')
                 player, week = start_new_game(greeting_msg)
                 is_weekend = False
             break
@@ -86,7 +87,7 @@ def game():
         sleep(0.5)
         ascii.print_ascii('new_week')
 
-        print(f"========== Week {current_week} ==========")
+        print(f'========== Week {current_week} ==========')
         if current_week == TOTAL_WEEKS // 2:
             if not exam.take_exam(player, 'midterm'):
                 pass_midterm = False

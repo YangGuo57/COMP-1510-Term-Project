@@ -62,11 +62,47 @@ def weekend(character, main_map, week):
     return True
 
 
+def binary_user_choice(setting):
+    """
+    Get user choice for an action - whether to proceed or not.
+    :param setting:
+    :return:
+    """
+    prompts = {'quit job': 'Are you too busy to go to work? If so, maybe you should let your manager know you want to '
+                           'quit...',
+               'home': 'Your desk and your laptop patiently await your presence, ready for a productive session. Yet, '
+                       'your bed is whispering your name like a neglected girlfriend. What do you do?',
+               'hospital': '"You must be here for your annual vaccination," she says, "Now don\'t stand there and '
+                           'block the way, the lineup for getting your vaccine is this way."\n'
+                           'She grabs you by your arm and tries to lead you deeper into the hospital.',
+               'job posting': 'As you take in the fresh air and enjoy the greenery, you notice a piece of paper '
+                              'fluttering in the breeze. Snatching it from the air, you realize it\'s a job posting - '
+                              'a local cafe is looking for a weekend part-timer,  just a stone\'s throw away from '
+                              'your home! Extra money will always come in handy... but it comes at the cost of '
+                              'sacrificing precious weekend hours. Should you apply?',
+               'flea market': 'It seems there is a weekend flea market going on today at Stanley Park. Should you go '
+                              'check it out?'}
+    options = {'quit job': 'Enter "1" to keep your job, "2" to quit.',
+               'home': 'Enter 1 to say NO to temptation and do some work, enter 2 to succumb to the calling of '
+                       'your bed.',
+               'hospital': 'Enter "1" to follow her, "2" to break free from her grasp.',
+               'job posting': 'Enter "1" to apply, "2" to ignore.',
+               'flea market': 'Enter "1" to check out the flea market, "2" to continue walking.'}
+    print(f'{prompts[setting]}')
+    user_choice = input(f'{options[setting]}')
+    while user_choice != '1' and user_choice != '2':
+        print('That is not a valid command.')
+        sleep(0.5)
+        print(f'{prompts[setting]}')
+        user_choice = input(f'{options[setting]}')
+    return user_choice
+
+
 def execute_weekend_home_action(character):
     """
     do the action
     """
-    choice = weekend_action_user_input(character)
+    choice = binary_user_choice('home')
     sleep(0.5)
     describe_weekend_home_action(choice)
     sleep(0.5)
@@ -127,22 +163,6 @@ def describe_weekend_home_action(action):
         print('You pass out in your bed. Good night and sweet dreams.')
 
 
-def weekend_action_user_input(character):
-    """
-    get user choice on whether to work or sleep
-    """
-    choices = {'home': ('Your desk and your laptop patiently await your presence, ready for a productive session. Yet, '
-                        'your bed is whispering your name like a neglected girlfriend. What do you do?',
-                        'Enter 1 to say NO to temptation and do some work, enter 2 to succumb to the calling of '
-                        'your bed.')}
-    user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
-    while user_choice != '1' and user_choice != '2':
-        print('That is not a valid command.')
-        sleep(0.5)
-        user_choice = input(f'{choices[character["location"]][0]}\n{choices[character["location"]][1]}')
-    return user_choice
-
-
 def weekend_school(character):
     """
     generates random events at school on a weekend
@@ -157,7 +177,7 @@ def weekend_school(character):
         print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
               'on their hands?')
         stress_change += randint(10, 15) * -1
-        increase_in_eq += randint(1, 3) / 10
+        increase_in_eq += randint(1, 3)
     else:
         print('You accidentally walk into a hobo because you did not pay attention to where you were going. The hobo '
               'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
@@ -179,15 +199,7 @@ def weekend_hospital(character):
           'A nurse notices you and walks up to you.')
     sleep(0.5)
     if not character['vaccinated']:
-        print('"You must be here for your annual vaccination," she says, "Now don\'t stand there and block the way, '
-              'the lineup for getting your vaccine is this way."\n'
-              'She grabs you by your arm and tries to lead you deeper into the hospital.')
-        sleep(0.5)
-        user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
-        while user_choice != '1' and user_choice != '2':
-            print('That is not a valid option.')
-            sleep(0.5)
-            user_choice = input('Enter "1" to follow her, "2" to break free from her grasp.')
+        user_choice = binary_user_choice('hospital')
         if user_choice == '1':
             print('The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?')
             sleep(0.5)
@@ -216,7 +228,7 @@ def weekend_job(character):
         sleep(0.5)
         char.change_stat(character, 'EQ', increase_in_eq)
     else:
-        print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment'
+        print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment '
               'is heavily distracting. You don\'t get anything done.')
         sleep(0.5)
     stress_gain = randint(5, 8)
@@ -232,7 +244,7 @@ def evaluate_job_attendance(character, skip):
     if character['job'] and not skip:
         character['skip_job'] += 1
         sleep(1)
-        print('Uh oh, did you forget to go to work this weekend?')
+        print('\nUh oh, did you forget to go to work this weekend?')
         evaluate_firing_from_job(character)
 
 
@@ -247,7 +259,16 @@ def evaluate_firing_from_job(character):
         print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
         character['job'] = False
-        char.change_stat(character, 'EQ', -10)
+        char.change_stat(character, 'EQ', -15)
+    if character['skip_job'] == 2:
+        sleep(1)
+        user_choice = binary_user_choice('quit job')
+        if user_choice == '2':
+            print('You decide you can no longer commit to weekly shifts. Being the thoughtful person you are, you let '
+                  'your manager know.')
+            character['job'] = False
+        else:
+            print('You decide to keep your part time job for now. Just don\'t forget to go to work again!')
 
 
 def weekend_park(character):
@@ -263,8 +284,8 @@ def weekend_park(character):
     if not applied_to_job:
         random_park_event(character)
     sleep(1)
-    print('That was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
-          'some spare change, perhaps you should go check it out?')
+    print('\nThat was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
+          'some spare change, perhaps come here more often to check it out?')
 
     return applied_to_job
 
@@ -275,19 +296,11 @@ def generate_job_posting(character):
     :param character:
     :return:
     """
-    print(f'As you take in the fresh air and enjoy the greenery, you notice a piece of paper fluttering in the '
-          f'breeze. Snatching it from the air, you realize it\'s a job posting - a local cafe is looking '
-          f'for a weekend part-timer,  just a stone\'s throw away from your home! Extra money will always come '
-          f'in handy... but it comes at the cost of sacrificing precious weekend hours. Should you apply?')
-    sleep(1)
-    user_choice = input(f'Enter "1" to apply, "2" to ignore.')
-    while user_choice != '1' and user_choice != '2':
-        print('That is not a valid input!')
-        sleep(0.5)
-        user_choice = input(f'Enter "1" to apply, "2" to ignore.')
+    user_choice = binary_user_choice('job posting')
     if user_choice == '1':
-        print('You applied and got the job immediately! Guess they were really desperate for help. Don\'t forget '
-              'to go to work every weekend!')
+        print('\nYou applied and got the job immediately! Guess they were really desperate for help.')
+        sleep(0.5)
+        print('Remember, your new part-time job is at the local cafe! And don\'t forget to go to work every weekend!\n')
         character['job'] = True
         return True
     else:
@@ -357,17 +370,12 @@ def flea_market(character):
     carry out flea market
     """
     messages = generate_park_message_to_print(7)
-    sleep(0.5)
-    user_choice = input(f'{messages["default"]}')
-    while user_choice != '1' and user_choice != '2':
-        print('That is not a valid entry.')
-        sleep(0.5)
-        user_choice = input(f'{messages["default"]}')
+    user_choice = binary_user_choice('flea market')
     if user_choice == '1':
         print(f'{messages["enter flea"]}')
         sleep(0.5)
         if character['wealth'] >= 60:
-            print(f'{messages["kool-aid"]}')
+            print(f'\n{messages["kool-aid"]}')
             sleep(0.5)
             char.change_stat(character, 'wealth', -60)
             sleep(0.5)

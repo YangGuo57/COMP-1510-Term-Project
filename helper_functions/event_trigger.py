@@ -1,4 +1,5 @@
 from helper_functions import trigger_description, SUBJECTS, movement as mov, character as char, map
+from time import sleep
 
 
 def process_movement(user_choice, game_map, character):
@@ -10,13 +11,13 @@ def process_movement(user_choice, game_map, character):
         mov.update_visited_location(character)
         return True
     else:
-        print("Invalid move! Please choose another direction.")
+        print('Invalid move! Please choose another direction.')
         return False
 
 
 def at_entrance(character):
     """
-    return door location: "home", "school", "hospital", "park", "work"
+    return door location: 'home', 'school', 'hospital', 'park', 'work'
     """
     locations = map.coordinates()
     index = ''
@@ -65,8 +66,12 @@ def move_during_office_hours(character, school_map):
     while True:
         user_choice = mov.get_user_choice(character)
 
-        if user_choice == "back":
+        if user_choice == 'back':
             return user_choice
+        elif user_choice == 'stats':
+            char.print_stats(character)
+            sleep(1)
+            map.print_game_map(school_map, character)
         elif process_movement(user_choice, school_map, character):
             map.print_game_map(school_map, character)
             location = at_entrance(character)
@@ -100,7 +105,7 @@ def move_on_weekends(character, main_map):
                         return confirm_entry('home entrance')
                     elif location:
                         return confirm_entry(location)
-                if user_choice == "Back":
+                if user_choice == 'Back':
                     break
         elif choice == '2':
             char.print_stats(character)
@@ -113,17 +118,17 @@ def move_on_weekends(character, main_map):
             elif location:
                 return confirm_entry(location)
         elif choice == '4':
-            print("Thank you for playing! Your progress has been successfully saved. Goodbye!")
+            print('Thank you for playing! Your progress has been successfully saved. Goodbye!')
             return 'Exit'
         else:
-            print("Invalid choice. Please enter a valid option.")
+            print('Invalid choice. Please enter a valid option.')
 
 
 def main_menu():
-    print("1. Move")
-    print("2. Check Status")
-    print("3. Fast Travel")
-    print("4. Exit")
+    print('1. Move')
+    print('2. Check Status')
+    print('3. Fast Travel')
+    print('4. Exit')
 
-    choice = input("Please choose an option: ")
+    choice = input('Please choose an option: ')
     return choice

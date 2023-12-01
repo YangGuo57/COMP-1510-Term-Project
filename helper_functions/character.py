@@ -45,15 +45,21 @@ def ask_questionnaire(setting):
 
 def print_stats(character):
     print("Your current attributes: ")
-    print("IQ:", character['IQ'])
-    print("EQ:", character['EQ'])
-    print("stress:", character['stress'])
-    print("wealth:", character['wealth'])
-    print("exp:", character['exp'])
-    print("lvl:", character['lvl'])
-    print("personal project progress:", character('project'))
-    if 'job' in character['job'] and character['job']:
-        print('employed: True')
+    print("\tIQ:", character['IQ'])
+    print("\tEQ:", character['EQ'])
+    print("\tstress:", character['stress'])
+    print("\twealth:", character['wealth'])
+    print("\texperience in each course:")
+    for subject, exp in character['exp'].items():
+        print(f'\t\tCOMP{subject}: {exp}')
+    # print("exp:", character['exp'])
+    print("\tlevel in each course:")
+    for subject, lvl in character['lvl'].items():
+        print(f'\t\tCOMP{subject}: {lvl}')
+    print("\tpersonal project progress:", character['project'])
+    if 'job' in character and character['job']:
+        print('\temployed: True')
+    print()
 
 
 def evaluate_exp(character, subject):
@@ -84,12 +90,13 @@ def describe_stress(character):
     prints to console stress warnings
     """
     if character['stress'] > 100:
-        print('HAHAHAHAHAHAHA WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF')
+        print('\nHAHAHAHAHAHAHA WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&(*&#$<N<MSDV('
+              '@#U)0SFLKNA@$_)*LKANSLKNF\n')
     elif character['stress'] > 90:
-        print('You feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?')
+        print('\nYou feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?\n')
     elif character['stress'] > 80:
-        print('You feel like like your brain is no longer registering what you\'re reading... Maybe you should take it '
-              'easy?')
+        print('\nYou feel like like your brain is no longer registering what you\'re reading... Maybe you should take '
+              'it easy?\n')
 
 
 def determine_stress_multiplier(character):
@@ -104,8 +111,9 @@ def determine_stress_multiplier(character):
 
 
 def change_stat(character, attribute, amount):
-    if attribute not in PRODUCTIVE_STATS:
+    if attribute in PRODUCTIVE_STATS:
         amount *= determine_stress_multiplier(character)
+        amount = int(amount)
 
     if attribute in SUBJECTS:
         character['exp'][attribute] += amount
@@ -184,7 +192,7 @@ def set_character_location(character, location):
 def describe_wealth_change(character, amount):
     if amount < 0:
         print('You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"')
-        print(f'Your wealth decreases by {amount * -1}. Your bank account balance is now {character["wealth"]}.')
+        print(f'Your wealth decreases by {amount * -1}. \nYour bank account balance is now {character["wealth"]}.')
     else:
         print('Earning money puts a smile on your face, who doesn\'t love money?')
         print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')

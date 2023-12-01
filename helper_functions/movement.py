@@ -33,13 +33,13 @@ def get_user_choice(character):
 
     while True:
         choice = input(f'{prompt_string}')
-        if choice in commands:
+        if choice in commands.keys():
             return commands[choice]
-        elif choice in school_commands:
-            if character['location'] == 'school' and choice == 'stats':
-                char.print_stats(character)
-            else:
-                return choice
+        elif character['location'] == 'school' and choice in school_commands:
+            # if choice == 'stats':
+            #     char.print_stats(character)
+            # else:
+            return choice
         else:
             print('Enter a valid input!')
 

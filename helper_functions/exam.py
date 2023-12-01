@@ -35,9 +35,9 @@ def take_exam(character, exam):
 
     for subject in SUBJECTS:
         sleep(0.5)
-        input(f"\nPress '1' to start the exam for COMP{subject}: ")
+        input(f'\nPress "1" to start the exam for COMP{subject}: ')
         sleep(0.5)
-        print(f"The COMP{subject} exam is underway...")
+        print(f'The COMP{subject} exam is underway...')
 
         grade = evaluate_exam(character, subject, exam)
         sleep(0.5)
@@ -45,7 +45,7 @@ def take_exam(character, exam):
         sleep(0.5)
 
         if grade == 'F':
-            print(f"You failed COMP{subject}. Better luck next time.")
+            print(f'You failed COMP{subject}. Better luck next time.')
             pass_or_fail = False
         else:
             print(f'Phew, you passed and you got {"an" if grade == "A" else "a"} {grade} in COMP{subject}. Writing '

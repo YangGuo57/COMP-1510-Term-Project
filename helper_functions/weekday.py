@@ -30,12 +30,16 @@ def weekday(character, week, school_map):
         attend_class = input()
         if attend_class == '1':
             sleep(0.5)
+            print('You attend classes from Monday to Friday.')
+            sleep(1)
             weekday_schoolwork(character)
             char.evaluate_exp(character, 'all')
+            print()
             sleep(1)
             if input("Do you want to initiate a random school event? Type '1' to continue, "
                      "type anything else to skip: ").strip() == '1':
                 random_weekday_event(character)
+                print()
             else:
                 print("Skipping the random school event.")
             sleep(1)
@@ -196,10 +200,8 @@ def trauma_bond(character):
     carries out trauma bond with classmates
     """
     print('After a week of endless schoolwork, you and your classmates find yourselves rendered speechless by the '
-          'ordeal. Seeking comfort, you complain about the challenges of school life to each other. The venting '
-          'provides a temporary peace of mind, as if lifting a burden from your shoulders. However, upon returning '
-          'home, the harsh reality of the remaining workload hits you once more. The weight of unfinished tasks '
-          'looms over you, and the night ends with tears as you drift off to sleep.')
+          'ordeal. You complain about the challenges of school life to each other. The venting '
+          'provides a temporary peace of mind; just try not to think about your deadlines!')
     sleep(1)
     char.change_stat(character, 'stress', randint(-15, -10))
 
