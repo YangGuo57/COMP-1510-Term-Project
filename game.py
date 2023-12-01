@@ -28,7 +28,9 @@ def determine_game_ending(player, coop):
     gpa = exam.calculate_average(player)
     print(gpa)
     endings = ending_descriptions()
-    if coop:
+    if gpa is None:
+        return
+    elif coop:
         print(f'{endings["coop"]}')
     else:
         print(f'{endings[gpa]}')

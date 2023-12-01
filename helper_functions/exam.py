@@ -71,11 +71,14 @@ def calculate_average(character):
     subject_counter = 0
 
     for subject in SUBJECTS:
-        average = (min_threshold[letter_grades.index(character['midterm'][subject])] + min_threshold[
-            letter_grades.index(character['final'][subject])]) / 2
-        averages = averages * subject_counter + average
-        subject_counter += 1
-        averages /= subject_counter
+        midterm_grade = character['midterm'][subject]
+        final_grade = character['final'][subject]
+        if midterm_grade in letter_grades and final_grade in letter_grades:
+            average = (min_threshold[letter_grades.index(character['midterm'][subject])] + min_threshold[
+                letter_grades.index(character['final'][subject])]) / 2
+            averages = averages * subject_counter + average
+            subject_counter += 1
+            averages /= subject_counter
     for threshold in min_threshold:
         if averages >= threshold:
             return letter_grades[min_threshold.index(threshold)]

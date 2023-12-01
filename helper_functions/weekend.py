@@ -37,6 +37,8 @@ def weekend(character, main_map, week):
             # trigger events on the big map
             choice = event.move_on_weekends(character, main_map)
             while choice != '1':
+                if choice == 'Exit':
+                    return False
                 choice = event.move_on_weekends(character, main_map)
             if choice == '1':
                 sleep(0.5)
@@ -390,5 +392,3 @@ def flea_market(character):
     else:
         print(f'{messages["leave flea"]}')
         return False
-
-
