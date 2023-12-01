@@ -51,7 +51,7 @@ def print_stats(character):
     print("wealth:", character['wealth'])
     print("exp:", character['exp'])
     print("lvl:", character['lvl'])
-    print("personal project progress:", character('project'))
+    print("personal project progress:", character['project'])
     if 'job' in character['job'] and character['job']:
         print('employed: True')
 
