@@ -70,7 +70,7 @@ def move_during_office_hours(character, school_map):
             return user_choice
         elif user_choice == 'stats':
             char.print_stats(character)
-            sleep(1)
+            sleep(0.5)
             map.print_game_map(school_map, character)
         elif process_movement(user_choice, school_map, character):
             map.print_game_map(school_map, character)

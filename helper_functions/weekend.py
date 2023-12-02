@@ -244,7 +244,7 @@ def evaluate_job_attendance(character, skip):
     """
     if character['job'] and not skip:
         character['skip_job'] += 1
-        sleep(1)
+        sleep(0.5)
         print('\nUh oh, did you forget to go to work this weekend?')
         evaluate_firing_from_job(character)
 
@@ -256,13 +256,13 @@ def evaluate_firing_from_job(character):
     :return:
     """
     if character['skip_job'] >= 3:
-        sleep(1)
+        sleep(0.5)
         print('\nYou receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
         character['job'] = False
         char.change_stat(character, 'EQ', -15)
     if character['skip_job'] == 2:
-        sleep(1)
+        sleep(0.5)
         user_choice = binary_user_choice('quit job')
         if user_choice == '2':
             print('You decide you can no longer commit to weekly shifts. Being the thoughtful person you are, you let '
@@ -284,7 +284,7 @@ def weekend_park(character):
 
     if not applied_to_job:
         random_park_event(character)
-    sleep(1)
+    sleep(0.5)
     print('\nThat was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
           'some spare change, perhaps come here more often to check it out?')
 

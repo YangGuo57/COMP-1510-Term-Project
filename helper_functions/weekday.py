@@ -48,7 +48,7 @@ def end_of_week_action(character, school_map):
           'All your instructors are available for questions during their office hours. If you have any pressing '
           'questions about your courses, now is the perfect time to seek answers. Yet, you\'re feeling pretty tired '
           'from all the hard work this week. Maybe it\'s a good idea to head home and get some rest instead?')
-    sleep(1)
+    sleep(0.5)
     subject = event.move_during_office_hours(character, school_map)
     if subject == 'back':
         go_home(character)
@@ -115,7 +115,7 @@ def weekday_schoolwork(character):
     for subject in SUBJECTS:
         experience_gained = character['IQ'] * randint(15, 20)
         char.change_stat(character, subject, experience_gained)
-    sleep(1)
+    sleep(0.5)
     char.change_stat(character, 'stress', randint(5, 10))
 
 
@@ -135,11 +135,11 @@ def random_weekday_event(character):
         trauma_bond(character)
     elif roll == 3:
         print_assessment_results(fail, subject, 'quiz')
-        sleep(1)
+        sleep(0.5)
         assessment_stat_change(character, fail, subject, 'quiz')
     else:
         print_assessment_results(fail, subject, 'assignment')
-        sleep(1)
+        sleep(0.5)
         assessment_stat_change(character, fail, subject, 'assignment')
 
 
@@ -188,7 +188,7 @@ def trauma_bond(character):
     print('After a week of endless schoolwork, you and your classmates find yourselves rendered speechless by the '
           'ordeal. You complain about the challenges of school life to each other. The venting '
           'provides a temporary peace of mind; just try not to think about your deadlines!')
-    sleep(1)
+    sleep(0.5)
     char.change_stat(character, 'stress', randint(-15, -10))
 
 
@@ -200,6 +200,6 @@ def club_event(character):
           'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
-    sleep(1)
+    sleep(0.5)
     char.change_stat(character, 'stress', randint(-15, -10))
     char.change_stat(character, 'EQ', randint(1, 3))
