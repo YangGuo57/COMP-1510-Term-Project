@@ -26,7 +26,6 @@ def load_game(filename='game_save.json'):
 
 def determine_game_ending(player, coop):
     gpa = exam.calculate_average(player)
-    print(gpa)
     endings = ending_descriptions()
     if gpa is None:
         return
@@ -76,12 +75,13 @@ def game():
     pass_final = True
     pass_interview = False
 
-    # player['lvl']['1510'] = 5
-    # player['lvl']['1537'] = 5
-    # player['lvl']['1113'] = 5
-    # player['lvl']['1712'] = 5
+    player['lvl']['1510'] = 0
+    player['lvl']['1537'] = 5
+    player['lvl']['1113'] = 5
+    player['lvl']['1712'] = 5
     # player['midterm'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
     # player['final'] = {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}
+    week = 7
     # print(exam.calculate_average(player))
 
     for current_week in range(week, TOTAL_WEEKS + 1):
@@ -119,12 +119,19 @@ def game():
         save_game(player, current_week, is_weekend)
 
     # print(player)
+    print()
     if not pass_midterm:
-        print('GAME OVER! YOU FAILED YOUR MIDTERMS :(')
+        print('YOU FAILED YOUR MIDTERMS! YOU HAVE BEEN KICKED OUT OF THE CST PROGRAM :(')
+        sleep(0.5)
+        ascii.print_ascii('game over')
     elif not pass_final:
-        print('GAME OVER! YOU FAILED YOUR FINALS :(')
+        print('YOU FAILED YOUR FINALS! YOU HAVE BEEN KICKED OUT OF THE CST PROGRAM :(')
+        sleep(0.5)
+        ascii.print_ascii('game over')
     else:
         determine_game_ending(player, pass_interview)
+        sleep(0.5)
+        ascii.print_ascii('congratulations')
 
 
 if __name__ == '__main__':
