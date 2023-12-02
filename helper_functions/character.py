@@ -90,11 +90,11 @@ def describe_stress(character):
     prints to console stress warnings
     """
     if character['stress'] > 100:
-        print('\nHAHAHAHAHAHAHA WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&(*&#$<N<MSDV('
-              '@#U)0SFLKNA@$_)*LKANSLKNF\n')
-    elif character['stress'] > 90:
-        print('\nYou feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?\n')
-    elif character['stress'] > 80:
+        print('\nERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE '
+              'SKADLKNLKNES98723894*&(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF\n')
+    elif character['stress'] > 85:
+        print('\nYou feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?@@\n')
+    elif character['stress'] > 70:
         print('\nYou feel like like your brain is no longer registering what you\'re reading... Maybe you should take '
               'it easy?\n')
 
@@ -103,9 +103,9 @@ def determine_stress_multiplier(character):
     stress_multiplier = 1
     if character['stress'] > 100:
         stress_multiplier -= 1
-    elif character['stress'] > 90:
+    elif character['stress'] > 85:
         stress_multiplier -= 0.6
-    elif character['stress'] > 80:
+    elif character['stress'] > 70:
         stress_multiplier -= 0.3
     return stress_multiplier
 

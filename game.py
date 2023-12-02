@@ -57,7 +57,6 @@ def game():
         load_choice = input('Please choose an option (1 or 2): ')
         if load_choice == '1':
             print('Starting a fresh new journey in Survive CST!')
-            sleep(0.5)
             player, week = start_new_game(greeting_msg)
             is_weekend = False
             break
@@ -119,7 +118,7 @@ def game():
 
         save_game(player, current_week, is_weekend)
 
-    print(player)
+    # print(player)
     if not pass_midterm:
         print('GAME OVER! YOU FAILED YOUR MIDTERMS :(')
     elif not pass_final:

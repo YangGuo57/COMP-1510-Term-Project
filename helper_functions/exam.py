@@ -27,30 +27,25 @@ def take_coop_interview(character):
 def take_exam(character, exam):
     print(f'Finally, the time has come: the much-anticipated {exam} exams are here. You look around you and all '
           f'you see are the blank stares of your sleep-deprived classmates who pulled consecutive all-nighters and are '
-          f'living off of coffee. God forbid the Tim Hortons downstairs closes for today... You are no different from '
-          f'them. If you are not yet ready to take the exam, that\'s too bad because the exam starts NOW.')
+          f'living off of coffee. (God forbid the Tim Hortons downstairs closes for today...) You are no different '
+          f'from them. If you are not yet ready to take the exam, that\'s too bad because the exam starts NOW.')
     sleep(0.5)
     statuses = exam_status()
     pass_or_fail = True
 
     for subject in SUBJECTS:
-        sleep(0.5)
-        input(f'\nPress "1" to start the exam for COMP{subject}: ')
-        sleep(0.5)
         print(f'The COMP{subject} exam is underway...')
-
         grade = evaluate_exam(character, subject, exam)
         sleep(0.5)
         print(choice(statuses[grade]))
-        sleep(0.5)
 
         if grade == 'F':
             print(f'You failed COMP{subject}. Better luck next time.')
             pass_or_fail = False
         else:
-            print(f'Phew, you passed and you got {"an" if grade == "A" else "a"} {grade} in COMP{subject}. Writing '
+            print(f'\nPhew, you passed and you got {"an" if grade == "A" else "a"} {grade} in COMP{subject}. Writing '
                   f'this {exam} was a learning experience in itself, and you feel relieved now that one more {exam} '
-                  f'is over.')
+                  f'is over.\n')
             sleep(0.5)
             reward_character(character, subject)
             if exam == 'midterm':
@@ -58,7 +53,7 @@ def take_exam(character, exam):
             elif exam == 'final':
                 character['final'][subject] = grade
     sleep(0.5)
-    print(f'At last, the {exam}s are over. You let out a huge sigh of relief, and when you get home, you pass out '
+    print(f'\nAt last, the {exam}s are over. You let out a huge sigh of relief, and when you get home, you pass out '
           f'immediately on your bed. You are so exhausted you do not want to do anything productive this weekend, and '
           f'that\'s okay. You deserve a break.')
     return pass_or_fail

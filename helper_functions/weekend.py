@@ -105,7 +105,6 @@ def execute_weekend_home_action(character):
     do the action
     """
     choice = binary_user_choice('home')
-    sleep(0.5)
     describe_weekend_home_action(choice)
     sleep(0.5)
     if choice == '1':
@@ -174,7 +173,6 @@ def weekend_school(character):
     roll = randint(1, 2)
     stress_change = 0
     increase_in_eq = 0
-    print(roll)
     if roll == 1:
         print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
               'on their hands?')
@@ -188,7 +186,6 @@ def weekend_school(character):
         increase_in_eq += randint(1, 3)
     sleep(0.5)
     char.change_stat(character, 'EQ', increase_in_eq)
-    sleep(0.5)
     char.change_stat(character, 'stress', stress_change)
 
 
@@ -227,12 +224,14 @@ def weekend_job(character):
         sleep(0.5)
         char.change_stat(character, 'wealth', 20)
         increase_in_eq = randint(1, 3)
-        sleep(0.5)
         char.change_stat(character, 'EQ', increase_in_eq)
+    elif 'job' in character and not character['job']:
+        print('You arrive at your previous workplace. You exchange awkward glances with your previous manager. Why '
+              'are you even here?')
     else:
         print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment '
               'is heavily distracting. You don\'t get anything done.')
-        sleep(0.5)
+    sleep(0.5)
     stress_gain = randint(5, 8)
     char.change_stat(character, 'stress', stress_gain)
     return True
@@ -258,7 +257,7 @@ def evaluate_firing_from_job(character):
     """
     if character['skip_job'] >= 3:
         sleep(1)
-        print('You receive an angry call from your manager, since you missed work too many times. Your manager fires '
+        print('\nYou receive an angry call from your manager, since you missed work too many times. Your manager fires '
               'you over the phone.')
         character['job'] = False
         char.change_stat(character, 'EQ', -15)

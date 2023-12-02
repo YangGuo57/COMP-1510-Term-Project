@@ -16,38 +16,24 @@ def weekday(character, week, school_map):
     exam = 'midterms' if week <= 7 else 'finals'
     exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == "midterms" else TOTAL_WEEKS - week - 1
     end_of_term_countdown = TOTAL_WEEKS - week
-    sleep(1)
+    sleep(0.5)
     print(f'It is now week {week} of the term, only {end_of_term_countdown} weeks until end of term 1! The looming '
           f'presence of the {exam} reminds you that in {exam_countdown} weeks you will be at the mercy of these exams. '
           f'Here\'s to hoping for a productive week as you prepare to face  the challenges that lie ahead.')
 
     character['X'] = 1
     character['Y'] = 1
-
-    while True:
-        sleep(1)
-        print("Are you ready to attend classes for schoolwork? Type 1 to continue: ")
-        attend_class = input()
-        if attend_class == '1':
-            sleep(0.5)
-            print('You attend classes from Monday to Friday.')
-            sleep(1)
-            weekday_schoolwork(character)
-            char.evaluate_exp(character, 'all')
-            print()
-            sleep(1)
-            if input("Do you want to initiate a random school event? Type '1' to continue, "
-                     "type anything else to skip: ").strip() == '1':
-                random_weekday_event(character)
-                print()
-            else:
-                print("Skipping the random school event.")
-            sleep(1)
-            char.set_character_location(character, 'school')
-            end_of_week_action(character, school_map)
-            break
-
+    print('You attend classes from Monday to Friday.')
     sleep(0.5)
+    weekday_schoolwork(character)
+    char.evaluate_exp(character, 'all')
+    print()
+    sleep(0.5)
+    random_weekday_event(character)
+    print()
+    sleep(0.5)
+    char.set_character_location(character, 'school')
+    end_of_week_action(character, school_map)
     game.save_game(character, week, False)
 
 
