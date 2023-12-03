@@ -100,6 +100,11 @@ def describe_stress(character):
 
 
 def determine_stress_multiplier(character):
+    """
+
+    :param character:
+    :return:
+    """
     stress_multiplier = 1
     if character['stress'] > 100:
         stress_multiplier -= 1
@@ -139,8 +144,23 @@ def change_stat(character, attribute, amount):
 
 def describe_exp_gain(character, attribute, amount):
     """
-    describes how much exp is gained in an attribute
+    Describe the experience gain of the character.
+
+    :param character: a dictionary
+    :param attribute: a string
+    :param amount: an integer
+    :precondition: character must be a dictionary
+    :precondition: attribute must be a string
+    :precondition: amount must be an integer
+    :postcondition: describe the experience gain of the character
+
+    >>> player = {'exp': {'1510': 10, '1537': 0, '1113': 0, '1712': 0}}
+    >>> describe_exp_gain(player, '1510', 10)
+    Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
+increased by 10.
+    Your experience in COMP1510 is now 10.
     """
+
     print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
           f'COMP{attribute} increased by {amount}.')
     print(f'Your experience in COMP{attribute} is now {character["exp"][attribute]}.')
@@ -148,7 +168,21 @@ def describe_exp_gain(character, attribute, amount):
 
 def describe_flat_stat_gain(character, attribute, amount):
     """
-    describes how an attribute that is not exp related has changed (EQ, IQ, project)
+    Describe the flat stat gain of the character.
+
+    :param character: a dictionary
+    :param attribute: a string
+    :param amount: an integer
+    :precondition: character must be a dictionary
+    :precondition: attribute must be a string
+    :precondition: amount must be an integer
+    :postcondition: describe the flat stat gain of the character
+
+    >>> player = {'EQ': 2, 'IQ': 0, 'project': 0}
+    >>> describe_flat_stat_gain(player, 'EQ', 1)
+    Through meaningful human interactions, you become more emotionally savvy. You feel more confident talking to \
+humans now.
+    Your EQ increases by 1. It is now 2.
     """
     changes = 'increases'
     if attribute == 'EQ':
