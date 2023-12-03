@@ -3,6 +3,22 @@ from time import sleep
 
 
 def create_character(answers):
+    """
+    Create a new character with the given answers to the questionnaire.
+
+    :param answers: a list of integers
+    :precondition: answers must be a list of integers representing the answers to the questionnaire
+    :postcondition: creates a new character with the given answers
+    :return: a dictionary representing the new character
+
+    >>> results = [0, 1, 0, 1]
+    >>> create_character(results)
+    {'IQ': 1.0, 'EQ': 10, 'stress': 0, 'wealth': 40, 'X': 1, 'Y': 1, 'project': 0, 'exp': {'1510': \
+0, '1537': 0, '1113': 0, '1712': 0}, 'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}, 'midterm': \
+{'1510': None, '1537': None, '1113': None, '1712': None}, 'final': {'1510': None, '1537': None, '1113': \
+None, '1712': None}, 'visited_locations': {'home': 1, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0, \
+'1510': 0, '1537': 0, '1712': 0, '1113': 0}, 'location': 'home', 'vaccinated': False, 'skip_job': 0}
+    """
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                      'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
@@ -26,6 +42,14 @@ def create_character(answers):
 
 
 def ask_questionnaire(setting):
+    """
+    Asks the player a series of questions to determine player attributes.
+
+    :param setting: a string
+    :precondition: setting must be a string representing the setting of the game
+    :postcondition: asks the player a series of questions to determine player attributes
+    :return: a list of integers representing the player's answers to the questionnaire
+    """
     answers = []
     questions = coop_interview_questions() if setting == 'coop' else initial_game_questions()
 
@@ -181,6 +205,24 @@ def determine_stress_multiplier(character):
 
 
 def change_stat(character, attribute, amount):
+    """
+    Change the value of a character's attribute by a given amount.
+
+    :param character: a dictionary
+    :param attribute: a string
+    :param amount: an integer
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: attribute must be a string
+    :precondition: amount must be an integer
+    :postcondition: change the value of the character's attribute by the given amount
+
+    >>> player = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'project': 0, 'exp': \
+{'1510': 0, '1537': 0, '1113': 0, '1712': 0}}
+    >>> change_stat(player, 'IQ', 10)
+    Whoa, it's as if your brain is waking up from a century-long slumber. You've never \
+felt this intelligent before in your entire life.
+    Your IQ increases by 10. It is now 10.
+    """
     if attribute in PRODUCTIVE_STATS:
         amount *= determine_stress_multiplier(character)
         amount = int(amount)
