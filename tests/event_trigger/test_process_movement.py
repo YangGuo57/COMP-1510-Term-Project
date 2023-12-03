@@ -35,7 +35,8 @@ class Test(TestCase):
     @patch('helper_functions.movement.validate_move')
     @patch('helper_functions.movement.move_character')
     @patch('helper_functions.movement.update_visited_location')
-    def test_process_movement_out_of_bounds(self, mock_update_visited_location, mock_move_character, mock_validate_move):
+    def test_process_movement_out_of_bounds(self, mock_update_visited_location, mock_move_character,
+                                            mock_validate_move):
         mock_validate_move.return_value = False
         character = {'location': 'home', 'X': 0, 'Y': 0}
         game_map = {(0, 0): 'home'}
