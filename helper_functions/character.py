@@ -173,7 +173,25 @@ def describe_flat_stat_gain(character, attribute, amount):
 
 def describe_stress_change(character, amount):
     """
-    describes how much stress is gained/lost
+    Describe the change in stress level of the character.
+
+    :param character: a dictionary
+    :param amount: an integer
+    :precondition: character must be a dictionary containing the key "stress" with an integer value
+    :precondition: amount must be an integer
+    :postcondition: prints a message describing the change in stress level of the character
+
+    >>> player = {"stress": 1}
+    >>> describe_stress_change(player, 1)
+    The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to get some rest regularly so you don't burn out!
+    Your stress increases by 1
+    Your stress level is now 1.
+
+    >>> player = {"stress": 0}
+    >>> describe_stress_change(player, -1)
+    You feel rejuvenated as if a great load has been taken off your shoulders.
+    Your stress decreases by 1
+    Your stress level is now 0.
     """
     if amount > 0:
         print(f'The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to '
@@ -186,13 +204,47 @@ def describe_stress_change(character, amount):
 
 
 def set_character_location(character, location):
+    """
+    Sets the character's location to the given location.
+
+    :param character: a dictionary
+    :param location: a string
+    :precondition: character must be a dictionary with a 'location' key
+    :precondition: location must be a string
+    :postcondition: character's location is set to the given location
+
+    >>> player = {'location': 'home'}
+    >>> set_character_location(player, 'hospital')
+    >>> player['location']
+    'hospital'
+    """
     character['location'] = location
 
 
 def describe_wealth_change(character, amount):
+    """
+    Update character's wealth by the specified amount and print a description of the change.
+
+    :param character: a dictionary
+    :param amount: an integer
+    :precondition: character must be a dictionary with a key "wealth" that contains an integer value
+    :precondition: amount must be an integer
+    :postcondition: updates character's wealth by the specified amount
+
+    >>> player = {"wealth": 100}
+    >>> describe_wealth_change(player, 50)
+    Earning money puts a smile on your face, who doesn't love money?
+    Your wealth increases by 50.Your bank account balance is now 100.
+
+    >>> player = {'wealth': 100}
+    >>> describe_wealth_change(player, -50)
+    You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"
+    Your wealth decreases by 50.
+    Your bank account balance is now 100.
+    """
     if amount < 0:
         print('You watch your savings deplete as you tell yourself, "money is meant to be spent...right? RIGHT?"')
-        print(f'Your wealth decreases by {amount * -1}. \nYour bank account balance is now {character["wealth"]}.')
+        print(f'Your wealth decreases by {amount * -1}.\nYour bank account balance is now {character["wealth"]}.')
     else:
         print('Earning money puts a smile on your face, who doesn\'t love money?')
         print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')
