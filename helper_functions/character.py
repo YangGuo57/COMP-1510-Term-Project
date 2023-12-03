@@ -101,9 +101,19 @@ def describe_stress(character):
 
 def determine_stress_multiplier(character):
     """
+    Determine the stress multiplier based on the character's stress level.
 
-    :param character:
-    :return:
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: calculate the stress multiplier based on the character's stress level
+    :return: a float representing the stress multiplier
+
+    >>> player = {'stress': 100}
+    >>> determine_stress_multiplier(player)
+    0.4
+    >>> player = {'stress': 70}
+    >>> determine_stress_multiplier(player)
+    1
     """
     stress_multiplier = 1
     if character['stress'] > 100:
@@ -149,7 +159,7 @@ def describe_exp_gain(character, attribute, amount):
     :param character: a dictionary
     :param attribute: a string
     :param amount: an integer
-    :precondition: character must be a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
     :precondition: attribute must be a string
     :precondition: amount must be an integer
     :postcondition: describe the experience gain of the character
@@ -173,7 +183,7 @@ def describe_flat_stat_gain(character, attribute, amount):
     :param character: a dictionary
     :param attribute: a string
     :param amount: an integer
-    :precondition: character must be a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
     :precondition: attribute must be a string
     :precondition: amount must be an integer
     :postcondition: describe the flat stat gain of the character
