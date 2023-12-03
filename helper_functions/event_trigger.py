@@ -4,7 +4,16 @@ from time import sleep
 
 def process_movement(user_choice, game_map, character):
     """
-    Processes the player's movement choice in the game.
+    Processes the user's movement choice and returns a boolean value
+
+    :param user_choice: a string
+    :param game_map: a dictionary
+    :param character: a dictionary
+    :precondition: user_choice must be a string
+    :precondition: game_map must be a dictionary with keys as tuples and values as strings
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: processes the user's movement choice
+    :return: True if the user's movement choice is valid, False otherwise
     """
     if mov.validate_move(game_map, character, user_choice):
         mov.move_character(character, user_choice, game_map)
@@ -17,7 +26,12 @@ def process_movement(user_choice, game_map, character):
 
 def at_entrance(character):
     """
-    return door location: 'home', 'school', 'hospital', 'park', 'work'
+    Return the location of the character if they are at the entrance of a location, otherwise return None.
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: determine if the character is at the entrance of a location
+    :return: a string representing the location of the character, otherwise return None
     """
     locations = map.coordinates()
     index = ''
@@ -34,32 +48,34 @@ def at_entrance(character):
 
 def confirm_entry(location):
     """
-    Asks user to confirm whether to enter the door. Return 1 if entry is confirmed, 2 if entry is denied
+    Determine whether the player wants to enter a location or not.
+
+    :param location: a dictionary
+    :precondition: location must be a dictionary with keys as location and values as description
+    :postcondition: determine whether the player wants to enter a location or not
+    :return: a string representing the player's choice
     """
     locations = trigger_description()
-    if location == 'home':
-        confirm = input(f'{locations[location]["description"]}')
-        while confirm != '1' and confirm != '2':
-            confirm = input(f'{locations[location]["description"]}')
-        return confirm
-    elif location == 'school':
-        confirm = input(f'{locations[location]}')
-        while confirm != '1' and confirm != '2':
-            confirm = input(f'{locations[location]}')
-        return confirm
-    else:
-        confirm = input(f'{locations[location]}')
-        while confirm != '1' and confirm != '2':
-            confirm = input(f'{locations[location]}')
-        return confirm
+    description = locations.get(location, "")
+    if not description:
+        return
+
+    confirm = input(f'{description}')
+    while confirm != '1' and confirm != '2':
+        confirm = input(f'{description}')
+
+    return confirm
 
 
 def move_during_office_hours(character, school_map):
     """
-    move on school map and trigger events
-    :param character:
-    :param school_map:
-    :return:
+    Move the character during office hours.
+
+    :param character: a dictionary
+    :param school_map: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: school_map must be a dictionary with keys as tuples and values as strings
+    :postcondition: determine if the character is at the entrance of a location
     """
     map.print_game_map(school_map, character)
 
@@ -86,10 +102,13 @@ def move_during_office_hours(character, school_map):
 
 def move_on_weekends(character, main_map):
     """
-    move on main map and trigger events
-    :param character:
-    :param main_map:
-    :return:
+    Allows the user to move on weekends
+
+    :param character: a dictionary
+    :param main_map: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: main_map must be a dictionary with keys as tuples and values as strings
+    :postcondition: allows the user to move on weekends
     """
     while True:
         map.print_game_map(main_map, character)
@@ -125,6 +144,12 @@ def move_on_weekends(character, main_map):
 
 
 def main_menu():
+    """
+    Displays the main menu.
+
+    :postcondition: Displays main menu
+    :return: a string representing the user's choice
+    """
     print('1. Move')
     print('2. Check Status')
     print('3. Fast Travel')
