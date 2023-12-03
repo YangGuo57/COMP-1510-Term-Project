@@ -44,29 +44,68 @@ def ask_questionnaire(setting):
 
 
 def print_stats(character):
-    print("Your current attributes: ")
-    print("\tIQ:", character['IQ'])
-    print("\tEQ:", character['EQ'])
-    print("\tstress:", character['stress'])
-    print("\twealth:", character['wealth'])
-    print("\texperience in each course:")
+    """
+    Print the character's attributes
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: print the character's attributes
+
+    >>> player = {
+    ... 'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'project': 0,
+    ... 'exp': {'1712': 0, '1510': 0},
+    ... 'lvl': {'1510': 0, '1537': 0},
+    ... 'job': True}
+    >>> print_stats(player)
+    Your current attributes:
+        IQ: 0
+        EQ: 0
+        stress: 0
+        wealth: 0
+        experience in each course:
+            COMP1712: 0
+            COMP1510: 0
+        level in each course:
+            COMP1510: 0
+            COMP1537: 0
+        personal project progress: 0
+        employed: True
+    <BLANKLINE>
+    """
+    print("Your current attributes:")
+    print("    IQ:", character['IQ'])
+    print("    EQ:", character['EQ'])
+    print("    stress:", character['stress'])
+    print("    wealth:", character['wealth'])
+    print("    experience in each course:")
     for subject, exp in character['exp'].items():
-        print(f'\t\tCOMP{subject}: {exp}')
+        print(f'        COMP{subject}: {exp}')
     # print("exp:", character['exp'])
-    print("\tlevel in each course:")
+    print("    level in each course:")
     for subject, lvl in character['lvl'].items():
-        print(f'\t\tCOMP{subject}: {lvl}')
-    print("\tpersonal project progress:", character['project'])
+        print(f'        COMP{subject}: {lvl}')
+    print("    personal project progress:", character['project'])
     if 'job' in character and character['job']:
-        print('\temployed: True')
+        print('    employed: True')
     print()
 
 
 def evaluate_exp(character, subject):
     """
-    evaluates whether character has enough exp in a subject to level up
-    if subject == all, loop through all subjects
-    else, only evaluate that one subject passed in
+    Evaluate the character's experience points and level up if the character has enough experience.
+
+    :param character: a dictionary
+    :param subject: a string
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: subject must be a string representing the subject the character is studying
+    :postcondition: evaluate the character's experience points and level up if the character has enough experience
+
+    >>> player = {'exp': {'1510': 200},'lvl': {'1510': 1}}
+    >>> course = '1510'
+    >>> evaluate_exp(player, course)
+    Eureka, an epiphany strikes you! All the puzzle pieces fall into place and you've deepened your understanding of \
+COMP1510.
+    Your COMP1510 level increased by 1. It is now level 2.
     """
     threshold = 100
 
@@ -87,7 +126,23 @@ def evaluate_exp(character, subject):
 
 def describe_stress(character):
     """
-    prints to console stress warnings
+    Describe the character's stress level.
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: print a description of the character's stress level
+
+    >>> player = {'stress': 101}
+    >>> describe_stress(player)
+    <BLANKLINE>
+    ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
+(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
+    <BLANKLINE>
+    >>> player = {'stress': 90}
+    >>> describe_stress(player)
+    <BLANKLINE>
+    You feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?@@
+    <BLANKLINE>
     """
     if character['stress'] > 100:
         print('\nERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE '
@@ -227,7 +282,8 @@ def describe_stress_change(character, amount):
 
     >>> player = {"stress": 1}
     >>> describe_stress_change(player, 1)
-    The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to get some rest regularly so you don't burn out!
+    The stress of life and schoolwork is getting to you as you start to feel a bit more tired. Remember to get some \
+rest regularly so you don't burn out!
     Your stress increases by 1
     Your stress level is now 1.
 
