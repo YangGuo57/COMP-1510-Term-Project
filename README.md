@@ -22,4 +22,8 @@ YangGuo57
 
 ## Any important comments you'd like to make about your work:
 
-REPLACE THIS LINE WITH ANY COMMENTS
+
+## functions that we did not doctest/unit test:
+weekday.weekday
+weekday.end_of_week_action
+

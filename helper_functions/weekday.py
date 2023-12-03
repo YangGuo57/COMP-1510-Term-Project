@@ -6,12 +6,15 @@ from time import sleep
 
 def weekday(character, week, school_map):
     """
-    print weekday prompt to screen (eg. It is now week 5, only 2 more weeks until midterms...)
-    increase exp in all subjects
-    increase stress
-    evaluate_exp()
-    evaluate_stress()
-    generate random event
+    Carries out weekday events including attending classes, weekly random event, and end of week office hours.
+
+    :param character: character dictionary
+    :param week: integer representing week number
+    :param school_map: map dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :precondition: week must be a valid positive integer representing week number created in this program
+    :precondition: school_map must be a valid map dictionary created in this program
+    :postcondition: properly adjusts character's stats and location based on weekday events
     """
     exam = 'midterms' if week <= 7 else 'finals'
     exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == "midterms" else TOTAL_WEEKS - week - 1
@@ -39,10 +42,13 @@ def weekday(character, week, school_map):
 
 def end_of_week_action(character, school_map):
     """
-    freely move on school_map during office hours
-    :param character:
-    :param school_map:
-    :return:
+    Lets player choose to either move on the map to attend office hours or go home.
+
+    :param character: character dictionary
+    :param school_map: map dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :precondition: school_map must be a valid map dictionary created in this program
+    :postcondition: properly adjusts character's stats and location based on user choice
     """
     print('At last, you made it through another week. It is Friday afternoon, and you find yourself at crossroads. '
           'All your instructors are available for questions during their office hours. If you have any pressing '
@@ -58,9 +64,17 @@ def end_of_week_action(character, school_map):
 
 def go_home(character):
     """
-    character does not attend office hours and goes home
-    :param character:
-    :return:
+    Lets player go home and rest.
+
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from going home
+
+    >>> character = {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 10, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1, 'COMP1537': 1, 'X': 1, 'Y': 1}
+    >>> go_home(character)
+    You decide to call it a day and head home to get some rest.
+    >>> character
+    {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 0, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1, 'COMP1537': 1, 'X': 1, 'Y': 1}
     """
     print('You decide to call it a day and head home to get some rest.')
     sleep(0.5)
@@ -70,7 +84,13 @@ def go_home(character):
 
 def office_hours(character, subject):
     """
-    carries out office hours
+    Lets player attend office hours for a specific subject.
+
+    :param character: character dictionary
+    :param subject: string representing subject
+    :precondition: character must be a valid character dictionary created in this program
+    :precondition: subject must be a valid string representing a subject created in this program
+    :postcondition: properly adjusts character's stats from attending office hours
     """
     epiphany = roll_epiphany()
     exp_gain = 0
@@ -89,14 +109,27 @@ def office_hours(character, subject):
 
 def roll_epiphany():
     """
-    rolls for an epiphany during office hours at 20% chance
+    Rolls for an epiphany during office hours at 20% chance.
+
+    :return: a boolean representing whether an epiphany occurred
     """
     return False if randint(0, 4) else True
 
 
 def print_epiphany_office_hours(subject, epiphany):
     """
-    prints flavour text depending on whether player has an epiphany during office hours
+    Prints flavour text to console depending on whether player has an epiphany during office hours.
+
+    :param subject: string representing subject
+    :param epiphany: boolean representing whether an epiphany occurred
+    :precondition: subject must be a valid string representing a subject created in this program
+    :postcondition: prints the appropriate flavour text to console
+
+    >>> print_epiphany_office_hours('1510', True)
+    Your COMP1510 instructor graciously imparts their wisdom on you. You absorb all this wisdom like a sponge.
+
+    >>> print_epiphany_office_hours('1510', False)
+    Your COMP1510 instructor graciously imparts their wisdom on you, but Alas, your brain struggles to absorb all this wisdom.
     """
     if epiphany:
         print(f'Your COMP{subject} instructor graciously imparts their wisdom on you. You absorb all this wisdom like '
@@ -108,9 +141,11 @@ def print_epiphany_office_hours(subject, epiphany):
 
 def weekday_schoolwork(character):
     """
-    adds exp to all subjects
-    adds stress
-    calls other functions to print stat changes
+    Increases experience in all school subjects.
+
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from doing schoolwork
     """
     for subject in SUBJECTS:
         experience_gained = character['IQ'] * randint(15, 20)
@@ -121,9 +156,11 @@ def weekday_schoolwork(character):
 
 def random_weekday_event(character):
     """
-    hackathon (most rare), quiz, club event, assignment, trauma bond
-    evaluate_exp()
-    evaluate_stress()
+    Generates a random weekday event at 25% chance each.
+
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from the generated random weekday event
     """
     roll = randint(1, 4)
     subject = roll_subject()
@@ -145,7 +182,16 @@ def random_weekday_event(character):
 
 def assessment_stat_change(character, fail, subject, assessment):
     """
-    changes character's stats based on whether character passed or failed the assessment
+    Changes character's stats based on whether character passed or failed the assessment.
+
+    :param character: character dictionary
+    :param fail: boolean representing whether character failed the assessment
+    :param subject: string representing subject
+    :param assessment: string representing assessment type
+    :precondition: character must be a valid character dictionary created in this program
+    :precondition: subject must be a valid string representing a subject created in this program
+    :precondition: assessment must be a valid string representing an assessment type created in this program
+    :postcondition: properly adjusts character's stats from the conditions of the assessment
     """
     if fail:
         char.change_stat(character, 'stress', randint(8, 12))
@@ -165,7 +211,20 @@ def assessment_stat_change(character, fail, subject, assessment):
 
 def print_assessment_results(fail, subject, assessment):
     """
-    prints flavour text to screen, describing whether character has passed or failed the assessment
+    Prints flavour text to screen to describe whether character has passed or failed the assessment.
+
+    :param fail: boolean representing whether character failed the assessment
+    :param subject: string representing subject
+    :param assessment: string representing assessment type
+    :precondition: subject must be a valid string representing a subject created in this program
+    :precondition: assessment must be a valid string representing an assessment type created in this program
+    :postcondition: prints the appropriate flavour text to console
+
+    >>> print_assessment_results(True, '1510', 'quiz')
+    You completely bombed the COMP1510 quiz. Perhaps you should study harder.
+
+    >>> print_assessment_results(False, '1510', 'quiz')
+    Hurrah! You aced the COMP1510 quiz. All those tearful all-nighters were not for naught.
     """
     if not fail:
         print(f'Hurrah! You aced the COMP{subject} {assessment}. All those tearful all-nighters were not for naught!')
@@ -175,7 +234,9 @@ def print_assessment_results(fail, subject, assessment):
 
 def roll_subject():
     """
-    randomly rolls one subject out of four subjects at 25% chance
+    Rolls one subject out of four subjects at 25% chance.
+
+    :return: a string representing the subject rolled
     """
     roll = randint(0, 3)
     return SUBJECTS[roll]
@@ -183,7 +244,11 @@ def roll_subject():
 
 def trauma_bond(character):
     """
-    carries out trauma bond with classmates
+    Carries out trauma bond event with classmates.
+
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from the trauma bond event
     """
     print('After a week of endless schoolwork, you and your classmates find yourselves rendered speechless by the '
           'ordeal. You complain about the challenges of school life to each other. The venting '
@@ -194,7 +259,11 @@ def trauma_bond(character):
 
 def club_event(character):
     """
-    carries out club event
+    Carries out club event with classmates.
+
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from the club event
     """
     print('In the midst of overwhelming homework, the news of a socializing club event feels like a welcomed '
           'blessing. Naturally, you decide to join, finding solace among your peers as you all unwind and '
