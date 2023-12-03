@@ -50,8 +50,8 @@ def confirm_entry(location):
     """
     Determine whether the player wants to enter a location or not.
 
-    :param location: a dictionary
-    :precondition: location must be a dictionary with keys as location and values as description
+    :param location: a string
+    :precondition: location must be a string representing a location
     :postcondition: determine whether the player wants to enter a location or not
     :return: a string representing the player's choice
     """
