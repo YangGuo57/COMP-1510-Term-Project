@@ -1,5 +1,5 @@
 import game
-from random import randint
+import random
 from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char
 from time import sleep
 
@@ -154,8 +154,8 @@ def weekend_schoolwork(character, subject):
     :precondition: subject must be a string generated in this program
     :postcondition: correctly modifies character stats on the selected subject
     """
-    exp_gain = randint(15, 20) * 1 if subject == 'project' else randint(15, 20) * character['IQ']
-    stress_gain = randint(5, 10)
+    exp_gain = random.randint(15, 20) * 1 if subject == 'project' else random.randint(15, 20) * character['IQ']
+    stress_gain = random.randint(5, 10)
     char.change_stat(character, subject, exp_gain)
     sleep(0.5)
     char.change_stat(character, 'stress', stress_gain)
@@ -169,7 +169,7 @@ def weekend_sleep(character):
     :precondition: character must be a dictionary generated in this program
     :postcondition: correctly modifies character stats when user chooses to sleep on the weekend
     """
-    stress_loss = randint(25, 30) * -1
+    stress_loss = random.randint(25, 30) * -1
     char.change_stat(character, 'stress', stress_loss)
 
 
@@ -203,20 +203,20 @@ def weekend_school(character):
     """
     print('The school is closed weekends. Why are you even here?')
     sleep(0.5)
-    roll = randint(1, 2)
+    roll = random.randint(1, 2)
     stress_change = 0
     increase_in_eq = 0
     if roll == 1:
         print('You run into some classmates, who drag you along to a weekend party. How do they have so much free time '
               'on their hands?')
-        stress_change += randint(10, 15) * -1
-        increase_in_eq += randint(1, 3)
+        stress_change += random.randint(10, 15) * -1
+        increase_in_eq += random.randint(1, 3)
     else:
         print('You accidentally walk into a hobo because you did not pay attention to where you were going. The hobo '
               'thinks you\'re picking a fight with him, and starts yelling profanities at you. You tell him off, '
               'but the encounter leaves you feeling a bit shaken.')
-        stress_change += randint(10, 15)
-        increase_in_eq += randint(1, 3)
+        stress_change += random.randint(10, 15)
+        increase_in_eq += random.randint(1, 3)
     sleep(0.5)
     char.change_stat(character, 'EQ', increase_in_eq)
     char.change_stat(character, 'stress', stress_change)
@@ -264,7 +264,7 @@ def weekend_job(character):
               'navigating work relationships.')
         sleep(0.5)
         char.change_stat(character, 'wealth', 20)
-        increase_in_eq = randint(1, 3)
+        increase_in_eq = random.randint(1, 3)
         char.change_stat(character, 'EQ', increase_in_eq)
     elif 'job' in character and not character['job']:
         print('You arrive at your previous workplace. You exchange awkward glances with your previous manager. Why '
@@ -273,7 +273,7 @@ def weekend_job(character):
         print('You arrive at a bustling cafe. You sit down and attempt to do some work, but the noisy environment '
               'is heavily distracting. You don\'t get anything done.')
     sleep(0.5)
-    stress_gain = randint(5, 8)
+    stress_gain = random.randint(5, 8)
     char.change_stat(character, 'stress', stress_gain)
     return True
 
@@ -370,12 +370,12 @@ def random_park_event(character):
     :precondition: character must be a dictionary generated in this program
     :postcondition: correctly generates an event in Stanley park randomly
     """
-    roll = randint(1, 10)
+    roll = random.randint(1, 10)
 
     if roll in range(5, 7):
         print(f'{generate_park_message_to_print(roll)}')
         sleep(0.5)
-        stress_loss = randint(-20, -15)
+        stress_loss = random.randint(-20, -15)
         char.change_stat(character, 'stress', stress_loss)
     elif roll in range(7, 9):
         enter = flea_market(character)
@@ -388,7 +388,7 @@ def random_park_event(character):
     if roll in range(1, 5):
         print(f'{generate_park_message_to_print(roll)}')
         sleep(0.5)
-        stress_loss = randint(-15, -10)
+        stress_loss = random.randint(-15, -10)
         char.change_stat(character, 'stress', stress_loss)
 
 
@@ -455,7 +455,7 @@ def flea_market(character):
         else:
             print(f'{messages["no kool-aid"]}')
             sleep(0.5)
-            stress_gain = randint(10, 15)
+            stress_gain = random.randint(10, 15)
             sleep(0.5)
             char.change_stat(character, 'stress', stress_gain)
         return True
