@@ -90,6 +90,15 @@ def evaluate_exam(character, subject, exam):
 
 
 def reward_character(character, subject):
+    """
+    Reward the character with a point in the subject they are studying.
+
+    :param character: a dictionary
+    :param subject: a string
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: subject must be a string representing the subject the character is studying
+    :postcondition: adds a point to the character's attribute for the subject they are studying
+    """
     stress_loss = randint(5, 10) * -1
     exp_gain = randint(10, 15) * character['IQ']
 
