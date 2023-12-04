@@ -4,6 +4,14 @@ from time import sleep
 
 
 def take_coop_interview(character):
+    """
+    Determines if the character passes the coop interview
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: determines if the character passes the coop interview
+    :return: True if the character passes the coop interview, False otherwise
+    """
     print('As you step into the interview room, you are greeted with a few pairs of eyes - wow, there are more than '
           'one person interviewing you! You introduce yourself as you nervously sit down in the lone empty chair in '
           'the room. Your interviewer clears his throat, and starts asking you some questions, how will you answer?')
@@ -25,6 +33,16 @@ def take_coop_interview(character):
 
 
 def take_exam(character, exam):
+    """
+    Take the exam and evaluate the character's performance.
+
+    :param character: a dictionary
+    :param exam: a string
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: exam must be a string representing the exam type
+    :postcondition: evaluate the character's performance on the exam
+    :return: True if the character passes the exam, False otherwise
+    """
     print(f'Finally, the time has come: the much-anticipated {exam} exams are here. You look around you and all '
           f'you see are the blank stares of your sleep-deprived classmates who pulled consecutive all-nighters and are '
           f'living off of coffee. (God forbid the Tim Hortons downstairs closes for today...) You are no different '
@@ -60,6 +78,19 @@ def take_exam(character, exam):
 
 
 def calculate_average(character):
+    """
+    Calculate the average of the character's grades
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary storing the character's attributes
+    :postcondition: calculate the average of the character's grades
+    :return: the average of the character's grades
+
+    >>> player = {'midterm': {'1510': 'A', '1537': 'B', '1113': 'C', '1712': 'D'},
+    ... 'final': {'1510': 'A', '1537': 'B', '1113': 'C', '1712': 'D'}}
+    >>> calculate_average(player)
+    'B'
+    """
     min_threshold = (85, 70, 55)
     letter_grades = ('A', 'B', 'C')
     averages = 0
@@ -80,6 +111,23 @@ def calculate_average(character):
 
 
 def evaluate_exam(character, subject, exam):
+    """
+    Evaluate the character's exam result based on their level in the subject and the exam type.
+
+    :param character: a dictionary
+    :param subject: a string
+    :param exam: a string
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: subject must be a string representing the subject the character is studying
+    :precondition: exam must be a string representing the exam type
+    :postcondition: return a string representing the character's exam result
+
+    >>> player = {'lvl': {'1510': 1}}
+    >>> course = '1510'
+    >>> test = 'midterm'
+    >>> evaluate_exam(player, course, test)
+    'F'
+    """
     fail = {'midterm': 1, 'final': 4}
     lvl_requirements = {'midterm': {1: 'F', 2: 'C', 3: 'B', 4: 'A'},
                         'final': {3: 'F', 4: 'C', 5: 'B', 6: 'A'}}
@@ -90,6 +138,15 @@ def evaluate_exam(character, subject, exam):
 
 
 def reward_character(character, subject):
+    """
+    Reward the character with a point in the subject they are studying.
+
+    :param character: a dictionary
+    :param subject: a string
+    :precondition: character must be a dictionary storing the character's attributes
+    :precondition: subject must be a string representing the subject the character is studying
+    :postcondition: adds a point to the character's attribute for the subject they are studying
+    """
     stress_loss = randint(5, 10) * -1
     exp_gain = randint(10, 15) * character['IQ']
 
