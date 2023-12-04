@@ -66,9 +66,12 @@ def weekend(character, main_map, week):
 
 def binary_user_choice(setting):
     """
-    Get user choice for an action - whether to proceed or not.
-    :param setting:
-    :return:
+    Get user choice for questions with binary answers. 
+
+    :param setting: string representing the setting of the question
+    :precondition: setting must be a key in prompts and options
+    :postcondition: correctly gets and returns user choice
+    :return: a string representing user choice
     """
     prompts = {'quit job': 'Are you too busy to go to work? If so, maybe you should let your manager know you want to '
                            'quit...',
@@ -102,7 +105,11 @@ def binary_user_choice(setting):
 
 def execute_weekend_home_action(character):
     """
-    do the action
+    Executes selected weekend action at home.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly executes weekend action
     """
     choice = binary_user_choice('home')
     describe_weekend_home_action(choice)
@@ -115,7 +122,9 @@ def execute_weekend_home_action(character):
 
 def get_user_choice_weekend_schoolwork():
     """
-    get user choice on what kind of schoolwork to do when user is at home
+    Gets user choice on what kind of schoolwork to do when user is at home.
+
+    :return: a string representing the user's choice
     """
     user_choice = input('What do you want to work on? \n'
                         'Enter 1 to work on COMP1510,\n'
@@ -137,7 +146,13 @@ def get_user_choice_weekend_schoolwork():
 
 def weekend_schoolwork(character, subject):
     """
-    carry out the schoolwork and modify stats accordingly
+    Modifies character stats on the selected schoolwork by the user.
+
+    :param character: a dictionary representing the player character
+    :param subject: a string representing the subject the user chose to work on
+    :precondition: character must be a dictionary generated in this program
+    :precondition: subject must be a string generated in this program
+    :postcondition: correctly modifies character stats on the selected subject
     """
     exp_gain = randint(15, 20) * 1 if subject == 'project' else randint(15, 20) * character['IQ']
     stress_gain = randint(5, 10)
@@ -148,7 +163,11 @@ def weekend_schoolwork(character, subject):
 
 def weekend_sleep(character):
     """
-    sleep
+    Modifies character stats when user chooses to sleep on the weekend.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly modifies character stats when user chooses to sleep on the weekend
     """
     stress_loss = randint(25, 30) * -1
     char.change_stat(character, 'stress', stress_loss)
@@ -156,7 +175,17 @@ def weekend_sleep(character):
 
 def describe_weekend_home_action(action):
     """
-    print flavour text to describe the action at home
+    Prints flavour text to describe the action at home.
+
+    :param action: a string representing the action the user chooses to do at home
+    :precondition: action must be a string generated from binary_user_choice()
+    :postcondition: correctly prints flavour text to describe the action at home
+
+    >>> describe_weekend_home_action('1')
+    You decide to be productive (or try to be productive).
+
+    >>> describe_weekend_home_action('2')
+    You pass out in your bed. Good night and sweet dreams.
     """
     if action == '1':
         print('You decide to be productive (or try to be productive).')
@@ -166,7 +195,11 @@ def describe_weekend_home_action(action):
 
 def weekend_school(character):
     """
-    generates random events at school on a weekend
+    Generates random events at school on a weekend.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly generates random events at school on a weekend
     """
     print('The school is closed weekends. Why are you even here?')
     sleep(0.5)
@@ -191,7 +224,11 @@ def weekend_school(character):
 
 def weekend_hospital(character):
     """
-    weekend events at hospital
+    Adjust character stats when character goes to the hospital on the weekend.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly adjusts character stats when character goes to the hospital on the weekend
     """
     print('As you step inside Vancouver General Hospital, the scent of disinfectants greets you. Inside, '
           'it\'s serious with doctors and nurses bustling around, and you stand at the entrance feeling a bit lost. '
@@ -214,7 +251,11 @@ def weekend_hospital(character):
 
 def weekend_job(character):
     """
-    work at part-time job
+    Adjusts character stats when character visits the local cafe on a weekend.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly adjusts character stats when character visits the local cafe on a weekend
     """
     if 'job' in character and character['job']:
         print('You begin your shift at the cafe. The aroma of freshly brewed coffee fills the air as you learn '
@@ -239,8 +280,12 @@ def weekend_job(character):
 
 def evaluate_job_attendance(character, skip):
     """
-    keeps track of how many times player has skipped work
-    if > 2 times, player is fired
+    Keeps track of how many times character has skipped work.
+
+    :param character: a dictionary representing the player character
+    :param skip: a boolean representing whether the player skipped work
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly increments the number of times the player skipped work
     """
     if character['job'] and not skip:
         character['skip_job'] += 1
@@ -251,9 +296,11 @@ def evaluate_job_attendance(character, skip):
 
 def evaluate_firing_from_job(character):
     """
-    Should player be fired?
-    :param character:
-    :return:
+    Evaluates whether character should be fired from their job.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly evaluates whether character should be fired from their job
     """
     if character['skip_job'] >= 3:
         sleep(0.5)
@@ -274,9 +321,11 @@ def evaluate_firing_from_job(character):
 
 def weekend_park(character):
     """
-    weekend events at park
-    does player have a job? if not, generate job posting
-    random_park_event() if character has not applied to a job posting
+    Execute weekend events at Stanley Park depending on whether player has worked a job before.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly executes weekend events at Stanley Park depending on whether player has worked a job
     """
     applied_to_job = False
     if 'job' not in character:
@@ -293,9 +342,12 @@ def weekend_park(character):
 
 def generate_job_posting(character):
     """
-    Generates job posting is character is unemployed. Returns boolean to represent whether character applied to job.
-    :param character:
-    :return:
+    Generates job posting if character is unemployed.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly generates job posting if character is unemployed
+    :return: a boolean representing whether the player applied to the job
     """
     user_choice = binary_user_choice('job posting')
     if user_choice == '1':
@@ -312,7 +364,11 @@ def generate_job_posting(character):
 
 def random_park_event(character):
     """
-    generate random event in the park
+    Generates an event in Stanley park randomly.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly generates an event in Stanley park randomly
     """
     roll = randint(1, 10)
 
@@ -338,9 +394,19 @@ def random_park_event(character):
 
 def generate_park_message_to_print(roll):
     """
-    generate messages for random park event
-    :param roll:
-    :return:
+    Prints message to console depending on the roll.
+
+    :param roll: an integer representing the roll
+    :precondition: roll must be an integer generated from random_park_event()
+    :postcondition: correctly prints message to console depending on the roll
+
+    >>> generate_park_message_to_print(1)
+    'Taking a deep breath of the fresh air in Stanley Park helps ease your anxiety as you walk.'
+
+    >>> generate_park_message_to_print(6)
+    'A stray cat approaches, meowing softly. You give it a gentle tummy rub, and it responds with happy purring. \
+Seeing this carefree, adorable little creature revel in the simple joys of life inspires you to adopt a similar \
+mentality.'
     """
     messages = {
         range(1, 5): 'Taking a deep breath of the fresh air in Stanley Park helps ease your anxiety as you walk.',
@@ -368,7 +434,12 @@ def generate_park_message_to_print(roll):
 
 def flea_market(character):
     """
-    carry out flea market
+    Modifies character stats depending on user action at the flea market.
+
+    :param character: a dictionary representing the player character
+    :precondition: character must be a dictionary generated in this program
+    :postcondition: correctly modifies character stats depending on user action at the flea market
+    :return: a boolean representing whether the player entered the flea market
     """
     messages = generate_park_message_to_print(7)
     user_choice = binary_user_choice('flea market')
