@@ -1,4 +1,5 @@
-from random import randint
+# from random import random.randint
+import random
 import game
 from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event
 from time import sleep
@@ -70,21 +71,23 @@ def go_home(character):
     :precondition: character must be a valid character dictionary created in this program
     :postcondition: properly adjusts character's stats from going home
 
-    >>> character = {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 10, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1, 'COMP1537': 1, 'X': 1, 'Y': 1}
-    >>> go_home(character)
+    >>> player = {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 10, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1,
+    'COMP1537': 1, 'X': 1, 'Y': 1}
+    >>> go_home(player)
     You decide to call it a day and head home to get some rest.
-    >>> character
-    {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 0, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1, 'COMP1537': 1, 'X': 1, 'Y': 1}
+    >>> player
+    {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 0, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1,
+    'COMP1537': 1, 'X': 1, 'Y': 1}
     """
     print('You decide to call it a day and head home to get some rest.')
     sleep(0.5)
-    stress_loss = randint(10, 15) * -1
+    stress_loss = random.randint(10, 15) * -1
     char.change_stat(character, 'stress', stress_loss)
 
 
 def office_hours(character, subject):
     """
-    Lets player attend office hours for a specific subject.
+    Changes player stats after attending office hours for a specific subject.
 
     :param character: character dictionary
     :param subject: string representing subject
@@ -100,11 +103,11 @@ def office_hours(character, subject):
     if epiphany:
         exp_gain += 100
     else:
-        exp_gain += randint(15, 20) * character['IQ']
+        exp_gain += random.randint(15, 20) * character['IQ']
 
     char.change_stat(character, subject, exp_gain)
     sleep(0.5)
-    char.change_stat(character, 'stress', randint(10, 15))
+    char.change_stat(character, 'stress', random.randint(10, 15))
 
 
 def roll_epiphany():
@@ -113,7 +116,7 @@ def roll_epiphany():
 
     :return: a boolean representing whether an epiphany occurred
     """
-    return False if randint(0, 4) else True
+    return False if random.randint(0, 4) else True
 
 
 def print_epiphany_office_hours(subject, epiphany):
@@ -129,7 +132,8 @@ def print_epiphany_office_hours(subject, epiphany):
     Your COMP1510 instructor graciously imparts their wisdom on you. You absorb all this wisdom like a sponge.
 
     >>> print_epiphany_office_hours('1510', False)
-    Your COMP1510 instructor graciously imparts their wisdom on you, but Alas, your brain struggles to absorb all this wisdom.
+    Your COMP1510 instructor graciously imparts their wisdom on you, but Alas, your brain struggles to absorb all \
+this wisdom.
     """
     if epiphany:
         print(f'Your COMP{subject} instructor graciously imparts their wisdom on you. You absorb all this wisdom like '
@@ -148,10 +152,10 @@ def weekday_schoolwork(character):
     :postcondition: properly adjusts character's stats from doing schoolwork
     """
     for subject in SUBJECTS:
-        experience_gained = character['IQ'] * randint(15, 20)
+        experience_gained = character['IQ'] * random.randint(15, 20)
         char.change_stat(character, subject, experience_gained)
     sleep(0.5)
-    char.change_stat(character, 'stress', randint(5, 10))
+    char.change_stat(character, 'stress', random.randint(5, 10))
 
 
 def random_weekday_event(character):
@@ -162,9 +166,9 @@ def random_weekday_event(character):
     :precondition: character must be a valid character dictionary created in this program
     :postcondition: properly adjusts character's stats from the generated random weekday event
     """
-    roll = randint(1, 4)
+    roll = random.randint(1, 4)
     subject = roll_subject()
-    fail = True if randint(0, 1) else False
+    fail = True if random.randint(0, 1) else False
 
     if roll == 1:
         club_event(character)
@@ -194,15 +198,17 @@ def assessment_stat_change(character, fail, subject, assessment):
     :postcondition: properly adjusts character's stats from the conditions of the assessment
     """
     if fail:
-        char.change_stat(character, 'stress', randint(8, 12))
+        stress_gain = random.randint(8, 12)
+        print(stress_gain)
+        char.change_stat(character, 'stress', stress_gain)
     else:
         stat_gain = 0
-        stress_gain = randint(4, 7)
+        stress_gain = random.randint(4, 7)
 
         if assessment == 'quiz':
-            stat_gain = randint(15, 20) * character['IQ']
+            stat_gain = random.randint(15, 20) * character['IQ']
         elif assessment == 'assignment':
-            stat_gain = randint(25, 30) * character['IQ']
+            stat_gain = random.randint(25, 30) * character['IQ']
 
         char.change_stat(character, subject, stat_gain)
         sleep(0.5)
@@ -238,7 +244,7 @@ def roll_subject():
 
     :return: a string representing the subject rolled
     """
-    roll = randint(0, 3)
+    roll = random.randint(0, 3)
     return SUBJECTS[roll]
 
 
@@ -254,7 +260,7 @@ def trauma_bond(character):
           'ordeal. You complain about the challenges of school life to each other. The venting '
           'provides a temporary peace of mind; just try not to think about your deadlines!')
     sleep(0.5)
-    char.change_stat(character, 'stress', randint(-15, -10))
+    char.change_stat(character, 'stress', random.randint(-15, -10))
 
 
 def club_event(character):
@@ -270,5 +276,5 @@ def club_event(character):
           'complain about your school life to each other. Laughter fills the air, and as the evening unfolds, '
           'it\'s as if the weight of your stress has been lifted, leaving you liberated and refreshed.')
     sleep(0.5)
-    char.change_stat(character, 'stress', randint(-15, -10))
-    char.change_stat(character, 'EQ', randint(1, 3))
+    char.change_stat(character, 'stress', random.randint(-15, -10))
+    char.change_stat(character, 'EQ', random.randint(1, 3))
