@@ -6,10 +6,15 @@ from time import sleep
 
 def weekend(character, main_map, week):
     """
-    initialize actions
-    print weekend prompt to screen
-    ask user for action (stay home or go out?)
-    perform action
+    Carries out 3 weekend events on the main map.
+
+    :param character: character dictionary
+    :param week: integer representing week number
+    :param main_map: map dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :precondition: week must be a valid positive integer representing week number created in this program
+    :precondition: main_map must be a valid map dictionary created in this program
+    :postcondition: properly adjusts character's stats based on weekend events
     """
     actions = 3
     print('Gently roused by sunbeams, you awaken to the realization that the weekend has arrived. You reluctantly pull '
