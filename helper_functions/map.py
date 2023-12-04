@@ -3,17 +3,28 @@ from helper_functions import coordinates
 
 def make_board(row, column, locations, keys):
     """
-    Create game board with row and column.
+    Make a game board with the given row, column, locations and keys.
 
+    :param row: an integer
+    :param column: an integer
+    :param locations: a dictionary
+    :param keys: a string
+    :precondition: row must be a positive integer
+    :precondition: colum must be a positive integer
+    :precondition: locations must be a dictionary representing the locations of the game board
+    :precondition: keys must be a string representing the key of the locations dictionary
+    :postcondition: create a game board with the given row, column, locations and keys
+    :return: a dictionary representing the game board
 
-    :param row:
-    :param column:
-    :param locations:
-    :param keys:
-    :return:
-
-    >>> make_board(2, 2, {'key': {(0, 0): 'home', (1, 1): 'park'}}, 'key')
-    {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
+    >>> ro = 3
+    >>> col = 3
+    >>> location = {'top': {(0, 0): ' ', (0, 1): ' ', (0, 2): ' '},
+    ... 'middle': {(1, 0): ' ', (1, 1): ' ', (1, 2): ' '},
+    ... 'bottom': {(2, 0): ' ', (2, 1): ' ', (2, 2): ' '}}
+    >>> key = 'top'
+    >>> make_board(ro, col, location, key)
+    {(0, 0): ' ', (0, 1): ' ', (0, 2): ' ', (1, 0): ' ', (1, 1): ' ', (1, 2): ' ', (2, 0): ' ', (2, 1): ' ', \
+(2, 2): ' '}
     """
     game_board = {}
     for x in range(row):
@@ -28,18 +39,17 @@ def make_board(row, column, locations, keys):
 
 def add_element_to_map(game_board):
     """
-    Add elements to a game board and update the board.
+    Add elements to the map with the given dictionary
 
-    :param game_board:
-    :return:
+    :param game_board: a dictionary
+    :precondition: game_board must be a dictionary with tuples as keys and strings as values
+    :postcondition: add elements to the map
+    :return: a dictionary with tuples as keys and strings as values
 
-    # >>> board =  {(0, 0): 'home', (0, 1): ' ', (1, 0): ' ', (1, 1): 'park'}
-    # >>> result = add_element_to_map(board)
-    # >>> expected_result = {(0, 0): '=', (0, 1): '=', (1, 0): '|', (1, 1): '-', (-1, -1): '-',
-    # ... (-1, 0): '-', (-1, 1): '-', (0, -1): '|', (1, -1): '-', (0, 2): '=', (1, 2): '=',
-    # ... (2, 0): '=', (2, 1): '=', (2, 2): '='}
-    # >>> result == expected_result
-    True
+    >>> board = {(0, 0): 'home'}
+    >>> add_element_to_map(board)
+    {(0, 0): '✦', (-1, -1): '-', (-1, 0): '-', (-1, 1): '-', (0, -1): '|', (0, 1): '-', (1, -1): '-', (1, 0): '-', \
+(1, 1): '-'}
     """
     element_mappings = {
         'home': ('✦', '|', '-'),
@@ -71,6 +81,18 @@ def add_element_to_map(game_board):
 
 
 def initialize_map(board_rows, board_columns, location_key):
+    """
+    Initialize the game map with the given board rows, board columns and location key.
+
+    :param board_rows: an integer
+    :param board_columns: an integer
+    :param location_key: a string
+    :precondition: board_rows must be a positive integer
+    :precondition: board_columns must be a positive integer
+    :precondition: location_key must be a string representing the key of the locations dictionary
+    :postcondition: initialize the game map with the given board rows, board columns and location key
+    :return: a dictionary representing the game map
+    """
     locations = coordinates()
     game_board = make_board(board_rows, board_columns, locations, location_key)
     game_map = add_element_to_map(game_board)
@@ -83,7 +105,13 @@ def initialize_map(board_rows, board_columns, location_key):
 
 def print_game_map(game_map, character):
     """
-    Print the game map borders.
+    Print the game map with the given game map and character.
+
+    :param game_map: a dictionary
+    :param character: a dictionary
+    :precondition: game_map must be a dictionary representing the game map with tuples as keys and strings as values
+    :precondition: character must be a dictionary representing the character
+    :postcondition: print the game map with the given game map and character
     """
     rows = game_map['rows']
     columns = game_map['columns']
