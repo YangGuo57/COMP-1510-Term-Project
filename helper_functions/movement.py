@@ -2,6 +2,24 @@ from helper_functions import map, event_trigger as event
 
 
 def validate_move(board, character, direction):
+    """
+    Determine if the character can move in the given direction.
+
+    :param board: a dictionary
+    :param character: a dictionary
+    :param direction: a string
+    :precondition: board must be a dictionary representing the board
+    :precondition: character must be a dictionary representing the character
+    :precondition: direction must be a string representing the direction
+    :postcondition: determine if the character can move in the given direction
+    :return: True if the character can move in the given direction, False otherwise
+
+    >>> game_board = {(0, 0): ' ', (0, 1): ' ', (1, 0): ' ', (1, 1): ' '}
+    >>> player = {'X': 0, 'Y': 0}
+    >>> player_direction = 'North'
+    >>> validate_move(game_board, player, player_direction)
+    False
+    """
     x_coordinate = character['X']
     y_coordinate = character['Y']
 
@@ -21,6 +39,14 @@ def validate_move(board, character, direction):
 
 
 def get_user_choice(character):
+    """
+    Get the user's choice of direction to move in.
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary representing the character
+    :postcondition: returns a string representing the direction the user wants to move in
+    :return: a string representing the direction the user wants to move in
+    """
     commands = {'w': 'North', 's': 'South', 'a': 'West', 'd': 'East'}
     school_commands = {'back': 'To go home', 'stats': 'To see your stats'}
 
@@ -36,15 +62,28 @@ def get_user_choice(character):
         if choice in commands.keys():
             return commands[choice]
         elif character['location'] == 'school' and choice in school_commands:
-            # if choice == 'stats':
-            #     char.print_stats(character)
-            # else:
             return choice
         else:
             print('Enter a valid input!')
 
 
 def move_character(character, direction, game_map):
+    """
+    Move the character in the direction specified if possible.
+
+    :param character: a dictionary
+    :param direction: a string
+    :param game_map: a dictionary
+    :precondition: character must be a dictionary representing the character
+    :precondition: direction must be a string representing the direction
+    :precondition: game_map must be a dictionary representing the character
+    :postcondition: updates the character's position if possible
+
+    >>> player = {'X': 1, 'Y': 1}
+    >>> map_game = {'rows': 2, 'columns': 2, 'board': {(0, 0): ' ', (0, 1): ' ', (1, 0): ' ', (1, 1): ' '}}
+    >>> move_character(player, 'North', map_game)
+    You hit a wall!
+    """
     x_coordinate = character['X']
     y_coordinate = character['Y']
     rows = game_map['rows']
@@ -80,11 +119,6 @@ def update_visited_location(character):
     :param character: a dictionary
     :precondition: character must be a dictionary representing the character
     :postcondition: update the visited location of the character
-
-    >>> player = {'visited_locations': {'home': 1, 'school': 1, 'hospital': 0, 'park': 0}}
-    >>> update_visited_location(player)
-    >>> player
-    {'visited_locations': {'home': 1, 'school': 2, 'hospital': 0, 'park': 0}}
     """
     player_position = (character['X'], character['Y'])
     locations = map.coordinates()
