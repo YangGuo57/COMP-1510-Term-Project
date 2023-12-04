@@ -80,7 +80,7 @@ def move_character(character, direction, game_map):
     :postcondition: updates the character's position if possible
 
     >>> player = {'X': 1, 'Y': 1}
-    >>> map_game = {'rows': 2, 'columns': 2, 'board': {(0, 0): ' ', (0, 1): ' ', (1, 0): ' ', (1, 1): ' '}}
+    >>> map_game = {'rows': 2, 'columns': 2, (0, 0): ' ', (0, 1): ' ', (1, 0): ' ', (1, 1): ' '}
     >>> move_character(player, 'North', map_game)
     You hit a wall!
     """
