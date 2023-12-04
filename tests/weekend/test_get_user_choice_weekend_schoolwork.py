@@ -32,4 +32,3 @@ class Test(TestCase):
         system_print = mock_output.getvalue()
         expected = 'That is not a valid entry.\nThat is not a valid entry.\n'
         self.assertEqual(system_print, expected)
-
