@@ -1,4 +1,4 @@
-from helper_functions import map, character as char, event_trigger as event
+from helper_functions import map, event_trigger as event
 
 
 def validate_move(board, character, direction):
@@ -74,6 +74,18 @@ def move_character(character, direction, game_map):
 
 
 def update_visited_location(character):
+    """
+    Update the visited location of the character.
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary representing the character
+    :postcondition: update the visited location of the character
+
+    >>> player = {'visited_locations': {'home': 1, 'school': 1, 'hospital': 0, 'park': 0}}
+    >>> update_visited_location(player)
+    >>> player
+    {'visited_locations': {'home': 1, 'school': 2, 'hospital': 0, 'park': 0}}
+    """
     player_position = (character['X'], character['Y'])
     locations = map.coordinates()
     for location, door_positions in locations['door']['main'].items():
@@ -83,6 +95,13 @@ def update_visited_location(character):
 
 
 def fast_travel(character):
+    """
+    Allows the user to fast travel to a location they have visited before.
+
+    :param character: a dictionary
+    :precondition: character must be a dictionary representing the character
+    :postcondition: moves the character to the location they have chosen
+    """
     locations = map.coordinates()
     destination = input('Please input fast travel destination: home, school, hospital, park, work:')
     if destination.lower() in locations['door']['main']:
@@ -92,6 +111,6 @@ def fast_travel(character):
             print(f'You\'ve fast traveled to {destination}!')
         else:
             print(f'You\'re new to Vancouver, you don\'t know where {destination} is! You must have visited '
-                  f'{destination } at least once before fast traveling there.')
+                  f'{destination} at least once before fast traveling there.')
     else:
         print('Invalid destination.')
