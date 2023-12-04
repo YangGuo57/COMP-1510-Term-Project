@@ -71,11 +71,11 @@ def weekend(character, main_map, week):
 
 def binary_user_choice(setting):
     """
-    Get user choice for questions with binary answers. 
+    Prints to console to get user choice for questions with binary answers.
 
     :param setting: string representing the setting of the question
     :precondition: setting must be a key in prompts and options
-    :postcondition: correctly gets and returns user choice
+    :postcondition: correctly prints to console to get and return user choice
     :return: a string representing user choice
     """
     prompts = {'quit job': 'Are you too busy to go to work? If so, maybe you should let your manager know you want to '
@@ -98,6 +98,17 @@ def binary_user_choice(setting):
                'hospital': 'Enter "1" to follow her, "2" to break free from her grasp.',
                'job posting': 'Enter "1" to apply, "2" to ignore.',
                'flea market': 'Enter "1" to check out the flea market, "2" to continue walking.'}
+    result = {'hospital': {'1': 'The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?',
+                           '2': 'You manage to slip away from the nurse\'s grasp and escape from the hospital.'},
+              'job posting': {'1': '\nYou applied and got the job immediately! Guess they were really desperate for '
+                                   'help.',
+                              '2': 'You decide your free time on the weekend is more important. You throw the job '
+                                   'posting into the garbage can, because littering is bad. You venture deeper into '
+                                   'the park.'},
+              'quit job': {'1': 'You decide to keep your part time job for now. Just don\'t forget to go to work '
+                                'again!',
+                           '2': 'You decide you can no longer commit to weekly shifts. Being the thoughtful person '
+                                'you are, you let your manager know.'}}
     print(f'{prompts[setting]}')
     user_choice = input(f'{options[setting]}')
     while user_choice != '1' and user_choice != '2':
@@ -105,6 +116,8 @@ def binary_user_choice(setting):
         sleep(0.5)
         print(f'{prompts[setting]}')
         user_choice = input(f'{options[setting]}')
+    if setting != 'home' and setting != 'flea market':
+        print(result[setting][user_choice])
     return user_choice
 
 
@@ -242,12 +255,9 @@ def weekend_hospital(character):
     if not character['vaccinated']:
         user_choice = binary_user_choice('hospital')
         if user_choice == '1':
-            print('The nurse jabs you with a needle. Ouch. Surely this won\'t make you autistic right?')
             sleep(0.5)
             char.change_stat(character, 'IQ', 1)
             character['vaccinated'] = True
-        else:
-            print('You manage to slip away from the nurse\'s grasp and escape from the hospital.')
     else:
         print('"What are you doing here?" she says, "You\'re not sick and you already got your vaccination!'
               'Now don\'t stand there and block the way, go home."\n'
@@ -317,11 +327,7 @@ def evaluate_firing_from_job(character):
         sleep(0.5)
         user_choice = binary_user_choice('quit job')
         if user_choice == '2':
-            print('You decide you can no longer commit to weekly shifts. Being the thoughtful person you are, you let '
-                  'your manager know.')
             character['job'] = False
-        else:
-            print('You decide to keep your part time job for now. Just don\'t forget to go to work again!')
 
 
 def weekend_park(character):
@@ -356,15 +362,10 @@ def generate_job_posting(character):
     """
     user_choice = binary_user_choice('job posting')
     if user_choice == '1':
-        print('\nYou applied and got the job immediately! Guess they were really desperate for help.')
         sleep(0.5)
         print('Remember, your new part-time job is at the local cafe! And don\'t forget to go to work every weekend!\n')
         character['job'] = True
-        return True
-    else:
-        print('You decide your free time on the weekend is more important. You throw the job posting into the '
-              'garbage can, because littering is bad. You venture deeper into the park.')
-        return False
+    return user_choice == '1'
 
 
 def random_park_event(character):
