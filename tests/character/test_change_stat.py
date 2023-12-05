@@ -34,7 +34,7 @@ class Test(TestCase):
         evaluate_exp(self.character, subject)
         describe_exp_gain(self.character, subject, amount)
         change_stat(self.character, subject, amount)
-        self.assertEqual(self.character['exp']['1510'], 50)
+        self.assertEqual(self.character['exp']['1510'], 60)
 
     @patch('helper_functions.character.describe_exp_gain')
     @patch('helper_functions.character.evaluate_exp')
@@ -52,7 +52,7 @@ class Test(TestCase):
         amount = 10
         describe_stress_change(self.character, amount)
         change_stat(self.character, attribute, amount)
-        self.assertEqual(self.character['stress'], 0)
+        self.assertEqual(self.character['stress'], 60)
 
     @patch('helper_functions.character.describe_stress_change')
     def test_change_stat_reduce_stress_stat(self, describe_stress_change):

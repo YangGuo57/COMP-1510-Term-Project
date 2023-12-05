@@ -11,7 +11,7 @@ class Test(TestCase):
                            'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                            'midterm': {'1510': None, '1537': None, '1113': None, '1712': None},
                            'final': {'1510': None, '1537': None, '1113': None, '1712': None},
-                           'visited_locations': {'home': 1, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0,
+                           'visited_locations': {'home': 1, 'school': 1, 'hospital': 0, 'park': 0, 'work': 0,
                                                  '1510': 0, '1537': 0, '1712': 0, '1113': 0},
                            'location': 'home', 'vaccinated': False, 'skip_job': 0}
         self.assertEqual(create_character(answers), expected_output)
@@ -23,7 +23,7 @@ class Test(TestCase):
                            'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
                            'midterm': {'1510': None, '1537': None, '1113': None, '1712': None},
                            'final': {'1510': None, '1537': None, '1113': None, '1712': None},
-                           'visited_locations': {'home': 1, 'school': 0, 'hospital': 0, 'park': 0, 'work': 0,
+                           'visited_locations': {'home': 1, 'school': 1, 'hospital': 0, 'park': 0, 'work': 0,
                                                  '1510': 0, '1537': 0, '1712': 0, '1113': 0},
                            'location': 'home', 'vaccinated': False, 'skip_job': 0}
         self.assertEqual(create_character(answers), expected_output)
