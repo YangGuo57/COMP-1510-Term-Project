@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from unittest.mock import patch
 from helper_functions.weekend import evaluate_firing_from_job
 
 
-class TestEvaluateFiringFromJob(unittest.TestCase):
+class Test(TestCase):
 
     @patch('helper_functions.character.change_stat')
     @patch('helper_functions.weekend.binary_user_choice', return_value='2')
