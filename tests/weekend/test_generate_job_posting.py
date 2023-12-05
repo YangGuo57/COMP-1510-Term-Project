@@ -10,6 +10,7 @@ class Test(TestCase):
         result = generate_job_posting(character)
         self.assertTrue(result)
         self.assertTrue(character['job'])
+        self.assertTrue(mock_choice.called)
 
     @patch('helper_functions.weekend.binary_user_choice', return_value='2')
     def test_generate_job_posting_character_does_not_apply_for_job(self, mock_choice):
@@ -17,3 +18,4 @@ class Test(TestCase):
         result = generate_job_posting(character)
         self.assertFalse(result)
         self.assertFalse(character['job'])
+        self.assertTrue(mock_choice.called)
