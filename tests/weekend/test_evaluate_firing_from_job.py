@@ -12,6 +12,7 @@ class TestEvaluateFiringFromJob(unittest.TestCase):
         evaluate_firing_from_job(character)
         self.assertFalse(character['job'])
         mock_change_stat.assert_called_with(character, 'EQ', -15)
+        mock_user_choice.assert_not_called()
 
     @patch('helper_functions.character.change_stat')
     @patch('helper_functions.weekend.binary_user_choice', return_value='2')
@@ -20,9 +21,11 @@ class TestEvaluateFiringFromJob(unittest.TestCase):
         evaluate_firing_from_job(character)
         self.assertFalse(character['job'])
         mock_change_stat.assert_not_called()
+        mock_user_choice.assert_called_once()
 
     @patch('helper_functions.weekend.binary_user_choice', return_value='1')
     def test_evaluate_firing_from_job_not_quit_after_two_skips(self, mock_user_choice):
         character = {'skip_job': 2, 'job': True, 'EQ': 50}
         evaluate_firing_from_job(character)
         self.assertTrue(character['job'])
+        mock_user_choice.assert_called_once()
