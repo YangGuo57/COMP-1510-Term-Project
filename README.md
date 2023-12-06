@@ -31,9 +31,4 @@ event_trigger.move_during_office_hours
 event_trigger.move_on_weekends  
 weekend.weekend  
 weekend.execute_weekend_home_action  
-weekend.weekend_school   
-weekend.weekend_hospital   
-weekend.weekend_job   
-weekend.random_park_event   
-weekend.flea_market   
-weekend.function_dispatcher --> write docstrings!!
+weekend.function_dispatcher
