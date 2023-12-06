@@ -48,9 +48,6 @@ def weekend(character, main_map, week):
                 track_job_status = function_dispatcher(character, location)
                 applied_to_job += track_job_status[0]
                 job_attendance += track_job_status[1]
-                if location == 'home':
-                    char.set_character_location(character, location)
-
         actions -= 1
 
     if not applied_to_job and 'job' in character:
@@ -77,6 +74,7 @@ def function_dispatcher(character, location):
         job_attendance = True
     else:
         functions[location](character)
+    print()
 
     return applied_to_job, job_attendance
 
@@ -141,6 +139,7 @@ def execute_weekend_home_action(character):
     :precondition: character must be a dictionary generated in this program
     :postcondition: correctly executes weekend action
     """
+    char.set_character_location(character, 'home')
     choice = binary_user_choice('home')
     describe_weekend_home_action(choice)
     sleep(0.5)
