@@ -39,7 +39,7 @@ def weekend(character, main_map, week):
             # trigger events on the big map
             choice = event.move_on_weekends(character, main_map)
             while choice != '1':
-                if choice == 'Exit':
+                if choice == 'Save and quit the game':
                     return False
                 choice = event.move_on_weekends(character, main_map)
             if choice == '1':

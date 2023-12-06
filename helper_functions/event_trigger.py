@@ -138,7 +138,7 @@ def move_on_weekends(character, main_map):
                 return confirm_entry(location)
         elif choice == '4':
             print('Thank you for playing! Your progress has been successfully saved. Goodbye!')
-            return 'Exit'
+            return 'Save and quit the game'
         else:
             print('Invalid choice. Please enter a valid option.')
 

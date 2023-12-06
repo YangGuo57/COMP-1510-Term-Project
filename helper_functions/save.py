@@ -38,7 +38,7 @@ def start_new_game(greeting_msg):
     return player, week
 
 
-def load_game(filename='./saved_game/saved_game.json'):
+def load_game(filename='./saved_game.json'):
     try:
         with open(filename, 'r') as file:
             game_data = json.load(file)
@@ -48,7 +48,7 @@ def load_game(filename='./saved_game/saved_game.json'):
         return None, None, False
 
 
-def save_game(player, week, is_weekend, filename='./saved_game/saved_game.json'):
+def save_game(player, week, is_weekend, filename='./saved_game.json'):
     game_data = {
         'character': player,
         'week': week,
