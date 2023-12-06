@@ -1,7 +1,7 @@
 # from random import random.randint
 import random
 import game
-from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event
+from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event, save
 from time import sleep
 
 
@@ -38,7 +38,7 @@ def weekday(character, week, school_map):
     sleep(0.5)
     char.set_character_location(character, 'school')
     end_of_week_action(character, school_map)
-    game.save_game(character, week, False)
+    save.save_game(character, week, False)
 
 
 def end_of_week_action(character, school_map):

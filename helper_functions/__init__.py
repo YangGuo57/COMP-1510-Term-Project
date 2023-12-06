@@ -159,10 +159,8 @@ def trigger_description():
         "1537": "The office of the COMP1537 instructor stands before you. Do you want to bug the instructor about "
                 "material you don't understand? \n"
                 "Enter '1' to enter the office, '2' to think about it some more.",
-        "home": {'description': 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor '
-                                'stroll or indulge in the comforts of your home? \n'
-                                'Enter "1" to stay home, enter "2" to leave the house.',
-                 '1': 'home',
-                 '2': 'outside'}
+        "home": 'A radiant weather beckons beyond your window; should you go on a refreshing outdoor stroll or indulge '
+                'in the comforts of your home? \n'
+                'Enter "1" to stay home, enter "2" to leave the house.'
     }
     return message

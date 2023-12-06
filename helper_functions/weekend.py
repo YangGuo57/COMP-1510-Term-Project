@@ -1,6 +1,6 @@
 import game
 import random
-from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char
+from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char, save
 from time import sleep
 
 
@@ -26,7 +26,6 @@ def weekend(character, main_map, week):
     character['Y'] = 3
     sleep(0.5)
     char.set_character_location(character, 'home')
-    locations = event.trigger_description()
     job_attendance = False
     applied_to_job = 0
 
@@ -37,7 +36,7 @@ def weekend(character, main_map, week):
             if user_choice == '1':
                 execute_weekend_home_action(character)
             else:
-                char.set_character_location(character, locations[character['location']][user_choice])
+                char.set_character_location(character, 'outside')
         if character['location'] == 'outside':
             # trigger events on the big map
             choice = event.move_on_weekends(character, main_map)
@@ -65,8 +64,26 @@ def weekend(character, main_map, week):
     if not applied_to_job and 'job' in character:
         evaluate_job_attendance(character, job_attendance)
 
-    game.save_game(character, week, False)
+    save.save_game(character, week, False)
     return True
+
+
+def function_dispatcher(character, location, applied_to_job, job_attendance):
+    functions = {
+        'park': weekend_park,
+        'work': weekend_job,
+        'hospital': weekend_hospital,
+        'school': weekend_school,
+        'home': execute_weekend_home_action
+    }
+    if location == 'park':
+        applied_to_job += functions[location](character)
+        return applied_to_job
+    elif location == 'work':
+        functions[location](character)
+        job_attendance += 1
+    else:
+        functions[location](character)
 
 
 def binary_user_choice(setting):
