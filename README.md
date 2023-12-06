@@ -36,3 +36,4 @@ weekend.weekend_hospital
 weekend.weekend_job   
 weekend.random_park_event   
 weekend.flea_market   
+weekend.function_dispatcher --> write docstrings!!
