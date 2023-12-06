@@ -30,5 +30,4 @@ exam.reward_character
 event_trigger.move_during_office_hours  
 event_trigger.move_on_weekends  
 weekend.weekend  
-weekend.execute_weekend_home_action  
 weekend.function_dispatcher
