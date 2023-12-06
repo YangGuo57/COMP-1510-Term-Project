@@ -1,6 +1,4 @@
-# from random import random.randint
 import random
-import game
 from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event, save
 from time import sleep
 
