@@ -1,4 +1,3 @@
-import game
 import random
 from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char, save
 from time import sleep
@@ -22,8 +21,7 @@ def weekend(character, main_map, week):
           'yours.')
 
     # set player location to home
-    character['X'] = 2
-    character['Y'] = 3
+    character['X'], character['Y'] = 2, 3
     sleep(0.5)
     char.set_character_location(character, 'home')
     job_attendance = False
@@ -47,18 +45,12 @@ def weekend(character, main_map, week):
             if choice == '1':
                 sleep(0.5)
                 location = event.at_entrance(character)
-                if location == 'park':
-                    applied_to_job += weekend_park(character)
-                elif location == 'work':
-                    weekend_job(character)
-                    job_attendance = True
-                elif location == 'hospital':
-                    weekend_hospital(character)
-                elif location == 'school':
-                    weekend_school(character)
-                elif location == 'home':
+                track_job_status = function_dispatcher(character, location)
+                applied_to_job += track_job_status[0]
+                job_attendance += track_job_status[1]
+                if location == 'home':
                     char.set_character_location(character, location)
-                    execute_weekend_home_action(character)
+
         actions -= 1
 
     if not applied_to_job and 'job' in character:
@@ -68,7 +60,7 @@ def weekend(character, main_map, week):
     return True
 
 
-def function_dispatcher(character, location, applied_to_job, job_attendance):
+def function_dispatcher(character, location):
     functions = {
         'park': weekend_park,
         'work': weekend_job,
@@ -76,14 +68,17 @@ def function_dispatcher(character, location, applied_to_job, job_attendance):
         'school': weekend_school,
         'home': execute_weekend_home_action
     }
+    applied_to_job = 0
+    job_attendance = False
     if location == 'park':
         applied_to_job += functions[location](character)
-        return applied_to_job
     elif location == 'work':
         functions[location](character)
-        job_attendance += 1
+        job_attendance = True
     else:
         functions[location](character)
+
+    return applied_to_job, job_attendance
 
 
 def binary_user_choice(setting):
