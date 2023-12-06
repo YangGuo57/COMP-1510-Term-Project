@@ -26,6 +26,7 @@ YangGuo57
 ## functions that we did not doctest/unit test:
 weekday.weekday  
 weekday.end_of_week_action  
+weekday.random_weekday_event   
 event_trigger.move_during_office_hours  
 event_trigger.move_on_weekends  
 weekend.weekend  
