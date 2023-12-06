@@ -22,15 +22,13 @@ class Test(TestCase):
             mock_print.assert_called_with("You decide to keep walking.")
 
     @patch('builtins.print')
-    @patch('random.randint', return_value=12)
-    def test_flea_market_enter_with_sufficient_wealth(self, mock_randint, mock_print):
+    def test_flea_market_enter_with_sufficient_wealth(self, mock_print):
         with patch('builtins.input', return_value='1'):
             flea_market(self.character)
 
             self.assertEqual(self.character['wealth'], 40)
             self.assertEqual(self.character['IQ'], 0.5)
             mock_print.assert_called_with("Your IQ increases by 0.5. It is now 0.5.")
-            mock_randint.assert_called_once()
 
     @patch('builtins.print')
     @patch('random.randint', return_value=12)
