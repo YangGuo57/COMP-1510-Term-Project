@@ -58,6 +58,16 @@ def weekend(character, main_map, week):
 
 
 def function_dispatcher(character, location):
+    """
+    Dispatches the function to be executed based on the location
+
+    :param character: character dictionary
+    :param location: a string
+    :precondition: character must be a dictionary
+    :precondition: location must be a string
+    :postcondition: executes the function based on the location
+    :return: applied_to_job, job_attendance
+    """
     functions = {
         'park': weekend_park,
         'work': weekend_job,
