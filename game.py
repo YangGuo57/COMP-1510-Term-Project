@@ -76,7 +76,7 @@ def game() -> None:
 
         save.save_game(player, current_week, is_weekend)
 
-    print_game_ending(player, None, True, pass_interview)
+    print_game_ending(player, '', True, pass_interview)
 
 
 if __name__ == '__main__':
