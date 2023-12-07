@@ -1,4 +1,4 @@
-def print_ascii(time):
+def print_ascii(time: str) -> None:
     """
     Prints the ASCII art.
     
@@ -18,7 +18,7 @@ def print_ascii(time):
         print(line)
 
 
-def congratulations():
+def congratulations() -> tuple:
     """
     Returns the congratulations ASCII art.
     
@@ -38,7 +38,7 @@ def congratulations():
     return art
 
 
-def game_over():
+def game_over() -> tuple:
     """
     Returns the game over ASCII art.
     
@@ -59,7 +59,7 @@ def game_over():
     return art
 
 
-def new_week_ascii_art():
+def new_week_ascii_art() -> tuple:
     """
     Returns the new week ASCII art.
     
@@ -80,7 +80,7 @@ def new_week_ascii_art():
     return art
 
 
-def weekend_ascii_art():
+def weekend_ascii_art() -> tuple:
     """
     Returns the weekend ASCII art.
     

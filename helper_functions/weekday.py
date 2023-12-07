@@ -3,7 +3,7 @@ from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_tri
 from time import sleep
 
 
-def weekday(character, week, school_map):
+def weekday(character: dict, week: int, school_map: dict) -> None:
     """
     Carries out weekday events including attending classes, weekly random event, and end of week office hours.
 
@@ -39,7 +39,7 @@ def weekday(character, week, school_map):
     save.save_game(character, week, False)
 
 
-def end_of_week_action(character, school_map):
+def end_of_week_action(character: dict, school_map: dict) -> None:
     """
     Lets player choose to either move on the map to attend office hours or go home.
 
@@ -61,7 +61,7 @@ def end_of_week_action(character, school_map):
         office_hours(character, subject)
 
 
-def go_home(character):
+def go_home(character: dict) -> None:
     """
     Lets player go home and rest.
 
@@ -83,7 +83,7 @@ def go_home(character):
     char.change_stat(character, 'stress', stress_loss)
 
 
-def office_hours(character, subject):
+def office_hours(character: dict, subject: str) -> None:
     """
     Changes player stats after attending office hours for a specific subject.
 
@@ -117,7 +117,7 @@ def roll_epiphany():
     return False if random.randint(0, 4) else True
 
 
-def print_epiphany_office_hours(subject, epiphany):
+def print_epiphany_office_hours(subject: str, epiphany: bool) -> None:
     """
     Prints flavour text to console depending on whether player has an epiphany during office hours.
 
@@ -141,7 +141,7 @@ this wisdom.
               f'to absorb all this wisdom.')
 
 
-def weekday_schoolwork(character):
+def weekday_schoolwork(character: dict) -> None:
     """
     Increases experience in all school subjects.
 
@@ -156,7 +156,7 @@ def weekday_schoolwork(character):
     char.change_stat(character, 'stress', random.randint(5, 10))
 
 
-def random_weekday_event(character):
+def random_weekday_event(character: dict) -> None:
     """
     Generates a random weekday event at 25% chance each.
 
@@ -182,7 +182,7 @@ def random_weekday_event(character):
         assessment_stat_change(character, fail, subject, 'assignment')
 
 
-def assessment_stat_change(character, fail, subject, assessment):
+def assessment_stat_change(character: dict, fail: bool, subject: str, assessment: str) -> None:
     """
     Changes character's stats based on whether character passed or failed the assessment.
 
@@ -213,7 +213,7 @@ def assessment_stat_change(character, fail, subject, assessment):
         char.change_stat(character, 'stress', stress_gain)
 
 
-def print_assessment_results(fail, subject, assessment):
+def print_assessment_results(fail: bool, subject: str, assessment: str) -> None:
     """
     Prints flavour text to screen to describe whether character has passed or failed the assessment.
 
@@ -236,7 +236,7 @@ def print_assessment_results(fail, subject, assessment):
         print(f'You completely bombed the COMP{subject} {assessment}. Perhaps you should study harder.')
 
 
-def roll_subject():
+def roll_subject() -> str:
     """
     Rolls one subject out of four subjects at 25% chance.
 
@@ -246,7 +246,7 @@ def roll_subject():
     return SUBJECTS[roll]
 
 
-def trauma_bond(character):
+def trauma_bond(character: dict) -> None:
     """
     Carries out trauma bond event with classmates.
 
@@ -261,7 +261,7 @@ def trauma_bond(character):
     char.change_stat(character, 'stress', random.randint(-15, -10))
 
 
-def club_event(character):
+def club_event(character: dict) -> None:
     """
     Carries out club event with classmates.
 

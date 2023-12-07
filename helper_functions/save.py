@@ -3,7 +3,7 @@ from helper_functions import character, greeting
 import json
 
 
-def new_or_load():
+def new_or_load() -> tuple:
     """
     Gets user input on whether to start a new game or load a previous game.
 
@@ -31,7 +31,7 @@ def new_or_load():
         return player, week, is_weekend
 
 
-def start_new_game():
+def start_new_game() -> tuple:
     """
     Starts a new game by initializing a new character.
 
@@ -48,7 +48,7 @@ def start_new_game():
     return player, week
 
 
-def load_game(filename='./saved_game.json'):
+def load_game(filename: str='./saved_game.json') -> tuple:
     """
     Loads a previous game from a JSON file.
     
@@ -66,7 +66,7 @@ def load_game(filename='./saved_game.json'):
         return None, None, False
 
 
-def save_game(player, week, is_weekend, filename='./saved_game.json'):
+def save_game(player: dict, week: int, is_weekend: bool, filename: str='./saved_game.json') -> None:
     """
     Saves the current game to a JSON file.
     

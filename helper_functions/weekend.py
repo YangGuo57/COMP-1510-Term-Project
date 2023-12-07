@@ -3,7 +3,7 @@ from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character
 from time import sleep
 
 
-def weekend(character, main_map, week):
+def weekend(character: dict, main_map: dict, week: int) -> bool:
     """
     Carries out 3 weekend events on the main map.
 
@@ -57,7 +57,7 @@ def weekend(character, main_map, week):
     return True
 
 
-def function_dispatcher(character, location):
+def function_dispatcher(character: dict, location: str) -> tuple(int, bool):
     """
     Dispatches the function to be executed based on the location
 
@@ -89,7 +89,7 @@ def function_dispatcher(character, location):
     return applied_to_job, job_attendance
 
 
-def binary_user_choice(setting):
+def binary_user_choice(setting: str) -> str:
     """
     Prints to console to get user choice for questions with binary answers.
 
@@ -141,7 +141,7 @@ def binary_user_choice(setting):
     return user_choice
 
 
-def execute_weekend_home_action(character):
+def execute_weekend_home_action(character: dict) -> None:
     """
     Executes selected weekend action at home.
 
@@ -159,7 +159,7 @@ def execute_weekend_home_action(character):
         weekend_sleep(character)
 
 
-def get_user_choice_weekend_schoolwork():
+def get_user_choice_weekend_schoolwork() -> str:
     """
     Gets user choice on what kind of schoolwork to do when user is at home.
 
@@ -183,7 +183,7 @@ def get_user_choice_weekend_schoolwork():
     return PRODUCTIVE_STATS[int(user_choice) - 1]
 
 
-def weekend_schoolwork(character, subject):
+def weekend_schoolwork(character: dict, subject: str) -> None:
     """
     Modifies character stats on the selected schoolwork by the user.
 
@@ -200,7 +200,7 @@ def weekend_schoolwork(character, subject):
     char.change_stat(character, 'stress', stress_gain)
 
 
-def weekend_sleep(character):
+def weekend_sleep(character: dict) -> None:
     """
     Modifies character stats when user chooses to sleep on the weekend.
 
@@ -212,7 +212,7 @@ def weekend_sleep(character):
     char.change_stat(character, 'stress', stress_loss)
 
 
-def describe_weekend_home_action(action):
+def describe_weekend_home_action(action: str) -> None:
     """
     Prints flavour text to describe the action at home.
 
@@ -232,7 +232,7 @@ def describe_weekend_home_action(action):
         print('You pass out in your bed. Good night and sweet dreams.')
 
 
-def weekend_school(character):
+def weekend_school(character: dict) -> None:
     """
     Generates random events at school on a weekend.
 
@@ -261,7 +261,7 @@ def weekend_school(character):
     char.change_stat(character, 'stress', stress_change)
 
 
-def weekend_hospital(character):
+def weekend_hospital(character: dict) -> None:
     """
     Adjust character stats when character goes to the hospital on the weekend.
 
@@ -285,7 +285,7 @@ def weekend_hospital(character):
               'The nurse ushers you out of the hospital.')
 
 
-def weekend_job(character):
+def weekend_job(character: dict) -> bool:
     """
     Adjusts character stats when character visits the local cafe on a weekend.
 
@@ -314,7 +314,7 @@ def weekend_job(character):
     return True
 
 
-def evaluate_job_attendance(character, skip):
+def evaluate_job_attendance(character: dict, skip: bool) -> None:
     """
     Keeps track of how many times character has skipped work.
 
@@ -330,7 +330,7 @@ def evaluate_job_attendance(character, skip):
         evaluate_firing_from_job(character)
 
 
-def evaluate_firing_from_job(character):
+def evaluate_firing_from_job(character: dict) -> None:
     """
     Evaluates whether character should be fired from their job.
 
@@ -351,7 +351,7 @@ def evaluate_firing_from_job(character):
             character['job'] = False
 
 
-def weekend_park(character):
+def weekend_park(character: dict) -> bool:
     """
     Execute weekend events at Stanley Park depending on whether player has worked a job before.
 
@@ -372,7 +372,7 @@ def weekend_park(character):
     return applied_to_job
 
 
-def generate_job_posting(character):
+def generate_job_posting(character: dict) -> bool:
     """
     Generates job posting if character is unemployed.
 
@@ -389,7 +389,7 @@ def generate_job_posting(character):
     return user_choice == '1'
 
 
-def random_park_event(character):
+def random_park_event(character: dict) -> None:
     """
     Generates an event in Stanley park randomly.
 
@@ -419,7 +419,7 @@ def random_park_event(character):
         char.change_stat(character, 'stress', stress_loss)
 
 
-def generate_park_message_to_print(roll):
+def generate_park_message_to_print(roll: int) -> str or dict(str, str):
     """
     Prints message to console depending on the roll.
 
@@ -459,7 +459,7 @@ mentality.'
             return messages[key]
 
 
-def flea_market(character):
+def flea_market(character: dict) -> bool:
     """
     Modifies character stats depending on user action at the flea market.
 

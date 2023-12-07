@@ -3,7 +3,7 @@ from time import sleep
 import itertools
 
 
-def create_character(answers):
+def create_character(answers: list) -> dict:
     """
     Create a new character with the given answers to the questionnaire.
 
@@ -42,7 +42,7 @@ None, '1712': None}, 'visited_locations': {'home': 1, 'school': 1, 'hospital': 0
     return new_character
 
 
-def ask_questionnaire(setting):
+def ask_questionnaire(setting: str) -> list[int]:
     """
     Asks the player a series of questions to determine player attributes.
 
@@ -68,7 +68,7 @@ def ask_questionnaire(setting):
     return answers
 
 
-def print_stats(character):
+def print_stats(character: dict) -> None:
     """
     Print the character's attributes
 
@@ -115,7 +115,7 @@ def print_stats(character):
     print()
 
 
-def evaluate_exp(character, subject):
+def evaluate_exp(character: dict, subject: str) -> None:
     """
     Evaluate the character's experience points and level up if the character has enough experience.
 
@@ -149,7 +149,7 @@ COMP1510.
             print(f'Your COMP{each_subject} level increased by 1. It is now level {character["lvl"][each_subject]}.')
 
 
-def describe_stress(character):
+def describe_stress(character: dict) -> None:
     """
     Describe the character's stress level.
 
@@ -190,7 +190,7 @@ def describe_stress(character):
               'it easy?\n')
 
 
-def determine_stress_multiplier(character):
+def determine_stress_multiplier(character: dict) -> float:
     """
     Determine the stress multiplier based on the character's stress level.
 
@@ -216,7 +216,7 @@ def determine_stress_multiplier(character):
     return stress_multiplier
 
 
-def change_stat(character, attribute, amount):
+def change_stat(character: dict, attribute: str, amount: int) -> None:
     """
     Change the value of a character's attribute by a given amount.
 
@@ -255,7 +255,7 @@ felt this intelligent before in your entire life.
             describe_flat_stat_gain(character, attribute, amount)
 
 
-def describe_exp_gain(character, attribute, amount):
+def describe_exp_gain(character: dict, attribute: str, amount: int) -> None:
     """
     Describe the experience gain of the character.
 
@@ -279,7 +279,7 @@ increased by 10.
     print(f'Your experience in COMP{attribute} is now {character["exp"][attribute]}.')
 
 
-def describe_flat_stat_gain(character, attribute, amount):
+def describe_flat_stat_gain(character: dict, attribute: str, amount: int) -> None:
     """
     Describe the flat stat gain of the character.
 
@@ -318,7 +318,7 @@ humans now.
     print(f'Your {attribute} {changes} by {amount}. It is now {character[attribute]}.')
 
 
-def describe_stress_change(character, amount):
+def describe_stress_change(character: dict, amount: int) -> None:
     """
     Describe the change in stress level of the character.
 
@@ -351,7 +351,7 @@ rest regularly so you don't burn out!
     print(f'Your stress level is now {character["stress"]}.')
 
 
-def set_character_location(character, location):
+def set_character_location(character: dict, location: str) -> None:
     """
     Sets the character's location to the given location.
 
@@ -369,7 +369,7 @@ def set_character_location(character, location):
     character['location'] = location
 
 
-def describe_wealth_change(character, amount):
+def describe_wealth_change(character: dict, amount: int) -> None:
     """
     Update character's wealth by the specified amount and print a description of the change.
 

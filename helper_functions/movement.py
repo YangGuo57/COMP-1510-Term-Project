@@ -1,7 +1,7 @@
 from helper_functions import map, event_trigger as event
 
 
-def validate_move(board, character, direction):
+def validate_move(board: dict, character: dict, direction: str) -> bool:
     """
     Determine if the character can move in the given direction.
 
@@ -38,7 +38,7 @@ def validate_move(board, character, direction):
     return False
 
 
-def get_user_choice(character):
+def get_user_choice(character: dict) -> str:
     """
     Get the user's choice of direction to move in.
 
@@ -67,7 +67,7 @@ def get_user_choice(character):
             print('Enter a valid input!')
 
 
-def move_character(character, direction, game_map):
+def move_character(character: dict, direction: str, game_map: dict) -> None:
     """
     Move the character in the direction specified if possible.
 
@@ -112,7 +112,7 @@ def move_character(character, direction, game_map):
             print('You hit a wall!')
 
 
-def update_visited_location(character):
+def update_visited_location(character: dict) -> None:
     """
     Update the visited location of the character.
 
@@ -128,7 +128,7 @@ def update_visited_location(character):
             break
 
 
-def fast_travel(character):
+def fast_travel(character: dict) -> None:
     """
     Allows the user to fast travel to a location they have visited before.
 

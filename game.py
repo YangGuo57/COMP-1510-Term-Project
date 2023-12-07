@@ -3,7 +3,7 @@ from helper_functions import (weekday, exam, weekend, map, TOTAL_WEEKS,
 from time import sleep
 
 
-def print_game_ending(player, test, pass_exam, pass_coop):
+def print_game_ending(player: dict, test: str, pass_exam: bool, pass_coop: bool) -> None:
     """
     Prints the game ending including the ASCII art based on the player's GPA and whether they passed.
     
@@ -33,7 +33,7 @@ def print_game_ending(player, test, pass_exam, pass_coop):
         ascii.print_ascii('congratulations')
 
 
-def game():
+def game() -> None:
     """
     Drive the game
     """

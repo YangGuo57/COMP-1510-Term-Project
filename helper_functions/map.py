@@ -1,7 +1,7 @@
 from helper_functions import coordinates
 
 
-def make_board(row, column, locations, keys):
+def make_board(row: int, column: int, locations: dict, keys: str) -> dict:
     """
     Make a game board with the given row, column, locations and keys.
 
@@ -30,7 +30,7 @@ def make_board(row, column, locations, keys):
             in range(column)}
 
 
-def add_element_to_map(game_board):
+def add_element_to_map(game_board: dict) -> dict:
     """
     Add elements to the map with the given dictionary
 
@@ -73,7 +73,7 @@ def add_element_to_map(game_board):
     return game_board
 
 
-def initialize_map(board_rows, board_columns, location_key):
+def initialize_map(board_rows: int, board_columns: int, location_key: str) -> dict:
     """
     Initialize the game map with the given board rows, board columns and location key.
 
@@ -96,7 +96,7 @@ def initialize_map(board_rows, board_columns, location_key):
     return game_map
 
 
-def print_game_map(game_map, character):
+def print_game_map(game_map: dict, character: dict) -> None:
     """
     Print the game map with the given game map and character.
 

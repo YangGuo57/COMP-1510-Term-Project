@@ -2,7 +2,7 @@ from helper_functions import trigger_description, SUBJECTS, movement as mov, cha
 from time import sleep
 
 
-def process_movement(user_choice, game_map, character):
+def process_movement(user_choice: str, game_map: dict, character: dict) -> bool:
     """
     Processes the user's movement choice and returns a boolean value
 
@@ -24,7 +24,7 @@ def process_movement(user_choice, game_map, character):
         return False
 
 
-def at_entrance(character):
+def at_entrance(character: dict) -> str or None:
     """
     Return the location of the character if they are at the entrance of a location, otherwise return None.
 
@@ -46,7 +46,7 @@ def at_entrance(character):
     return None
 
 
-def confirm_entry(location):
+def confirm_entry(location: str) -> str or None:
     """
     Determine whether the player wants to enter a location or not.
 
@@ -67,7 +67,7 @@ def confirm_entry(location):
     return confirm
 
 
-def move_during_office_hours(character, school_map):
+def move_during_office_hours(character: dict, school_map: dict) -> str or None:
     """
     Move the character during office hours.
 
@@ -100,7 +100,7 @@ def move_during_office_hours(character, school_map):
                     map.print_game_map(school_map, character)
 
 
-def move_on_weekends(character, main_map):
+def move_on_weekends(character: dict, main_map: dict) -> str or None:
     """
     Allows the user to move on weekends
 
@@ -143,7 +143,7 @@ def move_on_weekends(character, main_map):
             print('Invalid choice. Please enter a valid option.')
 
 
-def main_menu():
+def main_menu() -> str:
     """
     Displays the main menu.
 

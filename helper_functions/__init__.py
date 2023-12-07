@@ -3,7 +3,7 @@ SUBJECTS = ('1510', '1537', '1113', '1712')
 PRODUCTIVE_STATS = ('1510', '1537', '1113', '1712', 'project')
 
 
-def greeting():
+def greeting() -> dict:
     """
     Returns a dictionary containing the greeting messages.
     
@@ -23,7 +23,7 @@ def greeting():
     return greeting_dict
 
 
-def coop_interview_questions():
+def coop_interview_questions() -> tuple:
     """
     Returns a tuple containing the coop interview questions.
     
@@ -46,7 +46,7 @@ def coop_interview_questions():
     return questions
 
 
-def initial_game_questions():
+def initial_game_questions() -> tuple:
     """
     Returns a tuple containing the initial game questions.
     
@@ -67,7 +67,7 @@ def initial_game_questions():
     return questions
 
 
-def ending_descriptions():
+def ending_descriptions() -> dict:
     """
     Returns a dictionary containing the game endings.
     
@@ -94,7 +94,7 @@ def ending_descriptions():
     return endings
 
 
-def exam_status():
+def exam_status() -> dict:
     """
     Returns a dictionary containing the exam status messages.
     
@@ -121,7 +121,7 @@ def exam_status():
     return status
 
 
-def coordinates():
+def coordinates() -> dict:
     """
     Returns a dictionary containing the coordinates of the map.
 
@@ -159,7 +159,7 @@ def coordinates():
     return locations
 
 
-def trigger_description():
+def trigger_description() -> dict:
     """
     Returns a dictionary containing the trigger descriptions.
     

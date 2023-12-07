@@ -3,7 +3,7 @@ from helper_functions import TOTAL_WEEKS, exam_status, SUBJECTS, character as ch
 from time import sleep
 
 
-def take_coop_interview(character):
+def take_coop_interview(character: dict) -> bool:
     """
     Determines if the character passes the coop interview
 
@@ -32,7 +32,7 @@ def take_coop_interview(character):
         return True
 
 
-def take_exam(character, exam):
+def take_exam(character: dict, exam: str) -> bool:
     """
     Take the exam and evaluate the character's performance.
 
@@ -77,7 +77,7 @@ def take_exam(character, exam):
     return pass_or_fail
 
 
-def calculate_average(character):
+def calculate_average(character: dict) -> str or None:
     """
     Calculate the average of the character's grades
 
@@ -110,7 +110,7 @@ def calculate_average(character):
             return letter_grades[min_threshold.index(threshold)]
 
 
-def evaluate_exam(character, subject, exam):
+def evaluate_exam(character: dict, subject: str, exam: str) -> str:
     """
     Evaluate the character's exam result based on their level in the subject and the exam type.
 
@@ -137,7 +137,7 @@ def evaluate_exam(character, subject, exam):
         return 'F' if character['lvl'][subject] < fail[exam] else 'A'
 
 
-def reward_character(character, subject):
+def reward_character(character: dict, subject: str) -> None:
     """
     Reward the character with a point in the subject they are studying.
 
