@@ -1,5 +1,6 @@
 from helper_functions import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
 from time import sleep
+import itertools
 
 
 def create_character(answers):
@@ -161,6 +162,12 @@ def describe_stress(character):
     <BLANKLINE>
     ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
 (*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
+    ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
+(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
+    ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
+(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
+    ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
+(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
     <BLANKLINE>
     >>> player = {'stress': 90}
     >>> describe_stress(player)
@@ -168,9 +175,14 @@ def describe_stress(character):
     You feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?@@
     <BLANKLINE>
     """
+    most_stress = ('ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE '
+                   'SKADLKNLKNES98723894*&(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF')
+
     if character['stress'] > 100:
-        print('\nERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE '
-              'SKADLKNLKNES98723894*&(*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF\n')
+        print()
+        for line in itertools.repeat(most_stress, 4):
+            print(line)
+        print()
     elif character['stress'] > 85:
         print('\nYou feel like you no longer have a FUnctionING BRAIn... MAYBE yoU should get some ReST?@@\n')
     elif character['stress'] > 70:
