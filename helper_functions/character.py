@@ -231,22 +231,16 @@ felt this intelligent before in your entire life.
         character['exp'][attribute] += amount
         describe_exp_gain(character, attribute, amount)
         evaluate_exp(character, attribute)
-    elif attribute == 'stress':
-        if character[attribute] + amount < 0:
-            character[attribute] = 0
-        else:
-            character[attribute] += amount
-        describe_stress_change(character, amount)
-        describe_stress(character)
-    elif attribute == 'wealth':
-        character[attribute] += amount
-        describe_wealth_change(character, amount)
     else:
-        if character[attribute] + amount < 0:
-            character[attribute] = 0
+        character[attribute] = 0 if character[attribute] + amount < 0 else character[attribute] + amount
+
+        if attribute == 'stress':
+            describe_stress_change(character, amount)
+            describe_stress(character)
+        elif attribute == 'wealth':
+            describe_wealth_change(character, amount)
         else:
-            character[attribute] += amount
-        describe_flat_stat_gain(character, attribute, amount)
+            describe_flat_stat_gain(character, attribute, amount)
 
 
 def describe_exp_gain(character, attribute, amount):
