@@ -66,10 +66,7 @@ def take_exam(character: dict, exam: str) -> bool:
                   f'is over.\n')
             sleep(0.5)
             reward_character(character, subject)
-            if exam == 'midterm':
-                character['midterm'][subject] = grade
-            elif exam == 'final':
-                character['final'][subject] = grade
+            character[exam][subject] = grade
     sleep(0.5)
     print(f'\nAt last, the {exam}s are over. You let out a huge sigh of relief, and when you get home, you pass out '
           f'immediately on your bed. You are so exhausted you do not want to do anything productive this weekend, and '

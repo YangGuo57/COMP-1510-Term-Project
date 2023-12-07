@@ -193,7 +193,7 @@ def weekend_schoolwork(character: dict, subject: str) -> None:
     :precondition: subject must be a string generated in this program
     :postcondition: correctly modifies character stats on the selected subject
     """
-    exp_gain = random.randint(15, 20) * 1 if subject == 'project' else random.randint(15, 20) * character['IQ']
+    exp_gain = random.randint(15, 20) if subject == 'project' else random.randint(15, 20) * character['IQ']
     stress_gain = random.randint(5, 10)
     char.change_stat(character, subject, exp_gain)
     sleep(0.5)
