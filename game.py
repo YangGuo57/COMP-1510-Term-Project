@@ -21,7 +21,6 @@ def print_game_ending(player, test, pass_exam, pass_coop):
         sleep(0.5)
         ascii.print_ascii('game over')
     else:
-        # determine_game_ending(player, pass_coop)
         gpa = exam.calculate_average(player)
         endings = ending_descriptions()
         if gpa is None:
