@@ -39,7 +39,7 @@ def weekend(character, main_map, week):
             # trigger events on the big map
             choice = event.move_on_weekends(character, main_map)
             while choice != '1':
-                if choice == 'Exit':
+                if choice == 'Save and quit the game':
                     return False
                 choice = event.move_on_weekends(character, main_map)
             if choice == '1':
@@ -58,6 +58,16 @@ def weekend(character, main_map, week):
 
 
 def function_dispatcher(character, location):
+    """
+    Dispatches the function to be executed based on the location
+
+    :param character: character dictionary
+    :param location: a string
+    :precondition: character must be a dictionary
+    :precondition: location must be a string
+    :postcondition: executes the function based on the location
+    :return: applied_to_job, job_attendance
+    """
     functions = {
         'park': weekend_park,
         'work': weekend_job,

@@ -26,14 +26,8 @@ YangGuo57
 ## functions that we did not doctest/unit test:
 weekday.weekday  
 weekday.end_of_week_action  
-exam.reward_character  
+weekday.random_weekday_event   
 event_trigger.move_during_office_hours  
 event_trigger.move_on_weekends  
 weekend.weekend  
-weekend.execute_weekend_home_action  
-weekend.weekend_school   
-weekend.weekend_hospital   
-weekend.weekend_job   
-weekend.random_park_event   
-weekend.flea_market   
-weekend.function_dispatcher --> write docstrings!!
+weekend.function_dispatcher
