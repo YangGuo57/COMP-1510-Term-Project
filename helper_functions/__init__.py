@@ -4,6 +4,11 @@ PRODUCTIVE_STATS = ('1510', '1537', '1113', '1712', 'project')
 
 
 def greeting():
+    """
+    Returns a dictionary containing the greeting messages.
+    
+    :return: a dictionary containing the greeting messages
+    """
     greeting_dict = {
         1: "Welcome to Survive CST. Please take a moment to answer the following questionnaire. There is no right"
            " or wrong answer.",
@@ -19,6 +24,11 @@ def greeting():
 
 
 def coop_interview_questions():
+    """
+    Returns a tuple containing the coop interview questions.
+    
+    :return: a tuple containing the coop interview questions
+    """
     questions = (
         'How do you prioritize tasks when you have multiple deadlines to meet?\n'
         '1. Do the task that\'s due first\n'
@@ -37,6 +47,11 @@ def coop_interview_questions():
 
 
 def initial_game_questions():
+    """
+    Returns a tuple containing the initial game questions.
+    
+    :return: a tuple containing the initial game questions
+    """
     questions = ('When new work is assigned to you, what do you do?\n'
                  '1. Get started on it right away\n'
                  '2. Leave it until the last minute\n',
@@ -53,6 +68,11 @@ def initial_game_questions():
 
 
 def ending_descriptions():
+    """
+    Returns a dictionary containing the game endings.
+    
+    :return: a dictionary containing the game endings
+    """
     endings = {
         'coop': 'Fantastic news, you passed the interview with flying colours! Not only did you secure an impressive A '
                 'in your final grades, but you\'ve also successfully landed a coveted coop opportunity! Your journey '
@@ -75,6 +95,11 @@ def ending_descriptions():
 
 
 def exam_status():
+    """
+    Returns a dictionary containing the exam status messages.
+    
+    :return: a dictionary containing the exam status messages
+    """
     status = {
         'A': ("Yay, you studied really hard for this subject and you\'re feeling confident!",
               "Surprisingly, this exam is easier than you anticipated.",
@@ -98,9 +123,9 @@ def exam_status():
 
 def coordinates():
     """
-    Stores location coordinates into a dictionary.
+    Returns a dictionary containing the coordinates of the map.
 
-    :return:
+    :return: a dictionary containing the coordinates of the map
     """
     locations = {
         "coordinates": {
@@ -135,6 +160,11 @@ def coordinates():
 
 
 def trigger_description():
+    """
+    Returns a dictionary containing the trigger descriptions.
+    
+    :return: a dictionary containing the trigger descriptions
+    """
     message = {
         "school": "You are at the entrance to BCIT. Do you want to enter?\n"
                   "Enter '1' to enter the building, '2' to leave.",

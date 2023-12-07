@@ -1,4 +1,11 @@
 def print_ascii(time):
+    """
+    Prints the ASCII art.
+    
+    :param time: a string representing the time of the game
+    :precondition: time must be a string generated in this game
+    :postcondition: correctly prints the ASCII art based on the time of the game
+    """
     if time == 'new_week':
         ascii_art = new_week_ascii_art()
     elif time == 'weekend':
@@ -12,6 +19,11 @@ def print_ascii(time):
 
 
 def congratulations():
+    """
+    Returns the congratulations ASCII art.
+    
+    :return: a tuple containing the congratulations ASCII art
+    """
     art = (
         "\n",
         "/* +==========================================================================================+ */",
@@ -27,6 +39,11 @@ def congratulations():
 
 
 def game_over():
+    """
+    Returns the game over ASCII art.
+    
+    :return: a tuple containing the game over ASCII art
+    """
     art = (
         "\n",
         "/* +================================================================+ */",
@@ -43,6 +60,11 @@ def game_over():
 
 
 def new_week_ascii_art():
+    """
+    Returns the new week ASCII art.
+    
+    :return: a tuple containing the new week ASCII art
+    """
     art = (
         "\n",
         "/* +=====================================================================================================+ */",
@@ -59,6 +81,11 @@ def new_week_ascii_art():
 
 
 def weekend_ascii_art():
+    """
+    Returns the weekend ASCII art.
+    
+    :return: a tuple containing the weekend ASCII art
+    """
     art = (
         "\n",
         "/* +=============================================================================================+ */",
