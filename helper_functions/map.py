@@ -26,15 +26,8 @@ def make_board(row, column, locations, keys):
     {(0, 0): ' ', (0, 1): ' ', (0, 2): ' ', (1, 0): ' ', (1, 1): ' ', (1, 2): ' ', (2, 0): ' ', (2, 1): ' ', \
 (2, 2): ' '}
     """
-    game_board = {}
-    for x in range(row):
-        for y in range(column):
-            if (x, y) in locations[keys]:
-                game_board[(x, y)] = locations[keys][(x, y)]
-            else:
-                game_board[(x, y)] = ' '
-
-    return game_board
+    return {(x, y): locations[keys][(x, y)] if (x, y) in locations[keys] else ' ' for x in range(row) for y
+            in range(column)}
 
 
 def add_element_to_map(game_board):
