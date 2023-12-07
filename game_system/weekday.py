@@ -16,7 +16,7 @@ def weekday(character: dict, week: int, school_map: dict) -> None:
     :postcondition: properly adjusts character's stats and location based on weekday events
     """
     exam = 'midterms' if week <= 7 else 'finals'
-    exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == "midterms" else TOTAL_WEEKS - week - 1
+    exam_countdown = TOTAL_WEEKS - week - TOTAL_WEEKS // 2 if exam == 'midterms' else TOTAL_WEEKS - week - 1
     end_of_term_countdown = TOTAL_WEEKS - week
     sleep(0.5)
     print(f'It is now week {week} of the term, only {end_of_term_countdown} weeks until end of term 1! The looming '
