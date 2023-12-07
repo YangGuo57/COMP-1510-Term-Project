@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.exam import evaluate_exam
+from game_system.exam import evaluate_exam
 
 
 class Test(TestCase):

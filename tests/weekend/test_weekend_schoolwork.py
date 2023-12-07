@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekend import weekend_schoolwork
+from game_system.weekend import weekend_schoolwork
 from unittest.mock import patch
 
 

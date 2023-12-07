@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekend import get_user_choice_weekend_schoolwork
+from game_system.weekend import get_user_choice_weekend_schoolwork
 from unittest.mock import patch
 import io
 

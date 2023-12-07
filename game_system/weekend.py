@@ -1,5 +1,5 @@
 import random
-from helper_functions import PRODUCTIVE_STATS, event_trigger as event, character as char, save
+from game_system import PRODUCTIVE_STATS, event_trigger as event, character as char, save
 from time import sleep
 
 
@@ -57,7 +57,7 @@ def weekend(character: dict, main_map: dict, week: int) -> bool:
     return True
 
 
-def function_dispatcher(character: dict, location: str) -> tuple(int, bool):
+def function_dispatcher(character: dict, location: str) -> tuple[int, bool]:
     """
     Dispatches the function to be executed based on the location
 
@@ -419,7 +419,7 @@ def random_park_event(character: dict) -> None:
         char.change_stat(character, 'stress', stress_loss)
 
 
-def generate_park_message_to_print(roll: int) -> str or dict(str, str):
+def generate_park_message_to_print(roll: int) -> str or dict[str, str]:
     """
     Prints message to console depending on the roll.
 

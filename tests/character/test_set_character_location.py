@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.character import set_character_location
+from game_system.character import set_character_location
 
 
 class Test(TestCase):

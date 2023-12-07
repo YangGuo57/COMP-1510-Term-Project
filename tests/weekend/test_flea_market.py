@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.weekend import flea_market
+from game_system.weekend import flea_market
 
 
 class Test(TestCase):

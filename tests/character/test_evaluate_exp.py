@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.character import evaluate_exp
+from game_system.character import evaluate_exp
 
 
 class Test(TestCase):

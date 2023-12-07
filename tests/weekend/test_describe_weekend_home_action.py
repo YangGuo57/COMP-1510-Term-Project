@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.weekend import describe_weekend_home_action
+from game_system.weekend import describe_weekend_home_action
 
 
 class Test(TestCase):

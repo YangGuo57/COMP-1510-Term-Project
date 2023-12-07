@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import office_hours
+from game_system.weekday import office_hours
 from unittest.mock import patch
 
 
@@ -16,7 +16,7 @@ class Test(TestCase):
             'location': 'home', 'vaccinated': False, 'skip_job': 0
         }
 
-    @patch('helper_functions.weekday.roll_epiphany')
+    @patch('game_system.weekday.roll_epiphany')
     @patch('random.randint')
     def test_office_hours_no_epiphany(self, mock_randint, mock_roll_epiphany):
         subject_code = '1510'
@@ -29,7 +29,7 @@ class Test(TestCase):
         self.assertEqual(self.character['exp'][subject_code], expected_exp_gain)
         self.assertEqual(self.character['stress'], expected_stress)
 
-    @patch('helper_functions.weekday.roll_epiphany')
+    @patch('game_system.weekday.roll_epiphany')
     @patch('random.randint')
     def test_office_hours_no_epiphany(self, mock_randint, mock_roll_epiphany):
         subject_code = '1510'

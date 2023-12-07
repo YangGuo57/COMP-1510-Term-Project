@@ -1,5 +1,5 @@
 from time import sleep
-from helper_functions import character, greeting
+from game_system import character, greeting
 import json
 
 
@@ -48,7 +48,7 @@ def start_new_game() -> tuple:
     return player, week
 
 
-def load_game(filename: str='./saved_game.json') -> tuple:
+def load_game(filename: str = './saved_game.json') -> tuple:
     """
     Loads a previous game from a JSON file.
     
@@ -66,7 +66,7 @@ def load_game(filename: str='./saved_game.json') -> tuple:
         return None, None, False
 
 
-def save_game(player: dict, week: int, is_weekend: bool, filename: str='./saved_game.json') -> None:
+def save_game(player: dict, week: int, is_weekend: bool, filename: str = './saved_game.json') -> None:
     """
     Saves the current game to a JSON file.
     

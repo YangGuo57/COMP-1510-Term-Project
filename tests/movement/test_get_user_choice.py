@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.movement import get_user_choice
+from game_system.movement import get_user_choice
 
 
 class Test(TestCase):

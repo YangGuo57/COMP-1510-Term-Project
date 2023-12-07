@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.event_trigger import confirm_entry
+from game_system.event_trigger import confirm_entry
 
 
 class Test(TestCase):

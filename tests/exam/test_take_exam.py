@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.exam import take_exam
+from game_system.exam import take_exam
 
 
 class Test(TestCase):
@@ -13,9 +13,9 @@ class Test(TestCase):
         }
 
     @patch('builtins.print')
-    @patch('helper_functions.exam.evaluate_exam', return_value='A')
-    @patch('helper_functions.exam.reward_character')
-    @patch('helper_functions.exam.exam_status', return_value={'A': ['Great job!'], 'F': ['Failed']})
+    @patch('game_system.exam.evaluate_exam', return_value='A')
+    @patch('game_system.exam.reward_character')
+    @patch('game_system.exam.exam_status', return_value={'A': ['Great job!'], 'F': ['Failed']})
     @patch('random.choice', side_effect=lambda x: x[0])
     def test_take_exam_pass_all(self, mock_choice, mock_exam_status, mock_reward_character, mock_evaluate_exam,
                                 mock_print):
@@ -31,9 +31,9 @@ class Test(TestCase):
         mock_print.assert_called()
 
     @patch('builtins.print')
-    @patch('helper_functions.exam.evaluate_exam', side_effect=['F'] + ['A'] * (len(SUBJECTS) - 1))
-    @patch('helper_functions.exam.reward_character')
-    @patch('helper_functions.exam.exam_status', return_value={'A': ['Great job!'], 'F': ['Failed']})
+    @patch('game_system.exam.evaluate_exam', side_effect=['F'] + ['A'] * (len(SUBJECTS) - 1))
+    @patch('game_system.exam.reward_character')
+    @patch('game_system.exam.exam_status', return_value={'A': ['Great job!'], 'F': ['Failed']})
     @patch('random.choice', side_effect=lambda x: x[0])
     def test_take_exam_fail_one_subject(self, mock_choice, mock_exam_status, mock_reward_character, mock_evaluate_exam,
                                         mock_print):

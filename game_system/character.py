@@ -1,4 +1,4 @@
-from helper_functions import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
+from game_system import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
 from time import sleep
 import itertools
 
@@ -216,16 +216,16 @@ def determine_stress_multiplier(character: dict) -> float:
     return stress_multiplier
 
 
-def change_stat(character: dict, attribute: str, amount: int) -> None:
+def change_stat(character: dict, attribute: str, amount: int or float) -> None:
     """
     Change the value of a character's attribute by a given amount.
 
     :param character: a dictionary
     :param attribute: a string
-    :param amount: an integer
+    :param amount: an integer or a float
     :precondition: character must be a dictionary storing the character's attributes
     :precondition: attribute must be a string
-    :precondition: amount must be an integer
+    :precondition: amount must be an integer or a float
     :postcondition: change the value of the character's attribute by the given amount
 
     >>> player = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'project': 0, 'exp': \

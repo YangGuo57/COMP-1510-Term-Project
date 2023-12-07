@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.weekend import random_park_event
+from game_system.weekend import random_park_event
 
 
 class Test(TestCase):
@@ -25,7 +25,7 @@ class Test(TestCase):
         def mock_change_stat(character, key, value):
             character[key] = max(0, character[key] + value)
 
-        with patch('time.sleep'), patch('helper_functions.character.change_stat', new=mock_change_stat):
+        with patch('time.sleep'), patch('game_system.character.change_stat', new=mock_change_stat):
             random_park_event(self.character)
             self.assertEqual(self.character['stress'], 0)
             mock_randint.assert_called()

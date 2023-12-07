@@ -1,4 +1,4 @@
-from helper_functions import coordinates
+from game_system import coordinates
 
 
 def make_board(row: int, column: int, locations: dict, keys: str) -> dict:

@@ -1,4 +1,4 @@
-from helper_functions import trigger_description, SUBJECTS, movement as mov, character as char, map
+from game_system import trigger_description, SUBJECTS, movement as mov, character as char, map
 from time import sleep
 
 

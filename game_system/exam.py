@@ -1,5 +1,5 @@
 from random import randint, choice
-from helper_functions import TOTAL_WEEKS, exam_status, SUBJECTS, character as char
+from game_system import TOTAL_WEEKS, exam_status, SUBJECTS, character as char
 from time import sleep
 
 

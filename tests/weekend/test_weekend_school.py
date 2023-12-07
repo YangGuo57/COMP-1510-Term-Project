@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.weekend import weekend_school
+from game_system.weekend import weekend_school
 
 
 class Test(TestCase):
@@ -15,7 +15,7 @@ class Test(TestCase):
         def mock_change_stat(character, key, value):
             character[key] = max(0, character[key] + value)
 
-        with patch('helper_functions.character.change_stat', new=mock_change_stat):
+        with patch('game_system.character.change_stat', new=mock_change_stat):
             weekend_school(self.character)
         self.assertEqual(self.character['EQ'], 2)
         self.assertEqual(self.character['stress'], 0)
@@ -30,7 +30,7 @@ class Test(TestCase):
         def mock_change_stat(character, key, value):
             character[key] += value
 
-        with patch('helper_functions.character.change_stat', new=mock_change_stat):
+        with patch('game_system.character.change_stat', new=mock_change_stat):
             weekend_school(self.character)
         self.assertEqual(self.character['EQ'], 2)
         self.assertEqual(self.character['stress'], 25)

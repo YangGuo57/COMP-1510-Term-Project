@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.character import describe_wealth_change
+from game_system.character import describe_wealth_change
 import io
 
 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import print_epiphany_office_hours
+from game_system.weekday import print_epiphany_office_hours
 from unittest.mock import patch
 import io
 

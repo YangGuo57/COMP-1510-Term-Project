@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 import io
-from helper_functions.character import describe_flat_stat_gain
+from game_system.character import describe_flat_stat_gain
 
 
 class Test(TestCase):

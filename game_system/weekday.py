@@ -1,5 +1,5 @@
 import random
-from helper_functions import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event, save
+from game_system import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event, save
 from time import sleep
 
 

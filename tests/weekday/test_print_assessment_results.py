@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import print_assessment_results
+from game_system.weekday import print_assessment_results
 from unittest.mock import patch
 import io
 

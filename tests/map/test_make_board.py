@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.map import make_board
+from game_system.map import make_board
 
 
 class Test(TestCase):

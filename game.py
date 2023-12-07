@@ -1,5 +1,5 @@
-from helper_functions import (weekday, exam, weekend, map, TOTAL_WEEKS,
-                              ending_descriptions, ascii, save)
+from game_system import (weekday, exam, weekend, map, TOTAL_WEEKS,
+                         ending_descriptions, ascii, save)
 from time import sleep
 
 

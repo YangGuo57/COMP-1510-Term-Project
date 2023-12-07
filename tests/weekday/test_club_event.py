@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import club_event
+from game_system.weekday import club_event
 from unittest.mock import patch
 import io
 

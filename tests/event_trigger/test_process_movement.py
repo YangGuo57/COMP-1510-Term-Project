@@ -1,12 +1,12 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.event_trigger import process_movement
+from game_system.event_trigger import process_movement
 
 
 class Test(TestCase):
-    @patch('helper_functions.movement.validate_move')
-    @patch('helper_functions.movement.move_character')
-    @patch('helper_functions.movement.update_visited_location')
+    @patch('game_system.movement.validate_move')
+    @patch('game_system.movement.move_character')
+    @patch('game_system.movement.update_visited_location')
     def test_process_movement_valid_movement(self, mock_update_visited_location, mock_move_character,
                                              mock_validate_move):
         mock_validate_move.return_value = True
@@ -18,9 +18,9 @@ class Test(TestCase):
         mock_move_character.assert_called_once()
         mock_update_visited_location.assert_called_once()
 
-    @patch('helper_functions.movement.validate_move')
-    @patch('helper_functions.movement.move_character')
-    @patch('helper_functions.movement.update_visited_location')
+    @patch('game_system.movement.validate_move')
+    @patch('game_system.movement.move_character')
+    @patch('game_system.movement.update_visited_location')
     def test_process_movement_invalid_movement(self, mock_update_visited_location, mock_move_character,
                                                mock_validate_move):
         mock_validate_move.return_value = False
@@ -32,9 +32,9 @@ class Test(TestCase):
         mock_move_character.assert_not_called()
         mock_update_visited_location.assert_not_called()
 
-    @patch('helper_functions.movement.validate_move')
-    @patch('helper_functions.movement.move_character')
-    @patch('helper_functions.movement.update_visited_location')
+    @patch('game_system.movement.validate_move')
+    @patch('game_system.movement.move_character')
+    @patch('game_system.movement.update_visited_location')
     def test_process_movement_out_of_bounds(self, mock_update_visited_location, mock_move_character,
                                             mock_validate_move):
         mock_validate_move.return_value = False
@@ -46,9 +46,9 @@ class Test(TestCase):
         mock_move_character.assert_not_called()
         mock_update_visited_location.assert_not_called()
 
-    @patch('helper_functions.movement.validate_move')
-    @patch('helper_functions.movement.move_character')
-    @patch('helper_functions.movement.update_visited_location')
+    @patch('game_system.movement.validate_move')
+    @patch('game_system.movement.move_character')
+    @patch('game_system.movement.update_visited_location')
     def test_process_movement_stay(self, mock_update_visited_location, mock_move_character, mock_validate_move):
         mock_validate_move.return_value = True
         character = {'location': 'home', 'X': 1, 'Y': 1}

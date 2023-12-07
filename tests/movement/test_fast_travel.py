@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.movement import fast_travel
+from game_system.movement import fast_travel
 
 
 class Test(TestCase):

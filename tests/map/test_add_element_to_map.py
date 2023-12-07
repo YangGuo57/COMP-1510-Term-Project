@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.map import add_element_to_map
+from game_system.map import add_element_to_map
 
 
 class Test(TestCase):

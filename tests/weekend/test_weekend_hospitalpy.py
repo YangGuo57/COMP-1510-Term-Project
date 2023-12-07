@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.weekend import weekend_hospital
+from game_system.weekend import weekend_hospital
 
 
 class Test(TestCase):
@@ -8,12 +8,12 @@ class Test(TestCase):
         self.character = {'IQ': 0, 'vaccinated': False}
 
     @patch('builtins.print')
-    @patch('helper_functions.weekend.binary_user_choice', return_value='1')
+    @patch('game_system.weekend.binary_user_choice', return_value='1')
     def test_weekend_hospital_not_vaccinated(self, mock_user_choice, mock_print):
         def mock_change_stat(character, key, value):
             character[key] += value
 
-        with patch('helper_functions.character.change_stat', new=mock_change_stat):
+        with patch('game_system.character.change_stat', new=mock_change_stat):
             weekend_hospital(self.character)
         self.assertEqual(self.character['IQ'], 1)
         self.assertTrue(self.character['vaccinated'])

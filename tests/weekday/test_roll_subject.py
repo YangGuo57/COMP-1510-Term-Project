@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import roll_subject
+from game_system.weekday import roll_subject
 from unittest.mock import patch
 
 

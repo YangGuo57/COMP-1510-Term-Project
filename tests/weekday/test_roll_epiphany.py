@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import roll_epiphany
+from game_system.weekday import roll_epiphany
 from unittest.mock import patch
 
 

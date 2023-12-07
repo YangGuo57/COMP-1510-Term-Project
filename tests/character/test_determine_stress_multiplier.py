@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.character import determine_stress_multiplier
+from game_system.character import determine_stress_multiplier
 
 
 class Test(TestCase):

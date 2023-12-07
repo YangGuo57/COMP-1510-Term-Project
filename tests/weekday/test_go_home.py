@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import go_home
+from game_system.weekday import go_home
 from unittest.mock import patch
 import io
 

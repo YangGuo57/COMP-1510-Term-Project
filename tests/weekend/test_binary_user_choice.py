@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekend import binary_user_choice
+from game_system.weekend import binary_user_choice
 from unittest.mock import patch
 import io
 

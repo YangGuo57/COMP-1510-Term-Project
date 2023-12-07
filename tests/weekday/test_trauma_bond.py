@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import trauma_bond
+from game_system.weekday import trauma_bond
 from unittest.mock import patch
 import io
 

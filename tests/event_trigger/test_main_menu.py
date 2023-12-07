@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.event_trigger import main_menu
+from game_system.event_trigger import main_menu
 from unittest.mock import patch
 
 

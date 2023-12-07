@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 from io import StringIO
-from helper_functions.map import print_game_map
+from game_system.map import print_game_map
 
 
 class Test(TestCase):

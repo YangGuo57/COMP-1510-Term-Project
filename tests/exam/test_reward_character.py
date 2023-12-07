@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.exam import reward_character
+from game_system.exam import reward_character
 
 
 class Test(TestCase):

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.character import describe_stress_change
+from game_system.character import describe_stress_change
 import io
 
 

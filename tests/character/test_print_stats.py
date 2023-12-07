@@ -1,7 +1,7 @@
 import io
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.character import print_stats
+from game_system.character import print_stats
 
 
 class Test(TestCase):

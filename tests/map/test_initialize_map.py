@@ -1,12 +1,12 @@
 from unittest import TestCase
 from unittest.mock import patch
-from helper_functions.map import initialize_map
+from game_system.map import initialize_map
 
 
 class Test(TestCase):
-    @patch('helper_functions.map.coordinates')
-    @patch('helper_functions.map.make_board')
-    @patch('helper_functions.map.add_element_to_map')
+    @patch('game_system.map.coordinates')
+    @patch('game_system.map.make_board')
+    @patch('game_system.map.add_element_to_map')
     def test_initialize_map(self, mock_add_element_to_map, mock_make_board, mock_coordinates):
         mock_rows, mock_columns = 5, 5
         mock_location_key = 'test_key'

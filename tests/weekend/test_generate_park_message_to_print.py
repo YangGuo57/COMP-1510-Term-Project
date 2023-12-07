@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekend import generate_park_message_to_print
+from game_system.weekend import generate_park_message_to_print
 
 
 class Test(TestCase):

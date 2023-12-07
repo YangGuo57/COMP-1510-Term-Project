@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.exam import calculate_average
+from game_system.exam import calculate_average
 
 
 class Test(TestCase):

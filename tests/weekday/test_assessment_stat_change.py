@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helper_functions.weekday import assessment_stat_change
+from game_system.weekday import assessment_stat_change
 from unittest.mock import patch
 
 

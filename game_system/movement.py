@@ -1,4 +1,4 @@
-from helper_functions import map, event_trigger as event
+from game_system import map, event_trigger as event
 
 
 def validate_move(board: dict, character: dict, direction: str) -> bool:
