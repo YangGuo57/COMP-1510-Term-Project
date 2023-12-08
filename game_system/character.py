@@ -304,7 +304,7 @@ humans now.
                   'talking to humans now.')
         else:
             print('Clearly you are not very good at handling human interactions, nor are you a responsible person.'
-                  'Perhaps you should work on them if you want to get hired in the future...')
+                  'Perhaps you should work on your people skills if you want to get hired in the future...')
             changes = 'decreases'
             amount *= -1
     elif attribute == 'IQ':

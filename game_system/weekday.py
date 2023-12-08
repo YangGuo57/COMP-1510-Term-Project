@@ -21,7 +21,7 @@ def weekday(character: dict, week: int, school_map: dict) -> None:
     sleep(0.5)
     print(f'It is now week {week} of the term, only {end_of_term_countdown} weeks until end of term 1! The looming '
           f'presence of the {exam} reminds you that in {exam_countdown} weeks you will be at the mercy of these exams. '
-          f'Here\'s to hoping for a productive week as you prepare to face  the challenges that lie ahead.')
+          f'Here\'s to hoping for a productive week as you prepare to face the challenges that lie ahead.')
 
     character['X'] = 1
     character['Y'] = 1

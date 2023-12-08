@@ -87,6 +87,11 @@ def calculate_average(character: dict) -> str or None:
     ... 'final': {'1510': 'A', '1537': 'B', '1113': 'C', '1712': 'D'}}
     >>> calculate_average(player)
     'B'
+
+    >>> another_player = {'midterm': {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'},
+    ... 'final': {'1510': 'A', '1537': 'A', '1113': 'A', '1712': 'A'}}
+    >>> calculate_average(another_player)
+    'A'
     """
     min_threshold = (85, 70, 55)
     letter_grades = ('A', 'B', 'C')
@@ -124,6 +129,12 @@ def evaluate_exam(character: dict, subject: str, exam: str) -> str:
     >>> test = 'midterm'
     >>> evaluate_exam(player, course, test)
     'F'
+
+    >>> player = {'lvl': {'1510': 5}}
+    >>> course = '1510'
+    >>> test = 'final'
+    >>> evaluate_exam(player, course, test)
+    'B'
     """
     fail = {'midterm': 1, 'final': 4}
     lvl_requirements = {'midterm': {1: 'F', 2: 'C', 3: 'B', 4: 'A'},

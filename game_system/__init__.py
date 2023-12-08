@@ -76,15 +76,15 @@ def ending_descriptions() -> dict:
     endings = {
         'coop': 'Fantastic news, you passed the interview with flying colours! Not only did you secure an impressive A '
                 'in your final grades, but you\'ve also successfully landed a coveted coop opportunity! Your journey '
-                'is bound for greatness, and I look forward to seeing your continued success in Survive CST term 2 '
-                '(TBD...). Congratulations :)',
-        'A': 'While your coop interviews may not have gone as planned, your academic prowess shines through with an '
+                'is bound for greatness, and you will no doubt succeed in Survive CST term 2 '
+                '(TBD...). Congratulations on surviving CST term 1 :)',
+        'A': 'While your coop interviews may not have gone as planned, you still got an '
              'impressive A in your final grades. Your intelligence is evident, but consider being more people-smart '
-             'in your next job application.  A prepared personal project could be the key to securing that coveted '
+             'in your next job application. A prepared personal project could be the key to securing that coveted '
              'offer next time. Congratulations on surviving CST term 1 :)',
         'B': 'You made it through the term, handling assignments and exams as best you could. Maybe not acing '
              'everything, but you pushed through and scored a B in your final grades. Give yourself credit for '
-             'navigating the challenges; it\'s about getting by, and that\'s an accomplishment in its own right. '
+             'surviving the challenges; it\'s about getting by, and that\'s an accomplishment in its own right. '
              'Congratulations on surviving CST term 1 :)',
         'C': 'Getting through this term has been a real challenge. Assignments and exams felt like a steep mountain to '
              'climb, and yeah, it got pretty close to not making it. But here you are, at the finish line, a bit '

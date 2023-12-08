@@ -1,5 +1,5 @@
 from time import sleep
-from game_system import character, greeting
+from game_system import character, greeting, ascii
 import json
 
 
@@ -10,7 +10,7 @@ def new_or_load() -> tuple:
     :return: a tuple containing the player, week, and is_weekend
     """
     sleep(0.5)
-    print('Welcome to Survive CST!')
+    ascii.print_ascii('run game')
     print('1. Start New Game')
     print('2. Load Previous Game')
     while True:

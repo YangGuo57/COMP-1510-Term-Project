@@ -367,7 +367,7 @@ def weekend_park(character: dict) -> bool:
         random_park_event(character)
     sleep(0.5)
     print('\nThat was a nice walk. Stanley Park seems like it sometimes hosts flea markets on the weekend. If you have '
-          'some spare change, perhaps come here more often to check it out?')
+          'some spare change, perhaps you should come here more often to check it out?')
 
     return applied_to_job
 
