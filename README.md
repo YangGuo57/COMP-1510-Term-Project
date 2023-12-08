@@ -11,7 +11,8 @@ Yang: YangGuo57
 
 ## About this game:
 Survive CST is a SUD simulation game where the player is a new student entering first year, first term of the CST 
-program. The player needs to balance schoolwork, social life, work life, and sleep in order to succeed in this program. 
+program. The player needs to balance schoolwork, social life, work life, and sleep in order to succeed in this 
+program (and maybe even get co-op). 
 
 ## Required elements
 | Element                  | Package/module name                           | Line              |
@@ -32,12 +33,10 @@ program. The player needs to balance schoolwork, social life, work life, and sle
 |movement in 4 directions| game_system.move.py                           | 92-99             |
 |movement restriction| game_system.move.py                           | 4-38              |
 |gameplay ending| game.py | 52-53, 58-59, 79  |
-|challenges| game_system.exam.py| 128-134           |
+|challenges| game_system.exam.py| 139-145           |
 
 
-
-
-## functions that we did not doctest/unit test:
+## Functions that we did not doctest/unit test:
 weekday.weekday  
 weekday.end_of_week_action  
 weekday.random_weekday_event   
@@ -45,3 +44,6 @@ event_trigger.move_during_office_hours
 event_trigger.move_on_weekends  
 weekend.weekend  
 weekend.function_dispatcher
+
+The above functions have not been unit tested, since they are at the top level of the nested function calls and the 
+helper functions that they call have been properly unit tested.
