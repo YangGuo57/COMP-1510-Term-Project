@@ -138,7 +138,7 @@ def fast_travel(character: dict) -> None:
     """
     locations = map.coordinates()
     destination = input('Please input fast travel destination: home, school, hospital, park, work:')
-    if destination.lower() in locations['door']['main']:
+    if destination in locations['door']['main']:
         visited = character['visited_locations'][destination]
         if visited:
             character['X'], character['Y'] = locations['door']['main'][destination]
