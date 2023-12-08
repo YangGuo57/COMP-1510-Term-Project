@@ -17,7 +17,7 @@ program (and maybe even get co-op).
 ## Required elements
 | Element                  | Package/module name                           | Line              |
 |--------------------------|-----------------------------------------------|-------------------|
-| immutable data structure | game_system                                   | 2, 3              |
+| immutable data structure | game_system.__init__.py                       | 2, 3              |
 | mutable data structure   | game_system.character.py                      | 23-30             |
 | exceptions               | game_system.save.py                           | 60-66             |
 | dictionary comprehension | game_system.map.py                            | 29-30             |
@@ -29,14 +29,14 @@ program (and maybe even get co-op).
 | random module            | game_system.weekend.py                        | 211               |
 | function annotations     | game_system.weekend.py                        | 60                |
 | 10x10 map                | game.py                                       | 41-42             |
-|character| game_system.character.py                      | 6-42              |
-|movement in 4 directions| game_system.move.py                           | 92-99             |
-|movement restriction| game_system.move.py                           | 4-38              |
-|gameplay ending| game.py | 52-53, 58-59, 79  |
-|challenges| game_system.exam.py| 139-145           |
+| character                | game_system.character.py                      | 6-42              |
+| movement in 4 directions | game_system.move.py                           | 92-99             |
+| movement restriction     | game_system.move.py                           | 4-38              |
+| gameplay ending          | game.py                                       | 52-53, 58-59, 79  |
+| challenges               | game_system.exam.py                           | 139-145           |
 
 
-## Functions that we did not doctest/unit test:
+## Functions that we did not unit test:
 weekday.weekday  
 weekday.end_of_week_action  
 weekday.random_weekday_event   
