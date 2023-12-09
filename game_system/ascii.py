@@ -1,3 +1,8 @@
+"""
+This module contains the ASCII art for the game.
+"""
+
+
 def print_ascii(time: str) -> None:
     """
     Prints the ASCII art.

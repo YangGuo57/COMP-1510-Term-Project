@@ -1,3 +1,7 @@
+"""
+This module contains functions that are used to move the character on the game map.
+"""
+
 from game_system import map, event_trigger as event
 
 

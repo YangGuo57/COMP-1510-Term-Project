@@ -1,3 +1,7 @@
+"""
+This module contains the game function that drives the game.
+"""
+
 from game_system import (weekday, exam, weekend, map, TOTAL_WEEKS,
                          ending_descriptions, ascii, save)
 from time import sleep

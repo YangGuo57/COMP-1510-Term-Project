@@ -1,3 +1,7 @@
+"""
+This module contains the functions that determine whether an event is triggered.
+"""
+
 from game_system import trigger_description, SUBJECTS, movement as mov, character as char, map
 from time import sleep
 

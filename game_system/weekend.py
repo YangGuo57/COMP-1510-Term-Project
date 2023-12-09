@@ -1,3 +1,7 @@
+"""
+This module contains functions that carry out weekend events.
+"""
+
 import random
 from game_system import PRODUCTIVE_STATS, event_trigger as event, character as char, save
 from time import sleep

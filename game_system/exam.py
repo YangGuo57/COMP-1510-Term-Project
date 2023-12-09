@@ -1,3 +1,7 @@
+"""
+This module contains the exam functions for the game.
+"""
+
 from random import randint, choice
 from game_system import TOTAL_WEEKS, exam_status, SUBJECTS, character as char
 from time import sleep

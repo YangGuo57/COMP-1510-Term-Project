@@ -1,3 +1,7 @@
+"""
+This module contains the constants used in the game.
+"""
+
 TOTAL_WEEKS = 14
 SUBJECTS = ('1510', '1537', '1113', '1712')
 PRODUCTIVE_STATS = ('1510', '1537', '1113', '1712', 'project')

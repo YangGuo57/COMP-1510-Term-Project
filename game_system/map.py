@@ -1,3 +1,7 @@
+"""
+This module contains functions that are used to create and print the game map.
+"""
+
 from game_system import coordinates
 
 

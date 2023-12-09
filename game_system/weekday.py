@@ -1,3 +1,7 @@
+"""
+This module contains functions that carry out weekday events.
+"""
+
 import random
 from game_system import TOTAL_WEEKS, SUBJECTS, character as char, event_trigger as event, save
 from time import sleep

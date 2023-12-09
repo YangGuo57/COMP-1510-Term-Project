@@ -1,3 +1,7 @@
+"""
+This module contains the functions that save and load the game.
+"""
+
 from time import sleep
 from game_system import character, greeting, ascii
 import json

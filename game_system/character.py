@@ -1,3 +1,7 @@
+"""
+This module contains functions that create, modify, and describe the character's attributes.
+"""
+
 from game_system import SUBJECTS, PRODUCTIVE_STATS, coop_interview_questions, initial_game_questions
 from time import sleep
 import itertools
