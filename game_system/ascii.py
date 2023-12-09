@@ -19,7 +19,13 @@ def print_ascii(time: str) -> None:
     for line in ascii_art:
         print(line)
 
-def welcome():
+
+def welcome() -> tuple:
+    """
+    Returns the welcome ASCII art.
+
+    :return: a tuple containing the welcome ASCII art
+    """
     art = (
         "\n",
         "/* +=========================================================+ */",
