@@ -118,7 +118,7 @@ def print_game_map(game_map: dict, character: dict) -> None:
     for row_index in range(rows):
         for col_index in range(columns):
             if (row_index, col_index) == player_position:
-                print('*', end=' ')
+                print('\033[91m*\033[0m', end=' ')
             elif row_index == 0 or row_index == rows - 1:
                 print('-', end=' ')
             elif col_index == 0 or col_index == columns - 1:
