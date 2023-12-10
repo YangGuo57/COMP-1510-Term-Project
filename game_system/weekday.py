@@ -66,6 +66,12 @@ def end_of_week_action(character: dict, school_map: dict) -> None:
 
 
 def go_home(character: dict) -> None:
+    """
+    Lets player go home and rest.
+    :param character: character dictionary
+    :precondition: character must be a valid character dictionary created in this program
+    :postcondition: properly adjusts character's stats from going home
+    """
     print('You decide to call it a day and head home to get some rest.')
     sleep(0.5)
     stress_loss = random.randint(10, 15) * -1
