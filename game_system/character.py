@@ -173,6 +173,7 @@ def describe_stress(character: dict) -> None:
     ERROR 4044444444 HAHAHAHAHAHAHA YOUR BRAIN IS FAILING? ?!!? WHAT IS THE MEANING OF LIFE SKADLKNLKNES98723894*&\
 (*&#$<N<MSDV(@#U)0SFLKNA@$_)*LKANSLKNF
     <BLANKLINE>
+
     >>> player = {'stress': 90}
     >>> describe_stress(player)
     <BLANKLINE>
