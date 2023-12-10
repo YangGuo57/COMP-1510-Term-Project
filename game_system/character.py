@@ -23,6 +23,14 @@ def create_character(answers: list) -> dict:
 {'1510': None, '1537': None, '1113': None, '1712': None}, 'final': {'1510': None, '1537': None, '1113': \
 None, '1712': None}, 'visited_locations': {'home': 1, 'school': 1, 'hospital': 0, 'park': 0, 'work': 0, \
 '1510': 0, '1537': 0, '1712': 0, '1113': 0}, 'location': 'home', 'vaccinated': False, 'skip_job': 0}
+
+    >>> another_result = [1, 1, 1, 1]
+    >>> create_character(another_result)
+    {'IQ': 0.5, 'EQ': 10, 'stress': 0, 'wealth': 60, 'X': 1, 'Y': 1, 'project': 0, 'exp': {'1510': 0, '1537': 0, \
+'1113': 0, '1712': 0}, 'lvl': {'1510': 0, '1537': 0, '1113': 0, '1712': 0}, 'midterm': {'1510': None, '1537': None, \
+'1113': None, '1712': None}, 'final': {'1510': None, '1537': None, '1113': None, '1712': None}, 'visited_locations': \
+{'home': 1, 'school': 1, 'hospital': 0, 'park': 0, 'work': 0, '1510': 0, '1537': 0, '1712': 0, '1113': 0}, \
+'location': 'home', 'vaccinated': False, 'skip_job': 0}
     """
     new_character = {'IQ': 0, 'EQ': 0, 'stress': 0, 'wealth': 0, 'X': 1, 'Y': 1, 'project': 0,
                      'exp': {'1510': 0, '1537': 0, '1113': 0, '1712': 0},
@@ -129,12 +137,14 @@ def evaluate_exp(character: dict, subject: str) -> None:
     :precondition: subject must be a string representing the subject the character is studying
     :postcondition: evaluate the character's experience points and level up if the character has enough experience
 
-    >>> player = {'exp': {'1510': 200},'lvl': {'1510': 1}}
+    >>> player = {'exp': {'1510': 200, '1537': 0},'lvl': {'1510': 1, '1537': 0}}
     >>> course = '1510'
     >>> evaluate_exp(player, course)
     Eureka, an epiphany strikes you! All the puzzle pieces fall into place and you've deepened your understanding of \
 COMP1510.
     Your COMP1510 level increased by 1. It is now level 2.
+
+    >>> evaluate_exp(player, '1537')
     """
     threshold = 100
 
@@ -207,6 +217,7 @@ def determine_stress_multiplier(character: dict) -> float:
     >>> player = {'stress': 100}
     >>> determine_stress_multiplier(player)
     0.4
+
     >>> player = {'stress': 70}
     >>> determine_stress_multiplier(player)
     1
@@ -239,6 +250,14 @@ def change_stat(character: dict, attribute: str, amount: int or float) -> None:
     Whoa, it's as if your brain is waking up from a century-long slumber. You've never \
 felt this intelligent before in your entire life.
     Your IQ increases by 10. It is now 10.
+    >>> player['IQ']
+    10
+
+    >>> change_stat(player, 'wealth', 10)
+    Earning money puts a smile on your face, who doesn't love money?
+    Your wealth increases by 10. Your bank account balance is now 10.
+    >>> player['wealth']
+    10
     """
     if attribute in PRODUCTIVE_STATS:
         amount *= determine_stress_multiplier(character)
@@ -277,6 +296,11 @@ def describe_exp_gain(character: dict, attribute: str, amount: int) -> None:
     Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
 increased by 10.
     Your experience in COMP1510 is now 10.
+
+    >>> describe_exp_gain(player, '1537', 40)
+    Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
+increased by 40.
+    Your experience in COMP1537 is now 40.
     """
 
     print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
@@ -301,6 +325,12 @@ def describe_flat_stat_gain(character: dict, attribute: str, amount: int) -> Non
     Through meaningful human interactions, you become more emotionally savvy. You feel more confident talking to \
 humans now.
     Your EQ increases by 1. It is now 2.
+
+    >>> describe_flat_stat_gain(player, 'project', 13)
+    You start grinding your personal project. You're not really sure what you're doing... If your coding \
+instructor saw your spaghetti code, he would have a heart attack. Thankfully, your GitHub repo is \
+private for now so no one can see the heinous code you've written.
+    Your personal project increases by 13. It is now 0.
     """
     changes = 'increases'
     if attribute == 'EQ':
@@ -320,7 +350,8 @@ humans now.
               'instructor saw your spaghetti code, he would have a heart attack. Thankfully, your GitHub repo is '
               'private for now so no one can see the heinous code you\'ve written.')
 
-    print(f'Your {attribute} {changes} by {amount}. It is now {character[attribute]}.')
+    print(f'Your {"personal " if attribute =="project" else "" }{attribute} {changes} by {amount}. It is now'
+          f' {character[attribute]}.')
 
 
 def describe_stress_change(character: dict, amount: int) -> None:
@@ -370,6 +401,10 @@ def set_character_location(character: dict, location: str) -> None:
     >>> set_character_location(player, 'hospital')
     >>> player['location']
     'hospital'
+
+    >>> set_character_location(player, 'home')
+    >>> player['location']
+    'home'
     """
     character['location'] = location
 
@@ -387,7 +422,7 @@ def describe_wealth_change(character: dict, amount: int) -> None:
     >>> player = {"wealth": 100}
     >>> describe_wealth_change(player, 50)
     Earning money puts a smile on your face, who doesn't love money?
-    Your wealth increases by 50.Your bank account balance is now 100.
+    Your wealth increases by 50. Your bank account balance is now 100.
 
     >>> player = {'wealth': 100}
     >>> describe_wealth_change(player, -50)
@@ -400,4 +435,4 @@ def describe_wealth_change(character: dict, amount: int) -> None:
         print(f'Your wealth decreases by {amount * -1}.\nYour bank account balance is now {character["wealth"]}.')
     else:
         print('Earning money puts a smile on your face, who doesn\'t love money?')
-        print(f'Your wealth increases by {amount}.Your bank account balance is now {character["wealth"]}.')
+        print(f'Your wealth increases by {amount}. Your bank account balance is now {character["wealth"]}.')
