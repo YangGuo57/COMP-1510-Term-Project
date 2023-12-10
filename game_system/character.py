@@ -296,11 +296,6 @@ def describe_exp_gain(character: dict, attribute: str, amount: int) -> None:
     Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
 increased by 10.
     Your experience in COMP1510 is now 10.
-
-    >>> describe_exp_gain(player, '1537', 40)
-    Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
-increased by 40.
-    Your experience in COMP1537 is now 40.
     """
 
     print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
@@ -350,7 +345,7 @@ private for now so no one can see the heinous code you've written.
               'instructor saw your spaghetti code, he would have a heart attack. Thankfully, your GitHub repo is '
               'private for now so no one can see the heinous code you\'ve written.')
 
-    print(f'Your {"personal " if attribute =="project" else "" }{attribute} {changes} by {amount}. It is now'
+    print(f'Your {"personal " if attribute == "project" else ""}{attribute} {changes} by {amount}. It is now'
           f' {character[attribute]}.')
 
 

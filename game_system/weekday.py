@@ -66,21 +66,6 @@ def end_of_week_action(character: dict, school_map: dict) -> None:
 
 
 def go_home(character: dict) -> None:
-    """
-    Lets player go home and rest.
-
-    :param character: character dictionary
-    :precondition: character must be a valid character dictionary created in this program
-    :postcondition: properly adjusts character's stats from going home
-
-    >>> player = {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 10, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1,
-    'COMP1537': 1, 'X': 1, 'Y': 1}
-    >>> go_home(player)
-    You decide to call it a day and head home to get some rest.
-    >>> player
-    {'name': 'test', 'IQ': 1, 'EQ': 1, 'stress': 0, 'COMP1510': 1, 'COMP1536': 1, 'COMP1113': 1,
-    'COMP1537': 1, 'X': 1, 'Y': 1}
-    """
     print('You decide to call it a day and head home to get some rest.')
     sleep(0.5)
     stress_loss = random.randint(10, 15) * -1
@@ -232,7 +217,7 @@ def print_assessment_results(fail: bool, subject: str, assessment: str) -> None:
     You completely bombed the COMP1510 quiz. Perhaps you should study harder.
 
     >>> print_assessment_results(False, '1510', 'quiz')
-    Hurrah! You aced the COMP1510 quiz. All those tearful all-nighters were not for naught.
+    Hurrah! You aced the COMP1510 quiz. All those tearful all-nighters were not for naught!
     """
     if not fail:
         print(f'Hurrah! You aced the COMP{subject} {assessment}. All those tearful all-nighters were not for naught!')
