@@ -291,11 +291,15 @@ def describe_exp_gain(character: dict, attribute: str, amount: int) -> None:
     :precondition: amount must be an integer
     :postcondition: describe the experience gain of the character
 
-    >>> player = {'exp': {'1510': 10, '1537': 0, '1113': 0, '1712': 0}}
+    >>> player = {'exp': {'1510': 10, '1537':40, '1113': 0, '1712': 0}}
     >>> describe_exp_gain(player, '1510', 10)
     Through hardwork and perseverance, you became more knowledgeable about COMP1510. Your experience in COMP1510 \
 increased by 10.
     Your experience in COMP1510 is now 10.
+    >>> describe_exp_gain(player, '1537', 40)
+    Through hardwork and perseverance, you became more knowledgeable about COMP1537. Your experience in COMP1537 \
+increased by 40.
+    Your experience in COMP1537 is now 40.
     """
 
     print(f'Through hardwork and perseverance, you became more knowledgeable about COMP{attribute}. Your experience in '
