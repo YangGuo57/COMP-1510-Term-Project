@@ -1,49 +1,32 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/ECKgeadS)
-# COMP-1510-202330-Term-Project
-
 # Survive CST
-by: Alice Huang (A01372753), Yang Guo (A00968177)
-
-
-#### GitHub usernames:
-Alice: orangeepop  
-Yang: YangGuo57 
+by: Alice Huang (orangeepop), Yang Guo (YangGuo57 )
 
 ## About this game:
-Survive CST is a SUD simulation game where the player is a new student entering first year, first term of the CST 
+![img.png](images/img.png)
+Survive CST is a trxt-based SUD simulation game in Python, where the player is a new student entering first year, first 
+term of 
+the CST 
 program. The player needs to balance schoolwork, social life, work life, and sleep in order to succeed in this 
 program (and maybe even get co-op). 
 
-## Required elements
-| Element                  | Package/module name                           | Line              |
-|--------------------------|-----------------------------------------------|-------------------|
-| immutable data structure | game_system.__init__.py                       | 2, 3              |
-| mutable data structure   | game_system.character.py                      | 23-30             |
-| exceptions               | game_system.save.py                           | 60-66             |
-| dictionary comprehension | game_system.map.py                            | 29-30             |
-| if statements            | game_system.save.py                           | 18,22,28          |
-| while loop               | game_system.weekend.py                        | 134               |
-| in operator              | game_system.weekend.py                        | 174               |
-| range function           | game_system.weekend.py<br/>game_system.map.py | 439-445<br/>29-30 |
-| itertools                | game_system.character.py                      | 183               |
-| random module            | game_system.weekend.py                        | 211               |
-| function annotations     | game_system.weekend.py                        | 60                |
-| 10x10 map                | game.py                                       | 41-42             |
-| character                | game_system.character.py                      | 6-42              |
-| movement in 4 directions | game_system.move.py                           | 92-99             |
-| movement restriction     | game_system.move.py                           | 4-38              |
-| gameplay ending          | game.py                                       | 52-53, 58-59, 79  |
-| challenges               | game_system.exam.py                           | 139-145           |
+Each week, the player attends classes, and the player's relevant stats (such as experience in a subject, stress, etc)
+may change. 
+![img_1.png](images/img_1.png)
 
+On the weekends, the player has free time to dedicate to resting, socializing, working a part time job, 
+studying, and exploring the city, all of which may affect certain stats differently.
+![img_2.png](images/img_2.png)
 
-## Functions that we did not unit test:
-weekday.weekday  
-weekday.end_of_week_action  
-weekday.random_weekday_event   
-event_trigger.move_during_office_hours  
-event_trigger.move_on_weekends  
-weekend.weekend  
-weekend.function_dispatcher
+The player needs to pass both midterms and finals in order to remain in the program. If the player excels 
+academically, the player may even get a co-op opportunity!
 
-The above functions have not been unit tested, since they are at the top level of the nested function calls and the 
-helper functions that they call have been properly unit tested.
+## Save and load
+The game has a save and load function implemented with json to allow the player to come back 
+to a saved game at a later time. 
+
+## Unit tests
+Over 200 unit tests were written for this project to ensure the game runs smoothly and is not prone to crashing or 
+other unintended bugs. Almost all functions have been properly tested, with the exception of the functions at the top 
+level of function calls. We decided these functions did not need to be tested since the helper functions that they call 
+have 
+already been thoroughly tested.
