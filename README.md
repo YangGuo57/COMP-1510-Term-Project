@@ -3,7 +3,8 @@ by: Alice Huang (orangeepop), Yang Guo (YangGuo57 )
 
 ## About this game:
 ![img.png](images/img.png)\
-Survive CST is a trxt-based SUD simulation game in Python, where the player is a new student entering first year, first 
+Survive CST is a text-based single player simulation game in Python, where the player is a new student entering first 
+year, first 
 term of 
 the CST 
 program. The player needs to balance schoolwork, social life, work life, and sleep in order to succeed in this 
