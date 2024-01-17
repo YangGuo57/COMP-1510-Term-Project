@@ -2,7 +2,7 @@
 by: Alice Huang (orangeepop), Yang Guo (YangGuo57 )
 
 ## About this game:
-![img.png](images/img.png)
+![img.png](images/img.png)\
 Survive CST is a trxt-based SUD simulation game in Python, where the player is a new student entering first year, first 
 term of 
 the CST 
